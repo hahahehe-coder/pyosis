@@ -17,7 +17,8 @@ class SectionAgent(BaseAgent):
             section_rect,
             
             section_offset,
-            section_mesh
+            section_mesh,
+            section_del
         ]
         system_prompt = \
 """
@@ -27,6 +28,7 @@ class SectionAgent(BaseAgent):
 1. section_XXX - 创建一个对应类型的截面
 2. section_offset - 设置截面偏心
 3. section_mesh - 设置截面网格
+3. section_del - 删除截面
 
 注意事项：
 - 创建任何对象时编号从1递增

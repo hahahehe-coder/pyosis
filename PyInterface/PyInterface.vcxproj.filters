@@ -12,8 +12,12 @@
   <ItemGroup>
     <ClInclude Include="PyInterface.h" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="PyInterface.pyi" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="PyInterface.rc" />
   </ItemGroup>
 </Project>

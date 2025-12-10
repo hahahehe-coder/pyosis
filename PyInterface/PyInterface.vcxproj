@@ -29,10 +29,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PyInterface.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="stdafx.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="PyInterface.pyi" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="PyInterface.rc" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{FDFB959B-BAFC-40D7-8474-3AA5C16BD99A}</ProjectGuid>

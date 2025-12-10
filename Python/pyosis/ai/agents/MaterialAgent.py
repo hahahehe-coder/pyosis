@@ -1,6 +1,6 @@
 from typing import Tuple
 from .BaseAgent import BaseAgent
-from .tools import creep_shrink, material
+from .tools import creep_shrink, material, material_del
 
 class MaterialAgent(BaseAgent):
     """材料设计智能体"""
@@ -10,7 +10,8 @@ class MaterialAgent(BaseAgent):
     def create_agent(self):
         tools = [
             creep_shrink, 
-            material
+            material,
+            material_del
         ]
         system_prompt = \
 """
@@ -22,6 +23,7 @@ class MaterialAgent(BaseAgent):
 你的工具：
 1. creep_shrink - 创建或修改收缩徐变特性（混凝土材料需要）
 2. material - 创建或修改新材料
+3. material_del - 删除材料
 
 工作流程：
 - 创建任何对象时编号从1递增

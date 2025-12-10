@@ -10,10 +10,12 @@ class ModelAgent(BaseAgent):
     def create_agent(self):
         tools = [
             node,
+            node_del,
             element_beam3d,
             element_truss,
             element_spring,
-            element_cable
+            element_cable,
+            element_del,
         ]
         system_prompt = \
 """
@@ -26,7 +28,9 @@ class ModelAgent(BaseAgent):
         
 你的工具：
 1. node - 创建一个节点
-2. element_XXX - 创建一个对应类型的单元
+2. node_del - 删除节点
+3. element_XXX - 创建一个对应类型的单元
+4. element_del - 删除单元
 
 工作流程：
 - 创建任何对象时编号从1递增
