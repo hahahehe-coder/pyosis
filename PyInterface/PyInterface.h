@@ -18,8 +18,6 @@ namespace py = pybind11;
 #include "PREPCommand/CommandInc.h"
 #include "Element/ElementInc.h"
 #include "yilBaseCommand/yilBaseCommandInc.h"
-#include "XCPUIModuleControl/xcpQBDlgToolFactory.h"
-#include "XCPCalculateTool/xcpQBShowToolBase.h"
 
 typedef void (*ReplotCallback)();
 
@@ -29,8 +27,6 @@ private:
 	yilProject* m_pProject;
 	yilBaseCommand* m_pCommand;
 	ReplotCallback Replot;
-	//std::unique_ptr<xcpQBDlgToolFactory> m_pQBToolFactory;
-	std::unique_ptr<xcpQBShowToolBase> m_pQBTool;		// 为快速建模功能提供
 	PyInterface() = default;
 
 public:
@@ -53,7 +49,7 @@ public:
 		m_pCommand = pCommand;
 	}
 
-	void SetReplotCallback(ReplotCallback callback)		// 刷新功能，单独用函数指针传
+	void SetReplotCallback(ReplotCallback callback)
 	{
 		Replot = callback;
 	}
@@ -62,10 +58,6 @@ public:
 	// ==============================基础函数接口===============================
 	// ========================================================================
 
-	/// <summary>
-	/// 刷新绘图界面
-	/// </summary>
-	/// <returns>是否成功，失败原因</returns>
 	std::pair<bool, std::string> OSIS_Replot();
 
 	/// <summary>
@@ -211,39 +203,6 @@ public:
 	/// <param name="nNew">新编号</param>
 	/// <returns></returns>
 	std::pair<bool, std::string> OSIS_ElementMod(const int nOld, const int nNew);
-
-
-
-	// ========================================================================
-	// ==============================复杂函数接口===============================
-	// ========================================================================
-
-	std::pair<bool, std::string> OSIS_QBInitialize(const std::string strBridgeType);		// 初始化快速建模工具
-	std::pair<bool, std::string> OSIS_QBHollowSlabOverall(
-		std::vector<double> spans,
-		const bool bIsElasticConnection,
-		const double dKxOfAbutment1, const double dKyOfAbutment1, const double dKzOfAbutment1, 
-		const double dKxOfAbutment2, const double dKyOfAbutment2, const double dKzOfAbutment2, 
-		const double dElasticLength);
-	std::pair<bool, std::string> OSIS_QBHollowSlabPortrait(
-		const double dEleLengthMin, const double dEleLengthMax, /*单元尺寸*/
-		const double S1, const double L1, const double F1, const double Tb, const double Tw, /*纵向参数*/
-		const double D1	/*支座设置*/);
-
-	std::pair<bool, std::string> OSIS_QBHollowSlabLoad(
-		const bool bHaveDeadLoad, const bool bHavePavement, const bool bHaveRail, const bool bHaveSidewalk, const bool bHaveEndCappingLoad, /*恒载*/
-		const bool bHaveMovingLoad, const bool bHaveTemperEff, const bool bHaveTemperGradient, const bool bHaveSupSettle, /*移动荷载*/
-		const double dDeadLoadFactor, const double dPavementIntensity, const double dRailIntensity, const double dSidewalkIntensity, const double dCrowdLoad,
-		const double dEndCappingLoad, 
-		const double dTransVehDistribution, const bool bIsSelfDefine, const double dFundFreq, const double dWarming, const double dCooling, 
-		const double T1, const double T2, const double dSupSettle);
-
-	std::pair<bool, std::string> OSIS_QBHollowSlabTendon(
-		const py::list& py_list
-	);
-	std::pair<bool, std::string> OSIS_QBHollowSlabStage();
-
-	std::pair<bool, std::string> OSIS_QBHollowSlab(const py::list spans);
 };
 
 // 将 UTF-8 string 转换为 wstring 用于显示

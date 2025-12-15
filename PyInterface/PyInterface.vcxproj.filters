@@ -8,24 +8,12 @@
     <ClCompile Include="Section.cpp" />
     <ClCompile Include="stdafx.cpp" />
     <ClCompile Include="PyInterface.cpp" />
-    <ClCompile Include="HollowSlab.cpp">
-      <Filter>QuickBuilding</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PyInterface.h" />
     <ClInclude Include="stdafx.h" />
-    <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="PyInterface.pyi" />
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="PyInterface.rc" />
-  </ItemGroup>
-  <ItemGroup>
-    <Filter Include="QuickBuilding">
-      <UniqueIdentifier>{347e06ef-68d7-4eee-90ea-bc739c510adf}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
 </Project>
