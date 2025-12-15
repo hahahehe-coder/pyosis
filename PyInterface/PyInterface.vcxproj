@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="Element.cpp" />
     <ClCompile Include="General.cpp" />
+    <ClCompile Include="HollowSlab.cpp" />
     <ClCompile Include="Material.cpp" />
     <ClCompile Include="Node.cpp" />
     <ClCompile Include="PyInterface.cpp" />
@@ -185,7 +186,7 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>HPDI.OSIS.Geometry.lib;HPDI.OSIS.PREP.Control.lib;HPDI.OSIS.IO.lib;HPDI.OSIS.PREP.Stage.lib;HPDI.OSIS.PREP.Load.lib;HPDI.OSIS.PREP.Boundary.lib;HPDI.OSIS.PREP.Command.lib;HPDI.OSIS.PREP.Material.lib;HPDI.OSIS.PREP.Property.lib;HPDI.OSIS.PREP.Section.lib;HPDI.OSIS.PREP.Element.lib;qilBaseLibrary.lib;yilBaseClass.lib;yilProject.lib;yilProjectGroup.lib;yilBaseCommand.lib;yilControl.lib;yilObject.lib;yilMatrix.lib;yilAlgorithm.lib;yilGraphicDisplay.lib;yilPlotControl.lib;vtkCommonCore.lib;vtksys.lib;yilSelect.lib;python3.lib;python3_d.lib;python311.lib;python311_d.lib</AdditionalDependencies>
+      <AdditionalDependencies>HPDI.OSIS.Geometry.lib;HPDI.OSIS.PREP.Control.lib;HPDI.OSIS.IO.lib;HPDI.OSIS.PREP.Stage.lib;HPDI.OSIS.PREP.Load.lib;HPDI.OSIS.PREP.Boundary.lib;HPDI.OSIS.PREP.Command.lib;HPDI.OSIS.PREP.Material.lib;HPDI.OSIS.PREP.Property.lib;HPDI.OSIS.PREP.Section.lib;HPDI.OSIS.PREP.Element.lib;qilBaseLibrary.lib;yilBaseClass.lib;yilProject.lib;yilProjectGroup.lib;yilBaseCommand.lib;yilControl.lib;yilObject.lib;yilMatrix.lib;yilAlgorithm.lib;yilGraphicDisplay.lib;xcpQuickBuilding.lib;xcpUIDocument.lib;xcpCalculateTool.lib;yilPlotControl.lib;vtkCommonCore.lib;vtksys.lib;yilSelect.lib;python3.lib;python3_d.lib;python311.lib;python311_d.lib</AdditionalDependencies>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
       <AdditionalLibraryDirectories>..\..\lib64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -246,7 +247,7 @@ copy .\PyInterface.h ..\..\include\PyInterface</Command>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>HPDI.OSIS.Geometry.lib;HPDI.OSIS.PREP.Control.lib;HPDI.OSIS.IO.lib;HPDI.OSIS.PREP.Stage.lib;HPDI.OSIS.PREP.Load.lib;HPDI.OSIS.PREP.Boundary.lib;HPDI.OSIS.PREP.Command.lib;HPDI.OSIS.PREP.Material.lib;HPDI.OSIS.PREP.Property.lib;HPDI.OSIS.PREP.Section.lib;HPDI.OSIS.PREP.Element.lib;qilBaseLibrary.lib;yilBaseClass.lib;yilProject.lib;yilProjectGroup.lib;yilBaseCommand.lib;yilControl.lib;yilObject.lib;yilMatrix.lib;yilAlgorithm.lib;yilGraphicDisplay.lib;vtkCommonCore.lib;yilPlotControl.lib;vtksys.lib;yilSelect.lib;python3.lib;python3_d.lib;python311.lib;python311_d.lib</AdditionalDependencies>
+      <AdditionalDependencies>HPDI.OSIS.Geometry.lib;HPDI.OSIS.PREP.Control.lib;HPDI.OSIS.IO.lib;HPDI.OSIS.PREP.Stage.lib;HPDI.OSIS.PREP.Load.lib;HPDI.OSIS.PREP.Boundary.lib;HPDI.OSIS.PREP.Command.lib;HPDI.OSIS.PREP.Material.lib;HPDI.OSIS.PREP.Property.lib;HPDI.OSIS.PREP.Section.lib;HPDI.OSIS.PREP.Element.lib;qilBaseLibrary.lib;yilBaseClass.lib;yilProject.lib;yilProjectGroup.lib;yilBaseCommand.lib;yilControl.lib;yilObject.lib;yilMatrix.lib;yilAlgorithm.lib;yilGraphicDisplay.lib;xcpQuickBuilding.lib;xcpUIDocument.lib;xcpCalculateTool.lib;yilPlotControl.lib;vtkCommonCore.lib;vtksys.lib;yilSelect.lib;python3.lib;python3_d.lib;python311.lib;python311_d.lib</AdditionalDependencies>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
