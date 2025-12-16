@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="Element.cpp" />
     <ClCompile Include="General.cpp" />
+    <ClCompile Include="HollowSlab.cpp" />
     <ClCompile Include="Material.cpp" />
     <ClCompile Include="Node.cpp" />
     <ClCompile Include="PyInterface.cpp" />
@@ -119,18 +120,20 @@
     <TargetExt>.pyd</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <ReferencePath>$(ReferencePath)</ReferencePath>
-    <SourcePath>$(SourcePath)</SourcePath>
-    <OutDir>Debug\</OutDir>
-    <IntDir>Debug\</IntDir>
+    <ReferencePath>$(VC_ReferencesPath_x64)</ReferencePath>
+    <SourcePath>$(VC_SourcePath)</SourcePath>
+    <OutDir>$(Configuration)\</OutDir>
+    <IntDir>$(Configuration)\</IntDir>
     <TargetName>PyInterface</TargetName>
     <TargetExt>.pyd</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <OutDir>Release\</OutDir>
-    <IntDir>Release\</IntDir>
+    <OutDir>$(Configuration)\</OutDir>
+    <IntDir>$(Configuration)\</IntDir>
     <TargetName>PyInterface</TargetName>
     <TargetExt>.pyd</TargetExt>
+    <ReferencePath>$(VC_ReferencesPath_x64)</ReferencePath>
+    <SourcePath>$(VC_SourcePath)</SourcePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <TargetName>PyInterface</TargetName>
@@ -233,7 +236,7 @@ copy .\PyInterface.h ..\..\include\PyInterface</Command>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>..\..\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;_USRDLL;PYINTERFACE_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <PrecompiledHeader>Create</PrecompiledHeader>

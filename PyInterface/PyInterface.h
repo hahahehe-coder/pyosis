@@ -203,6 +203,12 @@ public:
 	/// <param name="nNew">新编号</param>
 	/// <returns></returns>
 	std::pair<bool, std::string> OSIS_ElementMod(const int nOld, const int nNew);
+
+	// ========================================================================
+	// ==============================复杂函数接口===============================
+	// ========================================================================
+
+	std::pair<bool, std::string> OSIS_QBHollowSlab(const py::list spans);
 };
 
 // 将 UTF-8 string 转换为 wstring 用于显示
