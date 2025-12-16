@@ -208,7 +208,7 @@ public:
 	// ==============================复杂函数接口===============================
 	// ========================================================================
 
-	std::pair<bool, std::string> OSIS_QBHollowSlab(const py::list spans);
+	//std::pair<bool, std::string> OSIS_QBHollowSlab(const py::list spans);
 };
 
 // 将 UTF-8 string 转换为 wstring 用于显示

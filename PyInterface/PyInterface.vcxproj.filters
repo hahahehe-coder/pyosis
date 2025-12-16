@@ -8,7 +8,6 @@
     <ClCompile Include="Section.cpp" />
     <ClCompile Include="stdafx.cpp" />
     <ClCompile Include="PyInterface.cpp" />
-    <ClCompile Include="HollowSlab.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PyInterface.h" />

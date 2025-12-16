@@ -21,6 +21,7 @@ bool RestoreMat(bool _status, int _index, PREP::MaterialInfo* _pInfo)
 			return false;
 		}
 	}
+	return true;
 }
 
 /// <summary>

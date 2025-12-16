@@ -21,7 +21,6 @@
   <ItemGroup>
     <ClCompile Include="Element.cpp" />
     <ClCompile Include="General.cpp" />
-    <ClCompile Include="HollowSlab.cpp" />
     <ClCompile Include="Material.cpp" />
     <ClCompile Include="Node.cpp" />
     <ClCompile Include="PyInterface.cpp" />
@@ -191,6 +190,7 @@
       <ProgramDatabaseFile>$(OutDir)$(TargetName).pdb</ProgramDatabaseFile>
       <SubSystem>Windows</SubSystem>
       <ImportLibrary>$(OutDir)$(TargetName).lib</ImportLibrary>
+      <DelayLoadDLLs>%(DelayLoadDLLs)</DelayLoadDLLs>
     </Link>
     <PostBuildEvent>
       <Command>copy .\$(Configuration)\PyInterface.lib ..\..\lib64
@@ -253,6 +253,7 @@ copy .\PyInterface.h ..\..\include\PyInterface</Command>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <ImportLibrary>$(OutDir)$(TargetName).lib</ImportLibrary>
       <AdditionalLibraryDirectories>..\..\lib64;..\..\lib64\BCGCBPro</AdditionalLibraryDirectories>
+      <DelayLoadDLLs>%(DelayLoadDLLs)</DelayLoadDLLs>
     </Link>
     <PostBuildEvent>
       <Command>
