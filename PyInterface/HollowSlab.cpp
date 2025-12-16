@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "PyInterface.h"
 
 //#include "XCPQuickBuilding/ShowSimSmallBoxTool.h"

@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="Element.cpp" />
     <ClCompile Include="General.cpp" />
+    <ClCompile Include="HollowSlab.cpp" />
     <ClCompile Include="Material.cpp" />
     <ClCompile Include="Node.cpp" />
     <ClCompile Include="PyInterface.cpp" />
