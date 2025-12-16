@@ -7,7 +7,7 @@ bool AppendSec(const int& nSec, const std::string& strName, ParaType& para, Info
 	pInfo->setNO(nSec);
 	pInfo->setName(strName);
 	pInfo->setPara(para);
-	pInfo->updateRegion(1);
+	pInfo->updateRegion();
 	auto pSec = GET_PREP_SEC();
 	if (!pInfo->generateSection()) 
 	{
@@ -60,7 +60,7 @@ bool ModifySec(const int& nSec, const std::string& strName, ParaType& para, Info
 	pInfo->setNO(nSec);
 	pInfo->setName(strName);
 	pInfo->setPara(para);
-	pInfo->updateRegion(1);
+	pInfo->updateRegion();
 	if (!pInfo->generateSection())
 	{
 		return false;
@@ -75,7 +75,7 @@ bool AppendSteelSec(const int& nSec, const std::string& strName, InfoType* pInfo
 	pInfo->setNO(nSec);
 	pInfo->setName(strName);													
 	pInfo->clearRibAll();                                                       
-	pInfo->updateRegion(1);											
+	pInfo->updateRegion();											
 	//yilCString strCommand;														
 	if (status) {
 		//strCommand.Format(_T("SectionDel,%d"), _index);
@@ -1413,7 +1413,7 @@ std::pair<bool, std::string> PyInterface::OSIS_Section(const int nSec, const std
 
 			pInfo->setNO(nSec);
 			pInfo->setName(strName);
-			pInfo->updateRegion(1);
+			pInfo->updateRegion();
 		}
 	}
 		break;
@@ -1485,7 +1485,7 @@ std::pair<bool, std::string> PyInterface::OSIS_Section(const int nSec, const std
 
 			pInfo->setNO(nSec);
 			pInfo->setName(strName);
-			pInfo->updateRegion(1);
+			pInfo->updateRegion();
 		}
 	}
 		break;
@@ -1595,7 +1595,7 @@ std::pair<bool, std::string> PyInterface::OSIS_Section(const int nSec, const std
 
 			pInfo->setNO(nSec);
 			pInfo->setName(strName);
-			pInfo->updateRegion(1);
+			pInfo->updateRegion();
 		}
 	}
 		break;
@@ -1690,7 +1690,7 @@ std::pair<bool, std::string> PyInterface::OSIS_Section(const int nSec, const std
 
 			pInfo->setNO(nSec);
 			pInfo->setName(strName);
-			pInfo->updateRegion(1);
+			pInfo->updateRegion();
 		}
 	}
 		break;
@@ -1790,7 +1790,7 @@ std::pair<bool, std::string> PyInterface::OSIS_Section(const int nSec, const std
 
 			pInfo->setNO(nSec);
 			pInfo->setName(strName);
-			pInfo->updateRegion(1);
+			pInfo->updateRegion();
 		}
 	}
 		break;
@@ -1896,7 +1896,7 @@ std::pair<bool, std::string> PyInterface::OSIS_Section(const int nSec, const std
 
 			pInfo->setNO(nSec);
 			pInfo->setName(strName);
-			pInfo->updateRegion(1);
+			pInfo->updateRegion();
 		}
 	}
 		break;
