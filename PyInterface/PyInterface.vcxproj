@@ -36,6 +36,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="PyInterface.pyi" />
+    <None Include="set_python_env.bat" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{FDFB959B-BAFC-40D7-8474-3AA5C16BD99A}</ProjectGuid>
@@ -202,7 +203,8 @@ copy .\$(Configuration)\PyInterface.pyd ..\..\bin64</Command>
     <PreBuildEvent>
       <Command>if not exist "..\..\include\PyInterface " mkdir "..\..\include\PyInterface"
 del "..\..\include\PyInterface\" /Q
-copy .\PyInterface.h ..\..\include\PyInterface</Command>
+copy .\PyInterface.h ..\..\include\PyInterface
+call .\set_python_env.bat</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -267,7 +269,8 @@ copy .\$(Configuration)\PyInterface.pyd ..\..\bin64</Command>
     <PreBuildEvent>
       <Command>if not exist "..\..\include\PyInterface " mkdir "..\..\include\PyInterface"
 del "..\..\include\PyInterface\" /Q
-copy .\PyInterface.h ..\..\include\PyInterface</Command>
+copy .\PyInterface.h ..\..\include\PyInterface
+call .\set_python_env.bat</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
