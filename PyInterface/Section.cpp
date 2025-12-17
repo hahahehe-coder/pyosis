@@ -117,7 +117,7 @@ std::pair<bool, std::string> PyInterface::OSIS_Section(const int nSec, const std
 	std::string errorCode = "";
 	//strName = utf8_to_wide(strName);
 	PrepEnum::Section eSEC = PrepEnum::Section::Unassigned;
-	if (!m_pCommand->StrToSection(eSEC, eSectionType, 3))
+	if (!GetCommand()->StrToSection(eSEC, eSectionType, 3))
 	{
 		errorCode = "参数 截面类型 错误！";
 		return { false, errorCode };
@@ -166,7 +166,7 @@ std::pair<bool, std::string> PyInterface::OSIS_Section(const int nSec, const std
 		using Info = PREP::LShapeInfo;
 
 		Info* pInfo = new Info();
-		auto* pUnit = m_pProject->GetUnit();
+		auto* pUnit = GetProject()->GetUnit();
 		Para para = {
 			Dir,
 			pUnit->LocalLengthToSI(H),
@@ -220,7 +220,7 @@ std::pair<bool, std::string> PyInterface::OSIS_Section(const int nSec, const std
 		
 		Info * pInfo = new Info();
 
-		auto* pUnit = m_pProject->GetUnit();
+		auto* pUnit = GetProject()->GetUnit();
 		Para para = {
 			pUnit->LocalLengthToSI(H),
 			pUnit->LocalLengthToSI(Bt),
@@ -275,7 +275,7 @@ std::pair<bool, std::string> PyInterface::OSIS_Section(const int nSec, const std
 		
 		Info* pInfo = new Info();
 
-		auto* pUnit = m_pProject->GetUnit();
+		auto* pUnit = GetProject()->GetUnit();
 		Para para = {
 			Dir,
 			pUnit->LocalLengthToSI(H),
@@ -318,7 +318,7 @@ std::pair<bool, std::string> PyInterface::OSIS_Section(const int nSec, const std
 			D = safe_cast<bool>(kwargs, "D");
 			Tw = safe_cast<double>(kwargs, "Tw");
 			strType = safe_cast<std::string>(kwargs, "Type");
-			if (!m_pCommand->StrToFillingType(type, strType, 4))
+			if (!GetCommand()->StrToFillingType(type, strType, 4))
 			{
 
 				errorCode = "参数 Type 错误！";
@@ -335,7 +335,7 @@ std::pair<bool, std::string> PyInterface::OSIS_Section(const int nSec, const std
 
 		Info* pInfo = new Info();
 
-		auto* pUnit = m_pProject->GetUnit();
+		auto* pUnit = GetProject()->GetUnit();
 		Para para = {
 			type,
 			pUnit->LocalLengthToSI(D),
@@ -376,7 +376,7 @@ std::pair<bool, std::string> PyInterface::OSIS_Section(const int nSec, const std
 		double i1{ 0.0 }, i2{ 0.0 }, R{ 0.0 };
 		try {
 			strGirderPos = safe_cast<std::string>(kwargs, "GirderPos");
-			if (!m_pCommand->StrToGirderPosition(girderPos, strGirderPos, 4))
+			if (!GetCommand()->StrToGirderPosition(girderPos, strGirderPos, 4))
 			{
 
 				errorCode = "参数 GirderPos 错误！";
@@ -412,7 +412,7 @@ std::pair<bool, std::string> PyInterface::OSIS_Section(const int nSec, const std
 		using Para = PREP::SmallBoxPara;
 		Info* pInfo = new Info();
 
-		auto* pUnit = m_pProject->GetUnit();
+		auto* pUnit = GetProject()->GetUnit();
 		Para para = {
 			girderPos,
 			pUnit->LocalLengthToSI(H),
@@ -480,12 +480,12 @@ std::pair<bool, std::string> PyInterface::OSIS_Section(const int nSec, const std
 			// 参数解析
 			strTransition = safe_cast<std::string>(kwargs, "TransitionType");
 			strFillingType = safe_cast<std::string>(kwargs, "SecType");
-			if (!m_pCommand->StrToEdgeTransition(transitionType, strTransition, 4))
+			if (!GetCommand()->StrToEdgeTransition(transitionType, strTransition, 4))
 			{
 				errorCode = "参数 TransitionType 错误！";
 				return { false, errorCode };
 			}
-			if (!m_pCommand->StrToFillingType(fillingType, strFillingType, 5))
+			if (!GetCommand()->StrToFillingType(fillingType, strFillingType, 5))
 			{
 				errorCode = "参数 SecType 错误！";
 				return { false, errorCode };
@@ -516,7 +516,7 @@ std::pair<bool, std::string> PyInterface::OSIS_Section(const int nSec, const std
 		using Para = PREP::RectPara;
 		using Info = PREP::RectInfo;
 
-		auto* pUnit = m_pProject->GetUnit();
+		auto* pUnit = GetProject()->GetUnit();
 		Para para = {
 			transitionType,
 			pUnit->LocalLengthToSI(B),
@@ -575,7 +575,7 @@ std::pair<bool, std::string> PyInterface::OSIS_Section(const int nSec, const std
 		try {
 
 			strFillingType = safe_cast<std::string>(kwargs, "FillingType");
-			if (!m_pCommand->StrToFillingType(fillingType, strFillingType, 4))
+			if (!GetCommand()->StrToFillingType(fillingType, strFillingType, 4))
 			{
 				errorCode = "参数 FillingType 错误！";
 				return { false, errorCode };
@@ -601,7 +601,7 @@ std::pair<bool, std::string> PyInterface::OSIS_Section(const int nSec, const std
 		using Para = PREP::RoundedEndPara;
 		Info* pInfo = new Info();
 
-		auto* pUnit = m_pProject->GetUnit();
+		auto* pUnit = GetProject()->GetUnit();
 		Para para = {
 			fillingType,
 			pUnit->LocalLengthToSI(B),
@@ -702,7 +702,7 @@ std::pair<bool, std::string> PyInterface::OSIS_Section(const int nSec, const std
 			Tc2R = safe_cast<double>(kwargs, "Tc2R");
 
 			strSlopeType = safe_cast<std::string>(kwargs, "SlopeType");
-			if (!m_pCommand->StrToCrossSlopeType(SlopeType, strSlopeType, 44))
+			if (!GetCommand()->StrToCrossSlopeType(SlopeType, strSlopeType, 44))
 			{
 				errorCode = "参数 SlopeType 错误！";
 				return { false, errorCode };
@@ -725,7 +725,7 @@ std::pair<bool, std::string> PyInterface::OSIS_Section(const int nSec, const std
 		using Para = PREP::ConventionalBoxPara;
 		Info* pInfo = new Info();
 
-		auto* pUnit = m_pProject->GetUnit();
+		auto* pUnit = GetProject()->GetUnit();
 		Para para = {
 			pUnit->LocalLengthToSI(H),
 			pUnit->LocalLengthToSI(BtL),
@@ -868,7 +868,7 @@ std::pair<bool, std::string> PyInterface::OSIS_Section(const int nSec, const std
 			Tc2R = safe_cast<double>(kwargs, "Tc2R");
 
 			strSlopeType = safe_cast<std::string>(kwargs, "SlopeType");
-			if (!m_pCommand->StrToCrossSlopeType(SlopeType, strSlopeType, 47))
+			if (!GetCommand()->StrToCrossSlopeType(SlopeType, strSlopeType, 47))
 			{
 				errorCode = "参数 SlopeType 错误！";
 				return { false, errorCode };
@@ -891,7 +891,7 @@ std::pair<bool, std::string> PyInterface::OSIS_Section(const int nSec, const std
 		using Para = PREP::StreamedBoxPara;
 		Info* pInfo = new Info();
 
-		auto* pUnit = m_pProject->GetUnit();
+		auto* pUnit = GetProject()->GetUnit();
 		Para para = {
 			pUnit->LocalLengthToSI(H),
 			pUnit->LocalLengthToSI(BtL),
@@ -1004,7 +1004,7 @@ std::pair<bool, std::string> PyInterface::OSIS_Section(const int nSec, const std
 			Tt4 = safe_cast<double>(kwargs, "Tt4");
 			b1 = safe_cast<double>(kwargs, "b1");
 			strSlopeType = safe_cast<std::string>(kwargs, "SlopeType");
-			if (!m_pCommand->StrToCrossSlopeType(SlopeType, strSlopeType, 25))
+			if (!GetCommand()->StrToCrossSlopeType(SlopeType, strSlopeType, 25))
 			{
 				errorCode = "参数 SlopeType 错误！";
 				return { false, errorCode };
@@ -1022,7 +1022,7 @@ std::pair<bool, std::string> PyInterface::OSIS_Section(const int nSec, const std
 		using Para = PREP::DoubleSideBoxPara;
 		Info* pInfo = new Info();
 
-		auto* pUnit = m_pProject->GetUnit();
+		auto* pUnit = GetProject()->GetUnit();
 		Para para = {
 			pUnit->LocalLengthToSI(H),
 			pUnit->LocalLengthToSI(Bt),
@@ -1095,7 +1095,7 @@ std::pair<bool, std::string> PyInterface::OSIS_Section(const int nSec, const std
 			x = safe_cast<double>(kwargs, "x");
 			y = safe_cast<double>(kwargs, "y");
 			strSlopeType = safe_cast<std::string>(kwargs, "SlopeType");
-			if (!m_pCommand->StrToCrossSlopeType(SlopeType, strSlopeType, 14))
+			if (!GetCommand()->StrToCrossSlopeType(SlopeType, strSlopeType, 14))
 			{
 				errorCode = "参数 SlopeType 错误！";
 				return { false, errorCode };
@@ -1113,7 +1113,7 @@ std::pair<bool, std::string> PyInterface::OSIS_Section(const int nSec, const std
 		using Para = PREP::RibbedSlabPara;
 		Info* pInfo = new Info();
 
-		auto* pUnit = m_pProject->GetUnit();
+		auto* pUnit = GetProject()->GetUnit();
 		Para para = {
 			pUnit->LocalLengthToSI(H),
 			pUnit->LocalLengthToSI(Bt),
@@ -1165,7 +1165,7 @@ std::pair<bool, std::string> PyInterface::OSIS_Section(const int nSec, const std
 		double i1{ 0.0 }, i2{ 0.0 }, R{ 0.0 };
 		try {
 			strGirderPos = safe_cast<std::string>(kwargs, "GirderPos");
-			if (!m_pCommand->StrToGirderPosition(GirderPos, strGirderPos, 4))
+			if (!GetCommand()->StrToGirderPosition(GirderPos, strGirderPos, 4))
 			{
 				errorCode = "参数 GirderPos 错误！";
 				return { false, errorCode };
@@ -1197,7 +1197,7 @@ std::pair<bool, std::string> PyInterface::OSIS_Section(const int nSec, const std
 		using Para = PREP::TGirderPara;
 		Info* pInfo = new Info();
 
-		auto* pUnit = m_pProject->GetUnit();
+		auto* pUnit = GetProject()->GetUnit();
 		Para para = {
 			GirderPos,
 			pUnit->LocalLengthToSI(H),
@@ -1250,7 +1250,7 @@ std::pair<bool, std::string> PyInterface::OSIS_Section(const int nSec, const std
 
 		try {
 			strGirderPos = safe_cast<std::string>(kwargs, "GirderPos");
-			if (!m_pCommand->StrToGirderPosition(GirderPos, strGirderPos, 4))
+			if (!GetCommand()->StrToGirderPosition(GirderPos, strGirderPos, 4))
 			{
 				errorCode = "参数 GirderPos 错误！";
 				return { false, errorCode };
@@ -1284,7 +1284,7 @@ std::pair<bool, std::string> PyInterface::OSIS_Section(const int nSec, const std
 		using Para = PREP::HollowSlabPara;
 		Info* pInfo = new Info();
 
-		auto* pUnit = m_pProject->GetUnit();
+		auto* pUnit = GetProject()->GetUnit();
 		Para para = {
 			GirderPos,
 			pUnit->LocalLengthToSI(H),
@@ -1355,7 +1355,7 @@ std::pair<bool, std::string> PyInterface::OSIS_Section(const int nSec, const std
 			Tb = safe_cast<double>(kwargs, "Tb");
 			Tw = safe_cast<double>(kwargs, "Tw");
 			strLocation = safe_cast<std::string>(kwargs, "WebRibPos");
-			if (!m_pCommand->StrToRibLocation(Location, strLocation, 10))
+			if (!GetCommand()->StrToRibLocation(Location, strLocation, 10))
 			{
 				errorCode = "参数 WebRibPos 错误！";
 				return { false, errorCode };
@@ -1375,7 +1375,7 @@ std::pair<bool, std::string> PyInterface::OSIS_Section(const int nSec, const std
 
 			pInfo->clearRibAll();
 
-			auto* pUnit = m_pProject->GetUnit();
+			auto* pUnit = GetProject()->GetUnit();
 			pInfo->setBeamHeight(pUnit->LocalLengthToSI(H));
 			pInfo->setTopFlangeWidth(pUnit->LocalLengthToSI(Bt));
 			pInfo->setBotFlangeWidth(pUnit->LocalLengthToSI(Bb));
@@ -1402,7 +1402,7 @@ std::pair<bool, std::string> PyInterface::OSIS_Section(const int nSec, const std
 			//pInfo->formatAPDL(strCommand);
 			//PUSH_SHADOW_CMD(THIS_IS_MOD, strCommand);
 
-			auto* pUnit = m_pProject->GetUnit();
+			auto* pUnit = GetProject()->GetUnit();
 			pInfo->setBeamHeight(pUnit->LocalLengthToSI(H));
 			pInfo->setTopFlangeWidth(pUnit->LocalLengthToSI(Bt));
 			pInfo->setBotFlangeWidth(pUnit->LocalLengthToSI(Bb));
@@ -1443,7 +1443,7 @@ std::pair<bool, std::string> PyInterface::OSIS_Section(const int nSec, const std
 
 			pInfo->clearRibAll();
 
-			auto* pUnit = m_pProject->GetUnit();
+			auto* pUnit = GetProject()->GetUnit();
 			pInfo->setBeamHeight(pUnit->LocalLengthToSI(H));
 			pInfo->setTopFlangeWidth(pUnit->LocalLengthToSI(Bt));
 			pInfo->setOuterLengthOfTopFlange(pUnit->LocalLengthToSI(Bct));
@@ -1472,7 +1472,7 @@ std::pair<bool, std::string> PyInterface::OSIS_Section(const int nSec, const std
 			//pInfo->formatAPDL(strCommand);
 			//PUSH_SHADOW_CMD(THIS_IS_MOD, strCommand);
 
-			auto* pUnit = m_pProject->GetUnit();
+			auto* pUnit = GetProject()->GetUnit();
 			pInfo->setBeamHeight(pUnit->LocalLengthToSI(H));
 			pInfo->setTopFlangeWidth(pUnit->LocalLengthToSI(Bt));
 			pInfo->setOuterLengthOfTopFlange(pUnit->LocalLengthToSI(Bct));
@@ -1515,7 +1515,7 @@ std::pair<bool, std::string> PyInterface::OSIS_Section(const int nSec, const std
 			HasMiddleWeb = safe_cast<bool>(kwargs, "HasWeb");
 			Tw2 = safe_cast<double>(kwargs, "Tw2");
 			strRibLocation = safe_cast<std::string>(kwargs, "WebRibPos");
-			if (!m_pCommand->StrToRibLocation(RibLocation, strRibLocation, 21))
+			if (!GetCommand()->StrToRibLocation(RibLocation, strRibLocation, 21))
 			{
 				errorCode = "参数 WebRibPos 错误！";
 				return { false, errorCode };
@@ -1533,7 +1533,7 @@ std::pair<bool, std::string> PyInterface::OSIS_Section(const int nSec, const std
 
 			pInfo->clearRibAll();
 
-			auto* pUnit = m_pProject->GetUnit();
+			auto* pUnit = GetProject()->GetUnit();
 			pInfo->setBeamHeight_H(pUnit->LocalLengthToSI(H));
 			pInfo->setTopFlangeWidth_Bt(pUnit->LocalLengthToSI(Bt));
 			pInfo->setPlateBotFlangeWidth_Bb(pUnit->LocalLengthToSI(Bb));
@@ -1572,7 +1572,7 @@ std::pair<bool, std::string> PyInterface::OSIS_Section(const int nSec, const std
 			//pInfo->formatAPDL(strCommand);
 			//PUSH_SHADOW_CMD(THIS_IS_MOD, strCommand);
 
-			auto* pUnit = m_pProject->GetUnit();
+			auto* pUnit = GetProject()->GetUnit();
 			pInfo->setBeamHeight_H(pUnit->LocalLengthToSI(H));
 			pInfo->setTopFlangeWidth_Bt(pUnit->LocalLengthToSI(Bt));
 			pInfo->setPlateBotFlangeWidth_Bb(pUnit->LocalLengthToSI(Bb));
@@ -1634,7 +1634,7 @@ std::pair<bool, std::string> PyInterface::OSIS_Section(const int nSec, const std
 
 			pInfo->clearRibAll();
 
-			auto* pUnit = m_pProject->GetUnit();
+			auto* pUnit = GetProject()->GetUnit();
 			pInfo->setBeamHeight_H(pUnit->LocalLengthToSI(H));
 			pInfo->setBeamWidth_B(pUnit->LocalLengthToSI(B));
 			pInfo->setTopFlangeWidth_Bt(pUnit->LocalLengthToSI(Bt));
@@ -1670,7 +1670,7 @@ std::pair<bool, std::string> PyInterface::OSIS_Section(const int nSec, const std
 			//pInfo->formatAPDL(strCommand);
 			//PUSH_SHADOW_CMD(THIS_IS_MOD, strCommand);
 
-			auto* pUnit = m_pProject->GetUnit();
+			auto* pUnit = GetProject()->GetUnit();
 			pInfo->setBeamHeight_H(pUnit->LocalLengthToSI(H));
 			pInfo->setBeamWidth_B(pUnit->LocalLengthToSI(B));
 			pInfo->setTopFlangeWidth_Bt(pUnit->LocalLengthToSI(Bt));
@@ -1718,7 +1718,7 @@ std::pair<bool, std::string> PyInterface::OSIS_Section(const int nSec, const std
 			t = safe_cast<double>(kwargs, "t");
 			HasWeb = safe_cast<bool>(kwargs, "HasWeb");
 			strRibLocation = safe_cast<std::string>(kwargs, "WebRibPos");
-			if (!m_pCommand->StrToRibLocation(RibLocation, strRibLocation, 16))
+			if (!GetCommand()->StrToRibLocation(RibLocation, strRibLocation, 16))
 			{
 				errorCode = "参数 WebRibPos 错误！";
 				return { false, errorCode };
@@ -1736,7 +1736,7 @@ std::pair<bool, std::string> PyInterface::OSIS_Section(const int nSec, const std
 
 			pInfo->clearRibAll();
 
-			auto* pUnit = m_pProject->GetUnit();
+			auto* pUnit = GetProject()->GetUnit();
 			pInfo->setBeamHeight_H(pUnit->LocalLengthToSI(H));
 			pInfo->setTopFlangeWidth_Bt(pUnit->LocalLengthToSI(Bt));
 			pInfo->setPlateBotFlangeWidth_Bb(pUnit->LocalLengthToSI(Bb));
@@ -1771,7 +1771,7 @@ std::pair<bool, std::string> PyInterface::OSIS_Section(const int nSec, const std
 			//pInfo->formatAPDL(strCommand);
 			//PUSH_SHADOW_CMD(THIS_IS_MOD, strCommand);
 
-			auto* pUnit = m_pProject->GetUnit();
+			auto* pUnit = GetProject()->GetUnit();
 			pInfo->setBeamHeight_H(pUnit->LocalLengthToSI(H));
 			pInfo->setTopFlangeWidth_Bt(pUnit->LocalLengthToSI(Bt));
 			pInfo->setPlateBotFlangeWidth_Bb(pUnit->LocalLengthToSI(Bb));
@@ -1820,7 +1820,7 @@ std::pair<bool, std::string> PyInterface::OSIS_Section(const int nSec, const std
 			t = safe_cast<double>(kwargs, "t");
 			HasWeb = safe_cast<bool>(kwargs, "HasWeb");
 			strRibLocation = safe_cast<std::string>(kwargs, "WebRibPos");
-			if (!m_pCommand->StrToRibLocation(RibLocation, strRibLocation, 16))
+			if (!GetCommand()->StrToRibLocation(RibLocation, strRibLocation, 16))
 			{
 				errorCode = "参数 WebRibPos 错误！";
 				return { false, errorCode };
@@ -1838,7 +1838,7 @@ std::pair<bool, std::string> PyInterface::OSIS_Section(const int nSec, const std
 
 			pInfo->clearRibAll();
 
-			auto* pUnit = m_pProject->GetUnit();
+			auto* pUnit = GetProject()->GetUnit();
 			pInfo->setBeamHeight_H(pUnit->LocalLengthToSI(H));
 			pInfo->setTopFlangeWidth_Bt(pUnit->LocalLengthToSI(Bt));
 			pInfo->setPlateBotFlangeWidth_Bb(pUnit->LocalLengthToSI(Bb));
@@ -1875,7 +1875,7 @@ std::pair<bool, std::string> PyInterface::OSIS_Section(const int nSec, const std
 			//pInfo->formatAPDL(strCommand);
 			//PUSH_SHADOW_CMD(THIS_IS_MOD, strCommand);
 
-			auto* pUnit = m_pProject->GetUnit();
+			auto* pUnit = GetProject()->GetUnit();
 			pInfo->setBeamHeight_H(pUnit->LocalLengthToSI(H));
 			pInfo->setTopFlangeWidth_Bt(pUnit->LocalLengthToSI(Bt));
 			pInfo->setPlateBotFlangeWidth_Bb(pUnit->LocalLengthToSI(Bb));
@@ -1913,8 +1913,8 @@ std::pair<bool, std::string> PyInterface::OSIS_Section(const int nSec, const std
 		return { false, errorCode };
 	}
 
-	m_pProject->GetPlotControl()->StructTreeChangedOn();
-	m_pProject->GetPlotControl()->SectionDataChangedOn();
+	GetProject()->GetPlotControl()->StructTreeChangedOn();
+	GetProject()->GetPlotControl()->SectionDataChangedOn();
 
 	return { true, errorCode };
 }
@@ -1934,12 +1934,12 @@ std::pair<bool, std::string> PyInterface::OSIS_SectionOffset(const int nSec, con
 	SecEnum::SectionOffsetY _offsetTypeY{ SecEnum::SectionOffsetY::Middle };
 	SecEnum::SectionOffsetZ _offsetTypeZ{ SecEnum::SectionOffsetZ::Top };
 
-	if (!m_pCommand->StrToSectionOffsetY(_offsetTypeY, offsetTypeY, 2))
+	if (!GetCommand()->StrToSectionOffsetY(_offsetTypeY, offsetTypeY, 2))
 	{
 		errorCode = "参数 Y方向的偏心 错误！";
 		return { false, errorCode };
 	}
-	if (!m_pCommand->StrToSectionOffsetZ(_offsetTypeZ, offsetTypeZ, 3))
+	if (!GetCommand()->StrToSectionOffsetZ(_offsetTypeZ, offsetTypeZ, 3))
 	{
 		errorCode = "参数 Z方向的偏心 错误！";
 		return { false, errorCode };
@@ -1957,7 +1957,7 @@ std::pair<bool, std::string> PyInterface::OSIS_SectionOffset(const int nSec, con
 	//pInfo->formatAPDLSectionOffset(strCommand);
 	//PUSH_SHADOW_CMD(THIS_IS_MOD, strCommand);
 
-	auto* pUnit = m_pProject->GetUnit();
+	auto* pUnit = GetProject()->GetUnit();
 	pInfo->setOffsetTypeY(_offsetTypeY);
 	if (_offsetTypeY == SecEnum::SectionOffsetY::ManualInput) {
 
@@ -1972,7 +1972,7 @@ std::pair<bool, std::string> PyInterface::OSIS_SectionOffset(const int nSec, con
 		pInfo->setOffsetValueZ(value);
 	}
 	pInfo->updatePropByModelingPoint();
-	m_pProject->GetPlotControl()->SectionDataChangedOn();
+	GetProject()->GetPlotControl()->SectionDataChangedOn();
 
 	//return { true, "" };
 	return { true, errorCode };
@@ -2064,9 +2064,9 @@ std::pair<bool, std::string> PyInterface::OSIS_SectionDel(const int nSec)
 		return { false, errorCode };
 	}
 
-	m_pProject->GetPlotControl()->InputChangedOn();
-	m_pProject->GetPlotControl()->StructTreeChangedOn();
-	m_pProject->GetPlotControl()->SectionDataChangedOn();
+	GetProject()->GetPlotControl()->InputChangedOn();
+	GetProject()->GetPlotControl()->StructTreeChangedOn();
+	GetProject()->GetPlotControl()->SectionDataChangedOn();
 
 	return { true, errorCode };
 }
@@ -2113,8 +2113,8 @@ std::pair<bool, std::string> PyInterface::OSIS_SectionMod(const int nOld, const 
 			pRelatedInfo->substitueSection(nOld, nNew);
 		}
 
-		m_pProject->GetPlotControl()->ElementDataChangedOn();
-		m_pProject->GetPlotControl()->ElemPropBeam3DsDataChangedOn();
+		GetProject()->GetPlotControl()->ElementDataChangedOn();
+		GetProject()->GetPlotControl()->ElemPropBeam3DsDataChangedOn();
 	}
 	pEM = nullptr;
 
@@ -2123,8 +2123,8 @@ std::pair<bool, std::string> PyInterface::OSIS_SectionMod(const int nOld, const 
 	//strCommand.Format(_T("SectionMod,%d,%d"), nNew, nOld);
 	//PUSH_SHADOW_CMD(THIS_IS_MOD, strCommand);
 
-	m_pProject->GetPlotControl()->SectionDataChangedOn();
-	m_pProject->GetPlotControl()->InputChangedOn();
-	m_pProject->GetPlotControl()->StructTreeChangedOn();
+	GetProject()->GetPlotControl()->SectionDataChangedOn();
+	GetProject()->GetPlotControl()->InputChangedOn();
+	GetProject()->GetPlotControl()->StructTreeChangedOn();
 	return { true, errorCode };
 }

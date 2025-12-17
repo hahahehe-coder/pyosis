@@ -16,14 +16,16 @@
 
 namespace py = pybind11;
 #include "yilBaseCommand/yilBaseCommandInc.h"
+#include "YILProjectGroup/yilProjectGroupInc.h"
 
 typedef void (*ReplotCallback)();
 
 class PYINTERFACE_API PyInterface
 {
 private:
-	yilProject* m_pProject;
-	yilBaseCommand* m_pCommand;
+	//yilProject* GetProject();
+	yilProjectGroup* m_pProjectGroup;
+	//yilBaseCommand* GetCommand();
 	ReplotCallback Replot;
 	PyInterface() = default;
 
@@ -38,14 +40,29 @@ public:
 	PyInterface(const PyInterface&) = delete;
 	PyInterface& operator=(const PyInterface&) = delete;
 
-	void SetProject(yilProject* pProject) {
-		m_pProject = pProject;
+	void SetProjectGroup(yilProjectGroup* pProjectGroup)
+	{
+		m_pProjectGroup = pProjectGroup;
 	}
 
-	void SetCommand(yilBaseCommand* pCommand)
+	yilProject* GetProject()
 	{
-		m_pCommand = pCommand;
+		return m_pProjectGroup->GetProject();
 	}
+
+	yilBaseCommand* GetCommand()
+	{
+		return (yilBaseCommand*)m_pProjectGroup->GetyilCommand();
+	}
+
+	//void SetProject(yilProject* GetProject()) {
+	//	GetProject() = GetProject();
+	//}
+
+	//void SetCommand(yilBaseCommand* GetCommand())
+	//{
+	//	GetCommand() = GetCommand();
+	//}
 
 	void SetReplotCallback(ReplotCallback callback)
 	{

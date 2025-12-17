@@ -24,7 +24,7 @@ std::pair<bool, std::string> PyInterface::OSIS_Element(int nEle /*= -1*/, const 
 		return { false, errorCode };
 	}
 	PrepEnum::Element eET = PrepEnum::Element::Unassigned;
-	if (!m_pCommand->StrToElement(eET, eElementType, 2))
+	if (!GetCommand()->StrToElement(eET, eElementType, 2))
 	{
 		errorCode = "参数 单元类型 错误！";
 		return { false, errorCode };
@@ -247,10 +247,10 @@ std::pair<bool, std::string> PyInterface::OSIS_Element(int nEle /*= -1*/, const 
 			pEleInfo->setBeta(dBeta);
 			pEleInfo->setWarp(bWarping);
 		}
-		m_pProject->GetPlotControl()->InputChangedOn();
-		m_pProject->GetPlotControl()->StructTreeChangedOn();
-		m_pProject->GetPlotControl()->ElementDataChangedOn();
-		m_pProject->GetPlotControl()->ElemPropBeam3DsDataChangedOn();
+		GetProject()->GetPlotControl()->InputChangedOn();
+		GetProject()->GetPlotControl()->StructTreeChangedOn();
+		GetProject()->GetPlotControl()->ElementDataChangedOn();
+		GetProject()->GetPlotControl()->ElemPropBeam3DsDataChangedOn();
 		break;
 	}
 		break;
@@ -368,10 +368,10 @@ std::pair<bool, std::string> PyInterface::OSIS_Element(int nEle /*= -1*/, const 
 			pEleInfo->setStrain(dStrain);
 
 		}
-		m_pProject->GetPlotControl()->InputChangedOn();
-		m_pProject->GetPlotControl()->StructTreeChangedOn();
-		m_pProject->GetPlotControl()->ElementDataChangedOn();
-		m_pProject->GetPlotControl()->ElemPropBeam3DsDataChangedOn();
+		GetProject()->GetPlotControl()->InputChangedOn();
+		GetProject()->GetPlotControl()->StructTreeChangedOn();
+		GetProject()->GetPlotControl()->ElementDataChangedOn();
+		GetProject()->GetPlotControl()->ElemPropBeam3DsDataChangedOn();
 	}
 		break;
 	case PrepEnum::Element::Spring: 
@@ -432,7 +432,7 @@ std::pair<bool, std::string> PyInterface::OSIS_Element(int nEle /*= -1*/, const 
 			vecK[4] = kwargs["ry"].cast<double>();
 			vecK[5] = kwargs["rz"].cast<double>();
 
-			yilUnitScale* pUnit = m_pProject->GetUnit();
+			yilUnitScale* pUnit = GetProject()->GetUnit();
 			for (int it = 0; it < 3; it++)
 				vecK[it] = pUnit->LocalLineForceToSI(vecK[it]);
 
@@ -574,10 +574,10 @@ std::pair<bool, std::string> PyInterface::OSIS_Element(int nEle /*= -1*/, const 
 			pEleInfo->setProp(mapProp);
 			pEleInfo->setBeta(dBeta);
 		}
-		m_pProject->GetPlotControl()->InputChangedOn();
-		m_pProject->GetPlotControl()->StructTreeChangedOn();
-		m_pProject->GetPlotControl()->ElementDataChangedOn();
-		m_pProject->GetPlotControl()->ElemPropBeam3DsDataChangedOn();
+		GetProject()->GetPlotControl()->InputChangedOn();
+		GetProject()->GetPlotControl()->StructTreeChangedOn();
+		GetProject()->GetPlotControl()->ElementDataChangedOn();
+		GetProject()->GetPlotControl()->ElemPropBeam3DsDataChangedOn();
 	}
 		break;
 	case PrepEnum::Element::Cable:  
@@ -601,7 +601,7 @@ std::pair<bool, std::string> PyInterface::OSIS_Element(int nEle /*= -1*/, const 
 			// 处理错误
 			return { false, e.what() };
 		}
-		if (!m_pCommand->StrToCableDef(eMethod, eMet, 7))
+		if (!GetCommand()->StrToCableDef(eMethod, eMet, 7))
 		{
 			errorCode = "参数 应力方法 错误！";
 			return { false, errorCode };
@@ -641,7 +641,7 @@ std::pair<bool, std::string> PyInterface::OSIS_Element(int nEle /*= -1*/, const 
 			errorCode = "单元" + std::to_string(nEle) + "：截面" + std::to_string(nSec) + "不存在！";
 			return { false, errorCode };
 		}
-		yilUnitScale* pUnit = m_pProject->GetUnit();
+		yilUnitScale* pUnit = GetProject()->GetUnit();
 		switch (eMethod)
 		{
 		case PrepEnum::CableDef::UnstressedLength:  dPara = pUnit->LocalLengthToSI(dPara); break;
@@ -698,7 +698,7 @@ std::pair<bool, std::string> PyInterface::OSIS_Element(int nEle /*= -1*/, const 
 		}
 		else
 		{
-			yilUnitScale* pUnit = m_pProject->GetUnit();
+			yilUnitScale* pUnit = GetProject()->GetUnit();
 			switch (eMethod) {
 
 			case PrepEnum::CableDef::UnstressedLength:  dPara = pUnit->LocalLengthToSI(dPara); break;
@@ -736,10 +736,10 @@ std::pair<bool, std::string> PyInterface::OSIS_Element(int nEle /*= -1*/, const 
 			pEleInfo->setSec(nSec);
 			pEleInfo->setState(eMethod, dPara);
 		}
-		m_pProject->GetPlotControl()->InputChangedOn();
-		m_pProject->GetPlotControl()->StructTreeChangedOn();
-		m_pProject->GetPlotControl()->ElementDataChangedOn();
-		m_pProject->GetPlotControl()->ElemPropBeam3DsDataChangedOn(); //yanggj说单元是全量刷新，可以这么写
+		GetProject()->GetPlotControl()->InputChangedOn();
+		GetProject()->GetPlotControl()->StructTreeChangedOn();
+		GetProject()->GetPlotControl()->ElementDataChangedOn();
+		GetProject()->GetPlotControl()->ElemPropBeam3DsDataChangedOn(); //yanggj说单元是全量刷新，可以这么写
 	}
 		break;
 	case PrepEnum::Element::Shell:  
@@ -930,6 +930,7 @@ std::pair<bool, std::string> PyInterface::OSIS_Element(int nEle /*= -1*/, const 
 std::pair<bool, std::string> PyInterface::OSIS_ElementDel(const int nEle)
 {
 	std::string errorCode;
+
 	//ASSERT_FEM_STATUS();
 
 	PREP::ElementInfo* pEleInfo = GET_PREP_ELEMENT()->getInfo(nEle);
@@ -951,10 +952,10 @@ std::pair<bool, std::string> PyInterface::OSIS_ElementDel(const int nEle)
 		return { false, errorCode };
 	}
 
-	m_pProject->GetPlotControl()->InputChangedOn();
-	m_pProject->GetPlotControl()->StructTreeChangedOn();	//用于通知界面刷新菜单
-	m_pProject->GetPlotControl()->ElementDataChangedOn();	// 单元表格数据
-	m_pProject->GetPlotControl()->ElemPropBeam3DsDataChangedOn();
+	GetProject()->GetPlotControl()->InputChangedOn();
+	GetProject()->GetPlotControl()->StructTreeChangedOn();	//用于通知界面刷新菜单
+	GetProject()->GetPlotControl()->ElementDataChangedOn();	// 单元表格数据
+	GetProject()->GetPlotControl()->ElemPropBeam3DsDataChangedOn();
 
 	return { true, errorCode };
 }
@@ -1021,7 +1022,7 @@ std::pair<bool, std::string> PyInterface::OSIS_ElementMod(const int nOld, const 
 			pRelatedInfo->getData().erase(nOld);
 			pRelatedInfo->getData().emplace(nNew);
 		}
-		m_pProject->GetPlotControl()->LoadGroupTreeChangedOn();
+		GetProject()->GetPlotControl()->LoadGroupTreeChangedOn();
 		pEGM = nullptr;
 
 
@@ -1041,7 +1042,7 @@ std::pair<bool, std::string> PyInterface::OSIS_ElementMod(const int nOld, const 
 				}
 			}
 
-			m_pProject->GetPlotControl()->BoundaryChangedOn();
+			GetProject()->GetPlotControl()->BoundaryChangedOn();
 		}
 		pBM = nullptr;
 
@@ -1061,7 +1062,7 @@ std::pair<bool, std::string> PyInterface::OSIS_ElementMod(const int nOld, const 
 					pLayoutRef->setEle(nNew);
 				}
 
-				m_pProject->GetPlotControl()->TendonVecDataChangedOn();
+				GetProject()->GetPlotControl()->TendonVecDataChangedOn();
 			}
 		}
 		const auto& setRelatedLoad = pInfo->getRelatedLoad();
@@ -1073,8 +1074,8 @@ std::pair<bool, std::string> PyInterface::OSIS_ElementMod(const int nOld, const 
 				pRelatedInfo->substitueElement(nOld, nNew);
 			}
 
-			m_pProject->GetPlotControl()->LoadGroupChangedOn();
-			m_pProject->GetPlotControl()->LoadGroupTreeChangedOn();
+			GetProject()->GetPlotControl()->LoadGroupChangedOn();
+			GetProject()->GetPlotControl()->LoadGroupTreeChangedOn();
 		}
 		pLCM = nullptr;
 
@@ -1101,11 +1102,11 @@ std::pair<bool, std::string> PyInterface::OSIS_ElementMod(const int nOld, const 
 	//压入影子命令
 	//PUSH_SHADOW_CMD_CUSTOM(THIS_IS_MOD, "ElementMod,%d,%d", nNew, nOld);
 
-	m_pProject->GetPlotControl()->InputChangedOn();
-	m_pProject->GetPlotControl()->StructTreeChangedOn();
-	m_pProject->GetPlotControl()->ElementDataChangedOn();
-	m_pProject->GetPlotControl()->ElemPropBeam3DsDataChangedOn();
-	m_pProject->GetPlotControl()->NodeDataChangedOn();
+	GetProject()->GetPlotControl()->InputChangedOn();
+	GetProject()->GetPlotControl()->StructTreeChangedOn();
+	GetProject()->GetPlotControl()->ElementDataChangedOn();
+	GetProject()->GetPlotControl()->ElemPropBeam3DsDataChangedOn();
+	GetProject()->GetPlotControl()->NodeDataChangedOn();
 	SEL_MGR_PTR()->ElementModCmd(nOld, nNew);
 	return { true, errorCode };
 }

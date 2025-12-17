@@ -73,7 +73,7 @@
 //	}
 //
 //	//const double dSpan = pOverall->GetSpan();
-//	auto* pUnit = m_pProject->GetUnit();
+//	auto* pUnit = GetProject()->GetUnit();
 //	pOverall->SetSpan(pUnit->LocalLengthToSI(spans[0]));		// 空心板实际上只需要一个跨径数据
 //	pOverall->SetIsElasticConnection(bIsElasticConnection);
 //	pOverall->SetKxOfAbutment1(pUnit->LocalLineForceToSI(dKxOfAbutment1));
@@ -101,7 +101,7 @@
 //		return { false, errorCode };
 //	}
 //
-//	auto* pUnit = m_pProject->GetUnit();
+//	auto* pUnit = GetProject()->GetUnit();
 //	//单元尺寸
 //	pPortrait->SetEleMinLength(pUnit->LocalLengthToSI(dEleLengthMin));
 //	pPortrait->SetEleMaxLength(pUnit->LocalLengthToSI(dEleLengthMax));
@@ -134,7 +134,7 @@
 //		return { false, errorCode };
 //	}
 //
-//	auto* pUnit = m_pProject->GetUnit();
+//	auto* pUnit = GetProject()->GetUnit();
 //	pLoad->SetHaveDeadLoad(bHaveDeadLoad);
 //	pLoad->SetHavePavement(bHavePavement);//铺装
 //	pLoad->SetHaveRail(bHaveRail);//防撞栏杆

@@ -74,7 +74,7 @@ std::pair<bool, std::string> PyInterface::OSIS_Node(int nNO, double x, double y,
 	}
 
 	vector<double> vktValue{x, y, z};
-	yilUnitScale* pUnit = m_pProject->GetUnit();
+	yilUnitScale* pUnit = GetProject()->GetUnit();
 	vktValue[0] = pUnit->LocalLengthToSI(vktValue[0]);
 	vktValue[1] = pUnit->LocalLengthToSI(vktValue[1]);
 	vktValue[2] = pUnit->LocalLengthToSI(vktValue[2]);
@@ -84,7 +84,7 @@ std::pair<bool, std::string> PyInterface::OSIS_Node(int nNO, double x, double y,
 
 		if (!AppendNode(nNO, vktValue, errorCode))
 		{
-			m_pProject->GetNodeVec()->DeleteByNO(nNO);
+			GetProject()->GetNodeVec()->DeleteByNO(nNO);
 			//m_ErrCode.Format(_T("节点创建失败！"), (LPCSTR)_Command);
 			errorCode += "节点创建失败！";
 			return { false, errorCode };
@@ -97,15 +97,15 @@ std::pair<bool, std::string> PyInterface::OSIS_Node(int nNO, double x, double y,
 			return { false, errorCode };
 		}
 
-		m_pProject->GetPlotControl()->ElementDataChangedOn();
-		m_pProject->GetPlotControl()->ElemPropBeam3DsDataChangedOn();
-		m_pProject->GetPlotControl()->ElemPropTrussDataChangedOn();
-		m_pProject->GetPlotControl()->ElemPropMlelDataChangedOn();
+		GetProject()->GetPlotControl()->ElementDataChangedOn();
+		GetProject()->GetPlotControl()->ElemPropBeam3DsDataChangedOn();
+		GetProject()->GetPlotControl()->ElemPropTrussDataChangedOn();
+		GetProject()->GetPlotControl()->ElemPropMlelDataChangedOn();
 	}
 
-	m_pProject->GetPlotControl()->InputChangedOn();
-	m_pProject->GetPlotControl()->StructTreeChangedOn();
-	m_pProject->GetPlotControl()->NodeDataChangedOn();
+	GetProject()->GetPlotControl()->InputChangedOn();
+	GetProject()->GetPlotControl()->StructTreeChangedOn();
+	GetProject()->GetPlotControl()->NodeDataChangedOn();
 
 	return { true, errorCode };
 	//return { true, "成功创建节点，编号:" + std::to_string(nNO) +  "！" };
@@ -140,9 +140,9 @@ std::pair<bool, std::string> PyInterface::OSIS_NodeDel(const int nNO)
 		return { false, errorCode };
 	}
 
-	m_pProject->GetPlotControl()->InputChangedOn();
-	m_pProject->GetPlotControl()->StructTreeChangedOn();
-	m_pProject->GetPlotControl()->NodeDataChangedOn();
+	GetProject()->GetPlotControl()->InputChangedOn();
+	GetProject()->GetPlotControl()->StructTreeChangedOn();
+	GetProject()->GetPlotControl()->NodeDataChangedOn();
 
 	return { true, errorCode };
 }
@@ -184,8 +184,8 @@ std::pair<bool, std::string> PyInterface::OSIS_NodeMod(const int nOld, const int
 				pRelatedInfo->substitueNode(nOld, nNew);
 			}
 
-			m_pProject->GetPlotControl()->ElementDataChangedOn();
-			m_pProject->GetPlotControl()->ElemPropBeam3DsDataChangedOn();
+			GetProject()->GetPlotControl()->ElementDataChangedOn();
+			GetProject()->GetPlotControl()->ElemPropBeam3DsDataChangedOn();
 		}
 		pEM = nullptr;
 
@@ -216,7 +216,7 @@ std::pair<bool, std::string> PyInterface::OSIS_NodeMod(const int nOld, const int
 				}
 			}
 
-			m_pProject->GetPlotControl()->BoundaryChangedOn();
+			GetProject()->GetPlotControl()->BoundaryChangedOn();
 		}
 		pBM = nullptr;
 
@@ -230,8 +230,8 @@ std::pair<bool, std::string> PyInterface::OSIS_NodeMod(const int nOld, const int
 				pRelatedInfo->substitueNode(nOld, nNew);
 			}
 
-			m_pProject->GetPlotControl()->LoadGroupChangedOn();
-			m_pProject->GetPlotControl()->LoadGroupTreeChangedOn();
+			GetProject()->GetPlotControl()->LoadGroupChangedOn();
+			GetProject()->GetPlotControl()->LoadGroupTreeChangedOn();
 		}
 		pLCM = nullptr;
 
@@ -245,8 +245,8 @@ std::pair<bool, std::string> PyInterface::OSIS_NodeMod(const int nOld, const int
 				pRelatedInfo->substitueSetlNode(nOld, nNew);
 			}
 
-			m_pProject->GetPlotControl()->LoadGroupChangedOn();
-			m_pProject->GetPlotControl()->LoadGroupTreeChangedOn();
+			GetProject()->GetPlotControl()->LoadGroupChangedOn();
+			GetProject()->GetPlotControl()->LoadGroupTreeChangedOn();
 		}
 		pAM = nullptr;
 
@@ -270,9 +270,9 @@ std::pair<bool, std::string> PyInterface::OSIS_NodeMod(const int nOld, const int
 	//压入影子命令
 	//PUSH_SHADOW_CMD_CUSTOM(THIS_IS_MOD, "NodeMod,%d,%d", nNew, nOld);
 
-	m_pProject->GetPlotControl()->InputChangedOn();
-	m_pProject->GetPlotControl()->StructTreeChangedOn();
-	m_pProject->GetPlotControl()->NodeDataChangedOn();
+	GetProject()->GetPlotControl()->InputChangedOn();
+	GetProject()->GetPlotControl()->StructTreeChangedOn();
+	GetProject()->GetPlotControl()->NodeDataChangedOn();
 	SEL_MGR_PTR()->NodeModCmd(nOld, nNew);
 
 	return { true, errorCode };

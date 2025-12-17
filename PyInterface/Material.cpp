@@ -48,9 +48,10 @@ bool RestoreMat(bool _status, int _index, PREP::MaterialInfo* _pInfo)
 std::pair<bool, std::string> PyInterface::OSIS_Material(const int nMat, const std::string strName, const std::string eMaterialType, const std::string eCode, const std::string eGrade, const int nCrepShrk, const double dDmp)
 {
 	std::string errorCode;
+
 	//strName = utf8_to_wide(strName);
 	PrepEnum::Material eMT = PrepEnum::Material::Unassigned;
-	if (!m_pCommand->StrToMaterial(eMT, eMaterialType, 3))
+	if (!GetCommand()->StrToMaterial(eMT, eMaterialType, 3))
 	{
 		errorCode = "参数 材料类型 错误!";
 		return { false, errorCode };
@@ -73,7 +74,7 @@ std::pair<bool, std::string> PyInterface::OSIS_Material(const int nMat, const st
 	}
 
 	PrepEnum::Code _eCode = PrepEnum::Code::Unassigned;
-	if (!m_pCommand->StrToCode(_eCode, eCode, 4))
+	if (!GetCommand()->StrToCode(_eCode, eCode, 4))
 	{
 		errorCode = "参数 材料标准代码 错误!";
 		return { false, errorCode };
@@ -85,7 +86,7 @@ std::pair<bool, std::string> PyInterface::OSIS_Material(const int nMat, const st
 	case PrepEnum::Material::Conc:
 	{
 		PrepEnum::Conc _eGrade = PrepEnum::Conc::Unassigned;
-		if (!m_pCommand->StrToConc(_eGrade, eGrade, 4))
+		if (!GetCommand()->StrToConc(_eGrade, eGrade, 4))
 		{
 			errorCode = "混凝土材料的参数 材料等级 错误!";
 			return { false, errorCode };
@@ -122,7 +123,7 @@ std::pair<bool, std::string> PyInterface::OSIS_Material(const int nMat, const st
 			}
 			pInfo->setDamping(dDmp);
 		}
-		m_pProject->GetPlotControl()->CrpShrkDataChangedOn();
+		GetProject()->GetPlotControl()->CrpShrkDataChangedOn();
 	}
 		break;
 	case PrepEnum::Material::Steel:
@@ -133,7 +134,7 @@ std::pair<bool, std::string> PyInterface::OSIS_Material(const int nMat, const st
 			return { false, errorCode };
 		}
 		PrepEnum::Steel _eGrade = PrepEnum::Steel::Unassigned;
-		if (!m_pCommand->StrToSteel(_eGrade, eGrade, 4))
+		if (!GetCommand()->StrToSteel(_eGrade, eGrade, 4))
 		{
 			errorCode = "钢材材料的参数 材料等级 错误!";
 			return { false, errorCode };
@@ -169,7 +170,7 @@ std::pair<bool, std::string> PyInterface::OSIS_Material(const int nMat, const st
 	case PrepEnum::Material::Prestressed:  
 	{
 		PrepEnum::Prestressed _eGrade = PrepEnum::Prestressed::Unassigned;
-		if (!m_pCommand->StrToPrestressed(_eGrade, eGrade, 4))
+		if (!GetCommand()->StrToPrestressed(_eGrade, eGrade, 4))
 		{
 			errorCode = "预应力材料的参数 材料等级 错误!";
 			return { false, errorCode };
@@ -205,7 +206,7 @@ std::pair<bool, std::string> PyInterface::OSIS_Material(const int nMat, const st
 	case PrepEnum::Material::Rebar:        
 	{
 		PrepEnum::Rebar _eGrade = PrepEnum::Rebar::Unassigned;
-		if (!m_pCommand->StrToRebar(_eGrade, eGrade, 4))
+		if (!GetCommand()->StrToRebar(_eGrade, eGrade, 4))
 		{
 			errorCode = "普通钢筋的参数 材料等级 错误!";
 			return { false, errorCode };
@@ -247,10 +248,10 @@ std::pair<bool, std::string> PyInterface::OSIS_Material(const int nMat, const st
 		return { false, errorCode };
 	}
 
-	m_pProject->GetPlotControl()->StructTreeChangedOn();
-	m_pProject->GetPlotControl()->MaterialBaseDataChangedOn();
-	m_pProject->GetPlotControl()->MaterialConcDataChangedOn();
-	m_pProject->GetPlotControl()->MaterialSoilDataChangedOn();
+	GetProject()->GetPlotControl()->StructTreeChangedOn();
+	GetProject()->GetPlotControl()->MaterialBaseDataChangedOn();
+	GetProject()->GetPlotControl()->MaterialConcDataChangedOn();
+	GetProject()->GetPlotControl()->MaterialSoilDataChangedOn();
 
 	return { true, errorCode };
 	//return { true, "成功创建材料，编号:" + std::to_string(nMat) + "，名称：" + strName + "！"};
@@ -295,10 +296,10 @@ std::pair<bool, std::string> PyInterface::OSIS_MaterialDel(const int nMat)
 	}
 
 	//add by cf
-	m_pProject->GetPlotControl()->StructTreeChangedOn();
-	m_pProject->GetPlotControl()->MaterialBaseDataChangedOn();
-	m_pProject->GetPlotControl()->MaterialConcDataChangedOn();
-	m_pProject->GetPlotControl()->MaterialSoilDataChangedOn();
+	GetProject()->GetPlotControl()->StructTreeChangedOn();
+	GetProject()->GetPlotControl()->MaterialBaseDataChangedOn();
+	GetProject()->GetPlotControl()->MaterialConcDataChangedOn();
+	GetProject()->GetPlotControl()->MaterialSoilDataChangedOn();
 
 	return { true, errorCode };
 }
@@ -345,8 +346,8 @@ std::pair<bool, std::string> PyInterface::OSIS_MaterialMod(const int nOld, const
 			pRelatedInfo->substitueMaterial(nOld, nNew);
 		}
 
-		m_pProject->GetPlotControl()->ElementDataChangedOn();
-		m_pProject->GetPlotControl()->ElemPropBeam3DsDataChangedOn();
+		GetProject()->GetPlotControl()->ElementDataChangedOn();
+		GetProject()->GetPlotControl()->ElemPropBeam3DsDataChangedOn();
 	}
 	pEM = nullptr;
 
@@ -356,11 +357,11 @@ std::pair<bool, std::string> PyInterface::OSIS_MaterialMod(const int nOld, const
 	//strCommand.Format(_T("MaterialMod,%d,%d"), nNew, nOld);
 	//PUSH_SHADOW_CMD(THIS_IS_MOD, strCommand);
 
-	m_pProject->GetPlotControl()->InputChangedOn();
-	m_pProject->GetPlotControl()->StructTreeChangedOn();
-	m_pProject->GetPlotControl()->MaterialBaseDataChangedOn();
-	m_pProject->GetPlotControl()->MaterialConcDataChangedOn();
-	m_pProject->GetPlotControl()->MaterialSoilDataChangedOn();
+	GetProject()->GetPlotControl()->InputChangedOn();
+	GetProject()->GetPlotControl()->StructTreeChangedOn();
+	GetProject()->GetPlotControl()->MaterialBaseDataChangedOn();
+	GetProject()->GetPlotControl()->MaterialConcDataChangedOn();
+	GetProject()->GetPlotControl()->MaterialSoilDataChangedOn();
 
 	return { true, errorCode };
 }

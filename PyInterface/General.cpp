@@ -65,8 +65,8 @@ std::pair<bool, std::string> PyInterface::OSIS_CrpShrk(const int nNO, const std:
 	//strCommand.Format(_T("CrpShrkMod,%d,%d"), nNew, nOld);
 	//PUSH_SHADOW_CMD(THIS_IS_MOD, strCommand);
 
-	m_pProject->GetPlotControl()->StructTreeChangedOn();
-	m_pProject->GetPlotControl()->CrpShrkDataChangedOn();
+	GetProject()->GetPlotControl()->StructTreeChangedOn();
+	GetProject()->GetPlotControl()->CrpShrkDataChangedOn();
 
 	return { true, errorCode };
 	//return { true, "成功创建收缩徐变，编号:" + std::to_string(nNO) + "，名称：" + strName + "！"};
