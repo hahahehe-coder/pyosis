@@ -240,10 +240,38 @@
 //}
 
 
-std::pair<bool, std::string> PyInterface::OSIS_QBHollowSlab(const py::list spans)
+std::pair<bool, std::string> PyInterface::OSIS_QBHollowSlab(const py::list spans, const bool bIsElasticConnection)
 {
 	std::string errorCode;
 	double span = spans[0].cast<double>();		// 空心板，只需要第一个跨径
+
+	// ===================材料定义===================
+	// TODO 混凝土 钢筋 钢束材料
+
+	// ===================截面定义===================
+	// TODO 从pPortrait中获取
+
+	// ===================节点定义===================
+	// TODO 从pPortrait->CalcualteElement();中计算节点
+
+	// ===================单元定义===================
+	// TODO 从pPortrait->GetElement()中获取
+	
+	// ===================边界条件===================
+	if (bIsElasticConnection)
+	{
+
+	}
+	else
+	{
+
+	}
+
+	// ==================预应力定义==================
+
+	// ===================荷载定义===================
+
+	// =================施工阶段定义=================
 
 	return { true, errorCode };
 }

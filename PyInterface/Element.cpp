@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "PyInterface.h"
+#include "Element/ElementInc.h"
 
 /// <summary>
 /// 创建或修改单元

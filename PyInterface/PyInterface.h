@@ -15,8 +15,6 @@
 #include <codecvt>
 
 namespace py = pybind11;
-#include "PREPCommand/CommandInc.h"
-#include "Element/ElementInc.h"
 #include "yilBaseCommand/yilBaseCommandInc.h"
 
 typedef void (*ReplotCallback)();
@@ -58,6 +56,103 @@ public:
 	// ==============================基础函数接口===============================
 	// ========================================================================
 
+	/// <summary>
+	/// 定义加速度
+	/// </summary>
+	/// <param name="dG">加速度 9.8066</param>
+	/// <returns>是否成功，失败原因</returns>
+	std::pair<bool, std::string> OSIS_Acel(double dG);
+
+	/// <summary>
+	/// 计算预应力开关
+	/// </summary>
+	/// <param name="bFlag">1：开 0：关</param>
+	/// <returns>是否成功，失败原因</returns>
+	std::pair<bool, std::string> OSIS_CalcTendon(bool bFlag);
+
+	/// <summary>
+	/// 计算并发反力开关
+	/// </summary>
+	/// <param name="bFlag">1：开 0：关</param>
+	/// <returns>是否成功，失败原因</returns>
+	std::pair<bool, std::string> OSIS_CalcConForce(bool bFlag);
+
+	/// <summary>
+	/// 计算收缩开关
+	/// </summary>
+	/// <param name="bFlag">1：开 0：关</param>
+	/// <returns>是否成功，失败原因</returns>
+	std::pair<bool, std::string> OSIS_CalcShrink(bool bFlag);
+
+	/// <summary>
+	/// 计算徐变开关
+	/// </summary>
+	/// <param name="bFlag">1：开 0：关</param>
+	/// <returns>是否成功，失败原因</returns>
+	std::pair<bool, std::string> OSIS_CalcCreep(bool bFlag);
+
+	/// <summary>
+	/// 计算剪切变形开关
+	/// </summary>
+	/// <param name="bFlag">1：开 0：关</param>
+	/// <returns>是否成功，失败原因</returns>
+	std::pair<bool, std::string> OSIS_CalcShear(bool bFlag);
+
+	/// <summary>
+	/// 计算钢束松弛开关
+	/// </summary>
+	/// <param name="bFlag">1：开 0：关</param>
+	/// <returns>是否成功，失败原因</returns>
+	std::pair<bool, std::string> OSIS_CalcRlx(bool bFlag);
+
+	/// <summary>
+	/// 修改变截面局部坐标系开关
+	/// </summary>
+	/// <param name="bFlag">1：开 0：关</param>
+	/// <returns>是否成功，失败原因</returns>
+	std::pair<bool, std::string> OSIS_ModLocCoor(bool bFlag);
+
+	/// <summary>
+	/// 考虑钢束自重开关
+	/// </summary>
+	/// <param name="bFlag">1：开 0：关</param>
+	/// <returns>是否成功，失败原因</returns>
+	std::pair<bool, std::string> OSIS_IncTendon(bool bFlag);
+
+	/// <summary>
+	/// 非线性控制开关
+	/// </summary>
+	/// <param name="bGeom">0：关闭几何非线性开关 1：打开几何非线性开关、大位移大转角</param>
+	/// <param name="bLink">0：不考虑非线性连接单元 1：考虑非线性连接单元</param>
+	/// <returns>是否成功，失败原因</returns>
+	std::pair<bool, std::string> OSIS_NL(bool bGeom, bool bLink);
+
+	/// <summary>
+	/// 求解设置线性搜索
+	/// </summary>
+	/// <param name="bFlag">0：非线性搜索 1：线性搜索</param>
+	/// <returns>是否成功，失败原因</returns>
+	std::pair<bool, std::string> OSIS_LnSrch(bool bFlag);
+
+	/// <summary>
+	/// 是否定义自动计算时间荷载步
+	/// </summary>
+	/// <param name="bFlag">0：不自动计算时间荷载步 1：自动计算时间荷载步</param>
+	/// <returns>是否成功，失败原因</returns>
+	std::pair<bool, std::string> OSIS_AutoTs(bool bFlag);
+
+	/// <summary>
+	/// 定义模态分析所需的特征值最大数目
+	/// </summary>
+	/// <param name="nNO">需要计算的特征值最大数目（缺省值：1）</param>
+	/// <returns>是否成功，失败原因</returns>
+	std::pair<bool, std::string> OSIS_ModOpt(int nNO);
+
+
+	/// <summary>
+	/// 重绘窗口
+	/// </summary>
+	/// <returns>是否成功，失败原因</returns>
 	std::pair<bool, std::string> OSIS_Replot();
 
 	/// <summary>
@@ -77,19 +172,19 @@ public:
 	/// </summary>
 	/// <param name="nMat">编号</param>
 	/// <param name="strName">材料别名</param>
-	/// <param name="material">
+	/// <param name="eMaterialType">
 	///		CONC = 混凝土
 	///		STEEL = 钢材
 	///		PRESTRESSED = 预应力材料
 	///		REBAR = 普通钢筋
 	/// </param>
-	/// <param name="code">
+	/// <param name="eCode">
 	///		混凝土 JTG3362_2018，JTGD62_2004
 	///		钢材 JTGD64_2015
 	///		预应力 JTG3362_2018，JTGD62_2004
 	///		普通钢筋 JTG3362_2018，JTGD62_2004
 	/// </param>
-	/// <param name="grade">等级牌号</param>
+	/// <param name="eGrade">等级牌号</param>
 	/// <param name="nCrepShrk">收缩徐变特性编号，缺省时值为-1</param>
 	/// <param name="dDmp">材料阻尼比</param>
 	/// <returns>是否成功，失败原因</returns>
@@ -115,7 +210,7 @@ public:
 	/// </summary>
 	/// <param name="nSec">截面编号</param>
 	/// <param name="strName">截面名</param>
-	/// <param name="section">截面类型</param>
+	/// <param name="eSectionType">截面类型</param>
 	/// <param name="kwargs">截面参数</param>
 	/// <returns>是否成功，失败原因</returns>
 	std::pair<bool, std::string> OSIS_Section(const int nSec, const std::string strName, const std::string eSectionType, const py::dict kwargs);
@@ -184,7 +279,7 @@ public:
 	/// 创建或修改单元
 	/// </summary>
 	/// <param name="nEle">单元编号</param>
-	/// <param name="element">单元类型: Beam3D Truss Spring Cable</param>
+	/// <param name="eElementType">单元类型: Beam3D Truss Spring Cable</param>
 	/// <param name="kwargs">单元参数</param>
 	/// <returns>是否成功，失败原因</returns>
 	std::pair<bool, std::string> OSIS_Element(int nEle /*= -1*/, const std::string eElementType, const py::dict kwargs);
@@ -204,11 +299,20 @@ public:
 	/// <returns></returns>
 	std::pair<bool, std::string> OSIS_ElementMod(const int nOld, const int nNew);
 
+	/// <summary>
+	/// 边界条件
+	/// </summary>
+	/// <param name="nBd">边界编号</param>
+	/// <param name="eBoundaryType">边界类型：一般边界 主从约束 释放梁端约束 节点弹性支撑</param>
+	/// <param name="kwargs"></param>
+	/// <returns></returns>
+	std::pair<bool, std::string> OSIS_Boundary(const int nBd, const std::string eBoundaryType, const py::dict kwargs);
+
 	// ========================================================================
 	// ==============================复杂函数接口===============================
 	// ========================================================================
 
-	std::pair<bool, std::string> OSIS_QBHollowSlab(const py::list spans);
+	std::pair<bool, std::string> OSIS_QBHollowSlab(const py::list spans, const bool bIsElasticConnection);
 };
 
 // 将 UTF-8 string 转换为 wstring 用于显示
@@ -218,9 +322,9 @@ std::string wstring_to_string(const std::wstring& wide_str);
 
 std::string utf8_to_wide(const std::string& utf8_str);
 
-// 安全参数解析
+// 安全参数解析 字典版
 template<typename T>
-inline T safe_cast(const pybind11::dict& kwargs, const std::string& key) {
+inline T safe_cast(const py::dict& kwargs, const std::string& key) {
 	if (!kwargs.contains(key)) {
 		throw std::runtime_error("参数 '" + key + "' 不存在!");
 	}
@@ -228,7 +332,23 @@ inline T safe_cast(const pybind11::dict& kwargs, const std::string& key) {
 	try {
 		return kwargs[key.c_str()].cast<T>();
 	}
-	catch (const pybind11::cast_error& e) {
+	catch (const py::cast_error& e) {
 		throw std::runtime_error("参数 '" + key + "' 解析错误: " + e.what());
 	}
 }
+
+//// 安全参数解析 单个参数版
+//template<typename T>
+//inline T safe_cast(const py::dict& kwargs, const std::string& key) {
+//	if (!kwargs.contains(key)) {
+//		throw std::runtime_error("参数 '" + key + "' 不存在!");
+//	}
+//
+//	try {
+//		auto a = kwargs[key.c_str()];
+//		return kwargs[key.c_str()].cast<T>();
+//	}
+//	catch (const py::cast_error& e) {
+//		throw std::runtime_error("参数 '" + key + "' 解析错误: " + e.what());
+//	}
+//}

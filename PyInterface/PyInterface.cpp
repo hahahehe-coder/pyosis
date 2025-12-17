@@ -55,6 +55,33 @@ PYBIND11_MODULE(PyInterface, m)
             py::return_value_policy::reference)
         .def("OSIS_Replot", &PyInterface::OSIS_Replot)
 
+        .def("OSIS_Acel", &PyInterface::OSIS_Acel,
+            py::arg("dG"))
+        .def("OSIS_CalcTendon", &PyInterface::OSIS_CalcTendon,
+            py::arg("bFlag"))
+        .def("OSIS_CalcConForce", &PyInterface::OSIS_CalcConForce,
+            py::arg("bFlag"))
+        .def("OSIS_CalcShrink", &PyInterface::OSIS_CalcShrink,
+            py::arg("bFlag"))
+        .def("OSIS_CalcCreep", &PyInterface::OSIS_CalcCreep,
+            py::arg("bFlag"))
+        .def("OSIS_CalcShear", &PyInterface::OSIS_CalcShear,
+            py::arg("bFlag"))
+        .def("OSIS_CalcRlx", &PyInterface::OSIS_CalcRlx,
+            py::arg("bFlag"))
+        .def("OSIS_ModLocCoor", &PyInterface::OSIS_ModLocCoor,
+            py::arg("bFlag"))
+        .def("OSIS_IncTendon", &PyInterface::OSIS_IncTendon,
+            py::arg("bFlag"))
+        .def("OSIS_NL", &PyInterface::OSIS_NL,
+            py::arg("bGeom"), py::arg("bLink"))
+        .def("OSIS_LnSrch", &PyInterface::OSIS_LnSrch,
+            py::arg("bFlag"))
+        .def("OSIS_AutoTs", &PyInterface::OSIS_AutoTs,
+            py::arg("bFlag"))
+        .def("OSIS_ModOpt", &PyInterface::OSIS_ModOpt,
+            py::arg("nNO"))
+
         .def("OSIS_CrpShrk", &PyInterface::OSIS_CrpShrk,
             py::arg("nNO"), py::arg("strName"), py::arg("dAvgHumidity"), py::arg("nBirthTime"), py::arg("dTypeCoeff"), py::arg("nBirthByShrinking"))
         .def("OSIS_Material", &PyInterface::OSIS_Material,
