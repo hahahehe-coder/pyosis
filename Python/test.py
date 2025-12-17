@@ -3,10 +3,10 @@ import sys
 
 # 默认dll位于上一级目录
 # dll_dir = r"../"
-dll_dir = "D:/OSIS 5/bin64"
-if os.path.exists(dll_dir):
-    os.add_dll_directory(dll_dir)
-    sys.path.insert(0, dll_dir)
+#dll_dir = "D:/OSIS 5/bin64"
+#if os.path.exists(dll_dir):
+#    os.add_dll_directory(dll_dir)
+#    sys.path.insert(0, dll_dir)
 
 
 from PyInterface import PyInterface as OSISEngine  # 导入OSIS python接口
@@ -31,7 +31,23 @@ LnSrch,0;//设置非线性参数，打开非线性连接单元
 AutoTs,0;//设置非线性参数，线形检索
 ModOpt,0;//设置模态阶数
 """
-# 还未完成
+try:
+    osis_engine.OSIS_Acel(9.8066)
+    osis_engine.OSIS_CalcTendon(1)
+    osis_engine.OSIS_CalcConForce(1)
+    osis_engine.OSIS_CalcShrink(1)
+    osis_engine.OSIS_CalcCreep(1)
+    osis_engine.OSIS_CalcShear(1)
+    osis_engine.OSIS_CalcRlx(1)
+    osis_engine.OSIS_ModLocCoor(0)
+    osis_engine.OSIS_IncTendon(1)
+    osis_engine.OSIS_NL(0, 0)
+    osis_engine.OSIS_LnSrch(0)
+    osis_engine.OSIS_AutoTs(0)
+    osis_engine.OSIS_ModOpt(0)
+except Exception as e:
+    print(e)
+    sys.exit(1)
 
 """
 CrpShrk,1,收缩徐变,70.00,7,5.000,3;//定义收缩徐变特性参数，基本上伴随混凝土材料有
