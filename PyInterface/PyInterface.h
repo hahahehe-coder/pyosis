@@ -334,6 +334,16 @@ public:
 	/// <returns></returns>
 	std::pair<bool, std::string> OSIS_Load(const std::string eLoadType, const std::string strLCName, const py::dict kwargs);
 
+	/// <summary>
+	/// 定义或修改荷载工况
+	/// </summary>
+	/// <param name="strName">别名</param>
+	/// <param name="eType">类型 USER\D\DC\DW\DD\CS</param>
+	/// <param name="dScalar">系数，可缺省</param>
+	/// <param name="strPrompt">说明，可缺省</param>
+	/// <returns></returns>
+	std::pair<bool, std::string> OSIS_LoadCase(const std::string strName, const std::string eLoadCaseType, const double dScalar, const std::string strPrompt);
+
 	// ========================================================================
 	// ==============================复杂函数接口===============================
 	// ========================================================================

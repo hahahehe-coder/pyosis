@@ -9,16 +9,55 @@ class PyInterface:
         if cls._instance is None:
             cls._instance = cls()
         return cls._instance
-    # @staticmethod
-    # def GetInstance() -> 'PyInterface': 
-    #     return PyInterface()
 
     # def setProjects(self, project: Any) -> None: ...
+
+    def OSIS_Replot(self) -> Tuple[bool, str]:
+        return True, ""
+
+    def OSIS_Acel(self, dG: float) -> tuple[bool, str]:
+        return True, ""
+
+    def OSIS_CalcTendon(self, bFlag: int) -> tuple[bool, str]:
+        return True, ""
+
+    def OSIS_CalcConForce(self, bFlag: int) -> tuple[bool, str]:
+        return True, ""
+
+    def OSIS_CalcShrink(self, bFlag: int) -> tuple[bool, str]:
+        return True, ""
+
+    def OSIS_CalcCreep(self, bFlag: int) -> tuple[bool, str]:
+        return True, ""
+
+    def OSIS_CalcShear(self, bFlag: int) -> tuple[bool, str]:
+        return True, ""
+
+    def OSIS_CalcRlx(self, bFlag: int) -> tuple[bool, str]:
+        return True, ""
+
+    def OSIS_ModLocCoor(self, bFlag: int) -> tuple[bool, str]:
+        return True, ""
+
+    def OSIS_IncTendon(self, bFlag: int) -> tuple[bool, str]:
+        return True, ""
+
+    def OSIS_NL(self, bGeom: int, bLink: int) -> tuple[bool, str]:
+        return True, ""
+
+    def OSIS_LnSrch(self, bFlag: int) -> tuple[bool, str]:
+        return True, ""
+
+    def OSIS_AutoTs(self, bFlag: int) -> tuple[bool, str]:
+        return True, ""
+
+    def OSIS_ModOpt(self, nMod: int) -> tuple[bool, str]:
+        return True, ""
 
     def OSIS_CrpShrk(self, nNO: int, strName: str, dAvgHumidity: float, nBirthTime: int, dTypeCoeff: float, nBirthByShrinking: int) -> Tuple[bool, str]: 
         return True, ""
 
-    def OSIS_Material(self, nMat: int, strName: str, strMaterialType: str, code: str, grade: str, nCrepShrk: int, dDmp: float) -> Tuple[bool, str]:
+    def OSIS_Material(self, nMat: int, strName: str, eMaterialType: str, eCode: str, eGrade: str, nCrepShrk: int, dDmp: float) -> Tuple[bool, str]:
         return True, ""
     
     def OSIS_MaterialDel(self, nMat: int) -> Tuple[bool, str]:
@@ -27,7 +66,7 @@ class PyInterface:
     def OSIS_MaterialMod(self, nOld: int, nNew: int) -> Tuple[bool, str]:
         return True, ""
 
-    def OSIS_Section(self, nSec: int, strName: str, strSectionType: str, params: Dict[str, Any]) -> Tuple[bool, str]:
+    def OSIS_Section(self, nSec: int, strName: str, eSectionType: str, params: Dict[str, Any]) -> Tuple[bool, str]:
         return True, ""
 
     def OSIS_SectionOffset(self, nSec: int, offsetTypeY: str, dOffsetValueY: float, offsetTypeZ: str, dOffsetValueZ: float) -> Tuple[bool, str]:
@@ -51,7 +90,7 @@ class PyInterface:
     def OSIS_NodeMod(self, nOld: int, nNew: int) -> Tuple[bool, str]:
         return True, ""
 
-    def OSIS_Element(self, nEle: int, strElementType: str, params: Dict[str, Any]) -> Tuple[bool, str]:
+    def OSIS_Element(self, nEle: int, eElementType: str, params: Dict[str, Any]) -> Tuple[bool, str]:
         return True, ""
     
     def OSIS_ElementDel(self, nEle: int) -> Tuple[bool, str]:
@@ -59,3 +98,13 @@ class PyInterface:
 
     def OSIS_ElementMod(self, nOld: int, nNew: int) -> Tuple[bool, str]:
         return True, ""
+    
+    def OSIS_Boundary(self, nBd: int, eBoundaryType: str, params: Dict[str, Any]) -> Tuple[bool, str]:
+        return True, ""
+    
+    def OSIS_Load(self, eLoadType: str, strLCName: str, params: Dict[str, Any]) -> Tuple[bool, str]:
+        return True, ""
+
+    def OSIS_LoadCase(self, strName: str, eLoadCaseType: str, dScalar: float, strPrompt: str) -> Tuple[bool, str]:
+        return True, ""
+    

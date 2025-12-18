@@ -24,6 +24,7 @@ bool RestoreBoundary(bool _status, int _index, InfoType* _pInfo)
 			return false;
 		}
 	}
+	return true;
 }
 
 /// <summary>
