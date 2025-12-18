@@ -165,7 +165,6 @@ std::pair<bool, std::string> PyInterface::OSIS_Section(const int nSec, const std
 		using Para = PREP::LShapePara;
 		using Info = PREP::LShapeInfo;
 
-		Info* pInfo = new Info();
 		auto* pUnit = GetProject()->GetUnit();
 		Para para = {
 			Dir,
@@ -217,8 +216,6 @@ std::pair<bool, std::string> PyInterface::OSIS_Section(const int nSec, const std
 		}
 		using Info = PREP::IShapeInfo;
 		using Para = PREP::IShapePara;
-		
-		Info * pInfo = new Info();
 
 		auto* pUnit = GetProject()->GetUnit();
 		Para para = {
@@ -272,8 +269,6 @@ std::pair<bool, std::string> PyInterface::OSIS_Section(const int nSec, const std
 		}
 		using Info = PREP::TShapeInfo;
 		using Para = PREP::TShapePara;
-		
-		Info* pInfo = new Info();
 
 		auto* pUnit = GetProject()->GetUnit();
 		Para para = {
@@ -332,8 +327,6 @@ std::pair<bool, std::string> PyInterface::OSIS_Section(const int nSec, const std
 
 		using Info = PREP::CircleInfo;
 		using Para = PREP::CirclePara;
-
-		Info* pInfo = new Info();
 
 		auto* pUnit = GetProject()->GetUnit();
 		Para para = {
@@ -410,7 +403,6 @@ std::pair<bool, std::string> PyInterface::OSIS_Section(const int nSec, const std
 
 		using Info = PREP::SmallBoxInfo;
 		using Para = PREP::SmallBoxPara;
-		Info* pInfo = new Info();
 
 		auto* pUnit = GetProject()->GetUnit();
 		Para para = {
@@ -515,7 +507,7 @@ std::pair<bool, std::string> PyInterface::OSIS_Section(const int nSec, const std
 
 		using Para = PREP::RectPara;
 		using Info = PREP::RectInfo;
-
+		
 		auto* pUnit = GetProject()->GetUnit();
 		Para para = {
 			transitionType,
@@ -599,7 +591,6 @@ std::pair<bool, std::string> PyInterface::OSIS_Section(const int nSec, const std
 
 		using Info = PREP::RoundedEndInfo;
 		using Para = PREP::RoundedEndPara;
-		Info* pInfo = new Info();
 
 		auto* pUnit = GetProject()->GetUnit();
 		Para para = {
@@ -723,7 +714,6 @@ std::pair<bool, std::string> PyInterface::OSIS_Section(const int nSec, const std
 
 		using Info = PREP::ConventionalBoxInfo;
 		using Para = PREP::ConventionalBoxPara;
-		Info* pInfo = new Info();
 
 		auto* pUnit = GetProject()->GetUnit();
 		Para para = {
@@ -889,7 +879,6 @@ std::pair<bool, std::string> PyInterface::OSIS_Section(const int nSec, const std
 
 		using Info = PREP::StreamedBoxInfo;
 		using Para = PREP::StreamedBoxPara;
-		Info* pInfo = new Info();
 
 		auto* pUnit = GetProject()->GetUnit();
 		Para para = {
@@ -1020,7 +1009,6 @@ std::pair<bool, std::string> PyInterface::OSIS_Section(const int nSec, const std
 
 		using Info = PREP::DoubleSideBoxInfo;
 		using Para = PREP::DoubleSideBoxPara;
-		Info* pInfo = new Info();
 
 		auto* pUnit = GetProject()->GetUnit();
 		Para para = {
@@ -1111,7 +1099,6 @@ std::pair<bool, std::string> PyInterface::OSIS_Section(const int nSec, const std
 
 		using Info = PREP::RibbedSlabInfo;
 		using Para = PREP::RibbedSlabPara;
-		Info* pInfo = new Info();
 
 		auto* pUnit = GetProject()->GetUnit();
 		Para para = {
@@ -1195,7 +1182,6 @@ std::pair<bool, std::string> PyInterface::OSIS_Section(const int nSec, const std
 
 		using Info = PREP::TGirderInfo;
 		using Para = PREP::TGirderPara;
-		Info* pInfo = new Info();
 
 		auto* pUnit = GetProject()->GetUnit();
 		Para para = {
@@ -1282,7 +1268,6 @@ std::pair<bool, std::string> PyInterface::OSIS_Section(const int nSec, const std
 
 		using Info = PREP::HollowSlabInfo;
 		using Para = PREP::HollowSlabPara;
-		Info* pInfo = new Info();
 
 		auto* pUnit = GetProject()->GetUnit();
 		Para para = {

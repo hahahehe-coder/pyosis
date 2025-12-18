@@ -321,9 +321,18 @@ public:
 	/// </summary>
 	/// <param name="nBd">边界编号</param>
 	/// <param name="eBoundaryType">边界类型：一般边界 主从约束 释放梁端约束 节点弹性支撑</param>
-	/// <param name="kwargs"></param>
+	/// <param name="kwargs">边界参数</param>
 	/// <returns></returns>
 	std::pair<bool, std::string> OSIS_Boundary(const int nBd, const std::string eBoundaryType, const py::dict kwargs);
+
+	/// <summary>
+	/// 荷载
+	/// </summary>
+	/// <param name="eLoadType">荷载类型</param>
+	/// <param name="nLC">荷载工况编号</param>
+	/// <param name="kwargs">荷载参数</param>
+	/// <returns></returns>
+	std::pair<bool, std::string> OSIS_Load(const std::string eLoadType, const std::string strLCName, const py::dict kwargs);
 
 	// ========================================================================
 	// ==============================复杂函数接口===============================

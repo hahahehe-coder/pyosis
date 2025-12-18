@@ -11,6 +11,8 @@
     <ClCompile Include="HollowSlab.cpp" />
     <ClCompile Include="control.cpp" />
     <ClCompile Include="Boundary.cpp" />
+    <ClCompile Include="Stage.cpp" />
+    <ClCompile Include="Load.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PyInterface.h" />

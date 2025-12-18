@@ -24,10 +24,12 @@
     <ClCompile Include="Element.cpp" />
     <ClCompile Include="General.cpp" />
     <ClCompile Include="HollowSlab.cpp" />
+    <ClCompile Include="Load.cpp" />
     <ClCompile Include="Material.cpp" />
     <ClCompile Include="Node.cpp" />
     <ClCompile Include="PyInterface.cpp" />
     <ClCompile Include="Section.cpp" />
+    <ClCompile Include="Stage.cpp" />
     <ClCompile Include="stdafx.cpp" />
   </ItemGroup>
   <ItemGroup>
