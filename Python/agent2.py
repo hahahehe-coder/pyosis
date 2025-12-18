@@ -1,9 +1,23 @@
+from pyosis.ai.agents.DecisionAgent import DecisionAgent
+
+# material_agent = MaterialAgent.create_agent()
+# material_agent.run_example()
+
+# section_agent = SectionAgent.create_agent()
+# section_agent.run_example()
+
+# model_agent = ModelAgent('qwen-flash')
+# model_agent.create_agent()
+# model_agent.run_example()
+
+# agent = DecisionAgent('qwen-max')
+# agent.create_agent()
+# agent.run_example()
+
 import queue
 import threading
 from ui import ChatInterface
 import tkinter as tk
-from pyosis.ai.agents.DecisionAgent import DecisionAgent
-
 
 # _api_key=""      # 全局变量
 # _base_url=""
@@ -100,30 +114,8 @@ class LangChainAgent:
             # 继续检查新消息
             self.ui.root.after(100, self.process_messages)
 
-# 对对话框进行控制的函数
-def modify_window_size(width, height):
-    """修改窗口大小的便捷函数"""
-    ui_instance = get_ui_instance()
-    if ui_instance:
-        return ui_instance.resize_window(width, height)
-    return False
-
-def set_window_fullscreen(fullscreen=True):
-    """设置全屏的便捷函数"""
-    ui_instance = get_ui_instance()
-    if ui_instance:
-        return ui_instance.set_fullscreen(fullscreen)
-    return False
-
-def change_window_title(title):
-    """修改窗口标题的便捷函数"""
-    ui_instance = get_ui_instance()
-    if ui_instance:
-        return ui_instance.set_window_title(title)
-    return False
-
-def main(api_key="sk-49a9cacef0274e4a8441914642ed1a73", base_url="https://dashscope.aliyuncs.com/compatible-mode/v1"):
-    # 创建UI
+def create_agent_ui(api_key="sk-49a9cacef0274e4a8441914642ed1a73", base_url="https://dashscope.aliyuncs.com/compatible-mode/v1"):
+    """创建智能体UI的便捷函数"""
     root = tk.Tk()
     ui = ChatInterface(root)
     
@@ -136,8 +128,40 @@ def main(api_key="sk-49a9cacef0274e4a8441914642ed1a73", base_url="https://dashsc
     # 启动UI主循环
     root.mainloop()
 
+def set_window_size(width, height):
+    """线程安全地设置窗口大小"""
+    ui_instance = get_ui_instance()
+    if ui_instance:
+        ui_instance.resize_window(width, height)
+
+def set_window_position(x, y):
+    """线程安全地设置窗口位置"""
+    ui_instance = get_ui_instance()
+    if ui_instance:
+        ui_instance.set_window_position(x, y)
+
+def close_window():
+    """线程安全地关闭窗口"""
+    ui_instance = get_ui_instance()
+    if ui_instance:
+        ui_instance.close_window()
+
+# def main(api_key="sk-49a9cacef0274e4a8441914642ed1a73", base_url="https://dashscope.aliyuncs.com/compatible-mode/v1"):
+#     # 创建UI
+#     root = tk.Tk()
+#     ui = ChatInterface(root)
+    
+#     # 创建智能体并连接到UI
+#     agent = LangChainAgent(ui, api_key, base_url)
+    
+#     # 设置UI的回调函数
+#     ui.on_send_message = agent.process_user_message
+    
+#     # 启动UI主循环
+#     root.mainloop()
+
 if __name__ == "__main__":
     api_key="sk-49a9cacef0274e4a8441914642ed1a73"
     base_url="https://dashscope.aliyuncs.com/compatible-mode/v1"
 
-    main(api_key, base_url)
+    create_agent_ui(api_key, base_url)

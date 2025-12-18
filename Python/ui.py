@@ -8,7 +8,7 @@ class ChatInterface:
     def __init__(self, root, on_send_message=None):
         self.root = root
         self.root.title("AI 设计助手")
-        self.root.geometry("700x600")
+        self.root.geometry("700x600+200+200")
         self.root.configure(bg='#f0f0f0')
         
         # 回调函数，用于外部获取用户消息
@@ -21,7 +21,10 @@ class ChatInterface:
         self.window_command_queue = queue.Queue()
         
         # 创建主框架
-        self.main_frame = ttk.Frame(root, padding="10")
+        #self.root.overrideredirect(True)
+
+        # 创建一个框架作为窗口的内容区域，并填充整个窗口
+        self.main_frame = ttk.Frame(self.root, padding="10")
         self.main_frame.pack(fill=tk.BOTH, expand=True)
         
         # 移除了标题标签
@@ -273,54 +276,28 @@ class ChatInterface:
                 # 从队列获取命令
                 command, *args = self.window_command_queue.get_nowait()
                 
-                if command == "resize":
+                if command == "resize_window":
                     # 修改窗口大小
                     width, height = args
                     self.root.geometry(f"{width}x{height}")
                     print(f"窗口大小已修改为: {width}x{height}")
-                
-                elif command == "fullscreen":
-                    # 切换全屏状态
-                    fullscreen_state = args[0]
-                    self.root.attributes('-fullscreen', fullscreen_state)
-                    print(f"全屏状态已修改为: {fullscreen_state}")
-                
-                elif command == "title":
-                    # 修改窗口标题
-                    new_title = args[0]
-                    self.root.title(new_title)
-                    print(f"窗口标题已修改为: {new_title}")
-                
-                elif command == "position":
+
+                elif command == "set_window_position":
                     # 修改窗口位置
                     x, y = args
                     self.root.geometry(f"+{x}+{y}")
                     print(f"窗口位置已修改为: x={x}, y={y}")
-                
-                elif command == "maximize":
-                    # 最大化窗口
-                    self.root.state('zoomed')
-                    print("窗口已最大化")
-                
-                elif command == "normal":
-                    # 恢复窗口到正常状态
-                    self.root.state('normal')
-                    print("窗口已恢复正常状态")
-                
-                elif command == "minimize":
-                    # 最小化窗口
-                    self.root.iconify()
-                    print("窗口已最小化")
-                
-                elif command == "deiconify":
-                    # 从最小化恢复
-                    self.root.deiconify()
-                    print("窗口已从最小化恢复")
-                
-                elif command == "quit":
+            
+                elif command == "close_window":
                     # 关闭窗口
                     self.root.quit()
                     print("窗口关闭命令已接收")
+
+                # elif command == "id":
+                #     # 返回窗口ID
+                #     window_id = str(self.root.winfo_id())
+                #     print(f"窗口ID: {window_id}")
+                #     return window_id
                 
         except queue.Empty:
             # 队列为空，继续等待
@@ -344,63 +321,21 @@ class ChatInterface:
         线程安全的方法：修改窗口大小
         从其他线程调用此方法
         """
-        return self.queue_window_command("resize", width, height)
-    
-    def set_fullscreen(self, fullscreen=True):
-        """
-        线程安全的方法：设置全屏
-        从其他线程调用此方法
-        """
-        return self.queue_window_command("fullscreen", fullscreen)
-    
-    def set_window_title(self, title):
-        """
-        线程安全的方法：设置窗口标题
-        从其他线程调用此方法
-        """
-        return self.queue_window_command("title", title)
-    
+        return self.queue_window_command("resize_window", width, height)
+
     def set_window_position(self, x, y):
         """
         线程安全的方法：设置窗口位置
         从其他线程调用此方法
         """
-        return self.queue_window_command("position", x, y)
-    
-    def maximize_window(self):
-        """
-        线程安全的方法：最大化窗口
-        从其他线程调用此方法
-        """
-        return self.queue_window_command("maximize")
-    
-    def restore_window(self):
-        """
-        线程安全的方法：恢复窗口正常状态
-        从其他线程调用此方法
-        """
-        return self.queue_window_command("normal")
-    
-    def minimize_window(self):
-        """
-        线程安全的方法：最小化窗口
-        从其他线程调用此方法
-        """
-        return self.queue_window_command("minimize")
-    
-    def show_window(self):
-        """
-        线程安全的方法：显示窗口（从最小化恢复）
-        从其他线程调用此方法
-        """
-        return self.queue_window_command("deiconify")
-    
+        return self.queue_window_command("set_window_position", x, y)
+ 
     def close_window(self):
         """
         线程安全的方法：关闭窗口
         从其他线程调用此方法
         """
-        return self.queue_window_command("quit")
+        return self.queue_window_command("close_window")
 
 # 示例使用
 if __name__ == "__main__":
