@@ -171,7 +171,7 @@ def section(nSec: int = 1, strName: str = "C50", strSectionType: str = "RECT",
                              mesh_params.get("bMeshMethod", 1), 
                              mesh_params.get("dMeshSize", 0.1))
 
-def create_beam_agent():
+def create_beam_agent(api_key, base_url) -> BaseAgent:
     tools = [
         material,
         section,
@@ -257,12 +257,9 @@ def create_beam_agent():
 #     """
 
 
-    beam_agent = BaseAgent()
+    beam_agent = BaseAgent(api_key=api_key, base_url=base_url)
     beam_agent.create_agent(
         tools=tools,
         system_prompt=system_prompt
     )
     return beam_agent
-
-if __name__ == "__main__":
-    beam_agent = create_beam_agent()

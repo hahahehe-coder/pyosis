@@ -4,7 +4,7 @@ from .tools import creep_shrink, material, material_del
 
 class MaterialAgent(BaseAgent):
     """材料设计智能体"""
-    def __init__(self, model="qwen-flash", api_key="sk-49a9cacef0274e4a8441914642ed1a73", base_url="https://dashscope.aliyuncs.com/compatible-mode/v1"):
+    def __init__(self, model="qwen-flash", api_key="", base_url=""):
         super().__init__(model, api_key, base_url)
 
     def create_agent(self):

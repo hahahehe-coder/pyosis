@@ -7,8 +7,10 @@ from typing import Literal
 class BaseAgent:
     """Agent base class"""
     
-    def __init__(self, model="qwen-flash", api_key="sk-49a9cacef0274e4a8441914642ed1a73", base_url="https://dashscope.aliyuncs.com/compatible-mode/v1"):
+    def __init__(self, model="qwen-flash", api_key="", base_url=""):
         """Initialize the agent"""
+        if api_key == "" or base_url == "":
+            raise ValueError("API key and Base URL must be provided for Agent.")
         self.llm = ChatOpenAI(
             model=model,
             api_key=pydantic.SecretStr(api_key),

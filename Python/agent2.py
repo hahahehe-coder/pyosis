@@ -1,32 +1,38 @@
-from pyosis.ai.agents.DecisionAgent import DecisionAgent
-
-# material_agent = MaterialAgent.create_agent()
-# material_agent.run_example()
-
-# section_agent = SectionAgent.create_agent()
-# section_agent.run_example()
-
-# model_agent = ModelAgent('qwen-flash')
-# model_agent.create_agent()
-# model_agent.run_example()
-
-# agent = DecisionAgent('qwen-max')
-# agent.create_agent()
-# agent.run_example()
-
 import queue
 import threading
 from ui import ChatInterface
 import tkinter as tk
+from pyosis.ai.agents.DecisionAgent import DecisionAgent
+
+
+# _api_key=""      # 全局变量
+# _base_url=""
+# 全局变量，用于存储UI实例的引用
+_ui_instance = None
+_ui_lock = threading.Lock()
+
+def get_ui_instance():
+    """获取UI实例的线程安全方法"""
+    with _ui_lock:
+        return _ui_instance
+
+def set_ui_instance(ui):
+    """设置UI实例的线程安全方法"""
+    global _ui_instance
+    with _ui_lock:
+        _ui_instance = ui
 
 class LangChainAgent:
-    def __init__(self, ui_instance):
+    def __init__(self, ui_instance, api_key, base_url):
         self.ui: ChatInterface = ui_instance
         self.message_queue = queue.Queue()
         
         # 初始化LangChain智能体
-        self.agent = DecisionAgent()      # 创建LangChain智能体
+        self.agent = DecisionAgent("qwen-max", api_key, base_url)
         self.agent.create_agent()
+        
+        # 设置UI实例的全局引用
+        set_ui_instance(ui_instance)
 
         # 启动消息处理循环
         self.after_id = self.ui.root.after(100, self.process_messages)
@@ -65,6 +71,7 @@ class LangChainAgent:
             
             # 流式输出结束
             self.message_queue.put(("end", "", stream_id))
+            self.agent.replot()
             # 普通输出
             # self.message_queue.put(("message", self.agent.ask_agent(user_message), None))
             
@@ -93,13 +100,35 @@ class LangChainAgent:
             # 继续检查新消息
             self.ui.root.after(100, self.process_messages)
 
-def main():
+# 对对话框进行控制的函数
+def modify_window_size(width, height):
+    """修改窗口大小的便捷函数"""
+    ui_instance = get_ui_instance()
+    if ui_instance:
+        return ui_instance.resize_window(width, height)
+    return False
+
+def set_window_fullscreen(fullscreen=True):
+    """设置全屏的便捷函数"""
+    ui_instance = get_ui_instance()
+    if ui_instance:
+        return ui_instance.set_fullscreen(fullscreen)
+    return False
+
+def change_window_title(title):
+    """修改窗口标题的便捷函数"""
+    ui_instance = get_ui_instance()
+    if ui_instance:
+        return ui_instance.set_window_title(title)
+    return False
+
+def main(api_key="sk-49a9cacef0274e4a8441914642ed1a73", base_url="https://dashscope.aliyuncs.com/compatible-mode/v1"):
     # 创建UI
     root = tk.Tk()
     ui = ChatInterface(root)
     
     # 创建智能体并连接到UI
-    agent = LangChainAgent(ui)
+    agent = LangChainAgent(ui, api_key, base_url)
     
     # 设置UI的回调函数
     ui.on_send_message = agent.process_user_message
@@ -108,4 +137,7 @@ def main():
     root.mainloop()
 
 if __name__ == "__main__":
-    main()
+    api_key="sk-49a9cacef0274e4a8441914642ed1a73"
+    base_url="https://dashscope.aliyuncs.com/compatible-mode/v1"
+
+    main(api_key, base_url)

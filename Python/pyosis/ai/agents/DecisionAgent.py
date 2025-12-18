@@ -3,6 +3,7 @@ from typing import Tuple
 from langchain_core.messages import AIMessage, HumanMessage
 from .BaseAgent import BaseAgent
 from langchain.tools import tool
+from functools import partial
 from .MaterialAgent import MaterialAgent
 from .SectionAgent import SectionAgent
 from .ModelAgent import ModelAgent
@@ -28,14 +29,9 @@ log_to_file("debug.txt", f"\n=====Start at {time.strftime('%Y-%m-%d %H:%M:%S', t
 log_to_file("log.txt", f"\n=====Start at {time.strftime('%Y-%m-%d %H:%M:%S', time.localtime())}=====")
 log_to_file("log_cmd.txt", f"\n//=====Start at {time.strftime('%Y-%m-%d %H:%M:%S', time.localtime())}=====")
 
-
-material_agent = MaterialAgent('qwen-plus')
-material_agent.create_agent()
-section_agent = SectionAgent('qwen-plus')
-section_agent.create_agent()
-model_agent = ModelAgent('qwen-flash')
-model_agent.create_agent()
-
+material_agent = None
+section_agent = None
+model_agent = None
 
 def call_agent(agent, request: str):
     ai_response = agent.invoke(request, "4")
@@ -70,6 +66,7 @@ def call_material_agent(request: str):
     Returns:
         str: 材料智能体的回答
     """
+    global material_agent
     return call_agent(material_agent, request)
     # for chunk in material_agent.ask_agent_stream(request, "1"):
     #     # 提取消息内容
@@ -78,7 +75,6 @@ def call_material_agent(request: str):
     #         print(ai_response)
     #         yield data['messages'][-1].content                                          # 一般回复
     
-
 @tool
 def call_section_agent(request: str):
     '''
@@ -97,7 +93,6 @@ def call_section_agent(request: str):
     #         ai_response = f"\nstep: {step}\ncontent: {data['messages'][-1].content_blocks}"     # 调试信息
     #         print(ai_response)
     #         yield data['messages'][-1].content                                          # 一般回复
-
 
 @tool
 def call_model_agent(request: str):
@@ -119,7 +114,6 @@ def call_model_agent(request: str):
     #         print(ai_response)
     #         yield data['messages'][-1].content                                          # 一般回复
 
-@tool
 def call_display_agent(request: str):
     '''
     调用显示智能体
@@ -145,10 +139,25 @@ def call_display_agent(request: str):
 
 class DecisionAgent(BaseAgent):
     """决策智能体"""
-    def __init__(self, model="qwen-max", api_key="sk-49a9cacef0274e4a8441914642ed1a73", base_url="https://dashscope.aliyuncs.com/compatible-mode/v1"):
+    def __init__(self, model="qwen-max", api_key="", base_url=""):
         super().__init__(model, api_key, base_url)
+        global material_agent
+        global section_agent
+        global model_agent
+        material_agent = MaterialAgent('qwen-plus', api_key, base_url)
+        material_agent.create_agent()
+        section_agent = SectionAgent('qwen-plus', api_key, base_url)
+        section_agent.create_agent()
+        model_agent = ModelAgent('qwen-flash', api_key, base_url)
+        model_agent.create_agent()
+
     def create_agent(self):
-        tools = [call_material_agent, call_section_agent, call_model_agent]
+        tools = [
+            call_material_agent, # 调用材料智能体
+            call_section_agent,  # 调用截面智能体
+            call_model_agent,    # 调用模型智能体
+        ]
+    
 #         system_prompt = """\
 # 你是一个桥梁设计总监，负责协调材料、截面、模型、显示等专业智能体的工作。
         
