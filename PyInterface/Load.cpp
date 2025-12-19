@@ -7,8 +7,8 @@
 /// </summary>
 /// <param name="strName">别名</param>
 /// <param name="eType">类型 USER\D\DC\DW\DD\CS</param>
-/// <param name="dScalar">系数，可缺省</param>
-/// <param name="strPrompt">说明，可缺省</param>
+/// <param name="dScalar">系数</param>
+/// <param name="strPrompt">说明</param>
 /// <returns></returns>
 std::pair<bool, std::string> PyInterface::OSIS_LoadCase(const std::string strName, const std::string eLoadCaseType, const double dScalar, const std::string strPrompt)
 {
@@ -178,6 +178,9 @@ std::pair<bool, std::string> PyInterface::OSIS_Load(const std::string eLoadType,
 
 		break;
 	}
-
+	GetProject()->GetPlotControl()->InputChangedOn();
+	GetProject()->GetPlotControl()->StructTreeChangedOn();	//用于通知界面刷新菜单
+	GetProject()->GetPlotControl()->LoadGroupChangedOn();		//用于通知界面刷新大数据界面
+	GetProject()->GetPlotControl()->LoadGroupTreeChangedOn();	//用于通知界面刷新菜单
 	return { true, errorCode };
 }

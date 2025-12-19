@@ -261,13 +261,6 @@ std::pair<bool, std::string> PyInterface::OSIS_Element(int nEle /*= -1*/, const 
 		int nSec1 = 0; int nSec2 = 0;
 		double dStrain = 0.0;
 
-		nNode1 = kwargs["nNode1"].cast<int>();
-		nNode2 = kwargs["nNode2"].cast<int>();
-		nMat = kwargs["nMat"].cast<int>();
-		nSec1 = kwargs["nSec1"].cast<int>();
-		nSec2 = kwargs["nSec2"].cast<int>();
-		dStrain = kwargs["dStrain"].cast<double>();
-
 		try {
 			nNode1 = safe_cast<int>(kwargs, "nNode1");
 			nNode2 = safe_cast<int>(kwargs, "nNode2");

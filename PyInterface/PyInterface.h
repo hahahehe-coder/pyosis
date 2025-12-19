@@ -326,6 +326,25 @@ public:
 	std::pair<bool, std::string> OSIS_Boundary(const int nBd, const std::string eBoundaryType, const py::dict kwargs);
 
 	/// <summary>
+	/// 分配边界给节点(一般支撑，节点弹性支撑)
+	/// </summary>
+	/// <param name="nBd">边界编号</param>
+	/// <param name="eOP">操作: a = 添加，s = 替换，r = 移除，aa = 添加全部，ra = 移除全部</param>
+	/// <param name="nodeNOs">待操作的节点编号</param>
+	/// <returns></returns>
+	std::pair<bool, std::string> OSIS_AsgnBd(const int nBd, const std::string eOP, const py::list nodeNOs);
+
+	/// <summary>
+	/// 定义或修改荷载工况
+	/// </summary>
+	/// <param name="strName">别名</param>
+	/// <param name="eType">类型 USER\D\DC\DW\DD\CS</param>
+	/// <param name="dScalar">系数，默认为1</param>
+	/// <param name="strPrompt">说明，默认为""</param>
+	/// <returns></returns>
+	std::pair<bool, std::string> OSIS_LoadCase(const std::string strName, const std::string eLoadCaseType, const double dScalar, const std::string strPrompt);
+
+	/// <summary>
 	/// 荷载
 	/// </summary>
 	/// <param name="eLoadType">荷载类型</param>
@@ -334,15 +353,6 @@ public:
 	/// <returns></returns>
 	std::pair<bool, std::string> OSIS_Load(const std::string eLoadType, const std::string strLCName, const py::dict kwargs);
 
-	/// <summary>
-	/// 定义或修改荷载工况
-	/// </summary>
-	/// <param name="strName">别名</param>
-	/// <param name="eType">类型 USER\D\DC\DW\DD\CS</param>
-	/// <param name="dScalar">系数，可缺省</param>
-	/// <param name="strPrompt">说明，可缺省</param>
-	/// <returns></returns>
-	std::pair<bool, std::string> OSIS_LoadCase(const std::string strName, const std::string eLoadCaseType, const double dScalar, const std::string strPrompt);
 
 	// ========================================================================
 	// ==============================复杂函数接口===============================

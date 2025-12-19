@@ -84,11 +84,11 @@ std::pair<bool, std::string> PyInterface::OSIS_Boundary(const int nBd, const std
 			return { false, e.what() };
 		}
 
-		if (!GET_PREP_PROP()->getInfo<PREP::CoorSysInfo>(nCoor))
-		{
-			errorCode = "一般支承" + std::to_string(nBd) + "：空间坐标系" + std::to_string(nCoor) + "不存在！";
-			return { false, errorCode };
-		}
+		//if (!GET_PREP_PROP()->getInfo<PREP::CoorSysInfo>(nCoor))
+		//{
+		//	errorCode = "一般支承" + std::to_string(nBd) + "：空间坐标系" + std::to_string(nCoor) + "不存在！";
+		//	return { false, errorCode };
+		//}
 		using Info = PREP::GeneralBoundaryInfo;
 		if (bState)
 		{
@@ -147,6 +147,117 @@ std::pair<bool, std::string> PyInterface::OSIS_Boundary(const int nBd, const std
 	}
 		break;
 	}
+	GetProject()->GetPlotControl()->StructTreeChangedOn();//用于通知界面刷新菜单
+	GetProject()->GetPlotControl()->BoundaryChangedOn();	//用于通知界面刷新大数据界面
 	return { true, errorCode };
 }
 
+/// <summary>
+/// 分配边界给节点(一般支撑，节点弹性支撑)
+/// </summary>
+/// <param name="nBd">边界编号</param>
+/// <param name="eOP">操作: a = 添加，s = 替换，r = 移除，aa = 添加全部，ra = 移除全部</param>
+/// <param name="nodeNOs">待操作的节点编号</param>
+/// <returns></returns>
+std::pair<bool, std::string> PyInterface::OSIS_AsgnBd(const int nBd, const std::string eOP, const py::list nodeNOs)
+{
+	std::string errorCode;
+	auto* pBdInfo = GET_PREP_BD()->getInfo(nBd);
+	if (!pBdInfo)
+	{
+		errorCode = "未能获取编号为：" + std::to_string(nBd) + "的边界信息！";
+		return { false, errorCode };
+	}
+
+	if (eOP == OSIS_APPEND) { //添加
+		std::set<int> setNO;
+		for (auto& item : nodeNOs)
+		{
+			int nNO = item.cast<int>();
+			setNO.insert(nNO);
+		}
+		pBdInfo->appendEntity(setNO);
+
+
+		//压入影子命令
+		//yilCString strCommand;
+		//pBdInfo->formatAPDL(strCommand, BD_APDL_ASGNBD_ONLY, OSIS_REMOVE, setNO);
+		//PUSH_SHADOW_CMD(THIS_IS_APP, strCommand);
+	}
+	else if (eOP == OSIS_SUBSTITUTE) { //替换
+
+		std::vector<int> vecOldNO;
+		std::vector<int> vecNewNO;
+		for (auto& item : nodeNOs)	// 此情况下，nodeNOs每个元素为 <旧编号,新编号> 对
+		{
+			auto it = item.cast<py::list>();
+			int nOld = it[0].cast<int>();
+			int nNew = it[1].cast<int>();
+			vecOldNO.push_back(nOld);
+			vecNewNO.push_back(nNew);
+		}
+		pBdInfo->substituteEntity(vecOldNO, vecNewNO);
+
+		//压入影子命令
+		//yilCString strCommand;
+		//pBdInfo->formatAPDL(strCommand, vecNewNO, vecOldNO);
+		//PUSH_SHADOW_CMD(THIS_IS_MOD, strCommand);
+	}
+	else if (eOP == OSIS_REMOVE) { //移除
+		//PROCESS_ASSGIN(BdRemove);
+
+		std::set<int> setNO;
+		for (auto& item : nodeNOs)
+		{
+			int nNO = item.cast<int>();
+			setNO.insert(nNO);
+		}
+		pBdInfo->removeEntity(setNO);
+
+		//压入影子命令
+		//yilCString strCommand;
+		//pBdInfo->formatAPDL(strCommand, BD_APDL_ASGNBD_ONLY, OSIS_APPEND, setNO);
+		//PUSH_SHADOW_CMD(THIS_IS_RMV, strCommand);
+	}
+	else if (eOP == OSIS_APPEND_ALL) { //添加全部
+		//PROCESS_ASSGIN(BdAppendAll);
+
+		if (pBdInfo->getType() != PrepEnum::Boundary::Release) {
+			std::set<int> vecNodeNO;
+			GET_PREP_NODE()->getAllNO(vecNodeNO);
+			pBdInfo->setEntityVec(vecNodeNO);
+		}
+		else {
+			std::set<int> vecEleNO;
+			GET_PREP_ELEMENT()->getAllNO(vecEleNO);
+			pBdInfo->setEntityVec(vecEleNO);
+		}
+
+		//压入影子命令
+		//yilCString strCommand;
+		//strCommand.Format(_T("AsgnBd,%d,ra"), _index);
+		//PUSH_SHADOW_CMD(THIS_IS_APP, strCommand);
+	}
+	else if (eOP == OSIS_REMOVE_ALL) { //移除全部
+		//PROCESS_ASSGIN(BdRemoveAll);
+		std::set<int> setNO = pBdInfo->getEntityVec();
+
+		pBdInfo->removeEntity(setNO);
+
+		//if (setNO.empty()) return true;
+
+		//压入影子命令
+		//yilCString strCommand;
+		//pBdInfo->formatAPDL(strCommand, BD_APDL_ASGNBD_ONLY, OSIS_APPEND, setNO);
+		//PUSH_SHADOW_CMD(THIS_IS_RMV, strCommand);
+	}
+	else {
+		errorCode = "参数 操作类型 错误！";
+		return { false, errorCode };
+	}
+
+	GetProject()->GetPlotControl()->StructTreeChangedOn();//用于通知界面刷新菜单
+	GetProject()->GetPlotControl()->BoundaryChangedOn();	//用于通知界面刷新大数据界面
+
+	return { true, errorCode };
+}

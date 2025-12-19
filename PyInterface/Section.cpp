@@ -310,13 +310,13 @@ std::pair<bool, std::string> PyInterface::OSIS_Section(const int nSec, const std
 		double D{ 0.0 }, Tw{ 0.0 };
 		std::string strType;
 		try {
-			D = safe_cast<bool>(kwargs, "D");
+			D = safe_cast<double>(kwargs, "D");
 			Tw = safe_cast<double>(kwargs, "Tw");
-			strType = safe_cast<std::string>(kwargs, "Type");
+			strType = safe_cast<std::string>(kwargs, "CircleType");
 			if (!GetCommand()->StrToFillingType(type, strType, 4))
 			{
 
-				errorCode = "参数 Type 错误！";
+				errorCode = "参数 CircleType 错误！";
 				return { false, errorCode };
 			}
 		}

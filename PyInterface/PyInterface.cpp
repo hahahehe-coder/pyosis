@@ -114,7 +114,18 @@ PYBIND11_MODULE(PyInterface, m)
         .def("OSIS_ElementDel", &PyInterface::OSIS_ElementDel,
             py::arg("nEle"))
         .def("OSIS_ElementMod", &PyInterface::OSIS_ElementMod,
-            py::arg("nOld"), py::arg("nNew"));
+            py::arg("nOld"), py::arg("nNew"))
+        
+        .def("OSIS_Boundary", &PyInterface::OSIS_Boundary,
+            py::arg("nBd"), py::arg("eBoundaryType"), py::arg("kwargs"))
+        .def("OSIS_AsgnBd", &PyInterface::OSIS_AsgnBd,
+            py::arg("nBd"), py::arg("eOP"), py::arg("nodeNOs"))
+
+        .def("OSIS_LoadCase", &PyInterface::OSIS_LoadCase,
+            py::arg("strName"), py::arg("eLoadCaseType"), py::arg("dScalar"), py::arg("strPrompt"))
+        .def("OSIS_Load", &PyInterface::OSIS_Load,
+            py::arg("eLoadType"), py::arg("strLCName"), py::arg("kwargs"))
+        ;
 
 	//m.def("add", &, "A function that adds two numbers");
 }
