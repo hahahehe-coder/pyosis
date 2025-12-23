@@ -6,3 +6,17 @@
 /PyInterface/Release
 
 *.pyc
+/Python/__pycache__
+/Python/pyosis/__pycache__
+/Python/pyosis/ai/__pycache__
+/Python/pyosis/analysis/__pycache__
+/Python/pyosis/boundary/__pycache__
+/Python/pyosis/control/__pycache__
+/Python/pyosis/core/__pycache__
+/Python/pyosis/element/__pycache__
+/Python/pyosis/general/__pycache__
+/Python/pyosis/load/__pycache__
+/Python/pyosis/material/__pycache__
+/Python/pyosis/node/__pycache__
+/Python/pyosis/post/__pycache__
+/Python/pyosis/section/__pycache__
