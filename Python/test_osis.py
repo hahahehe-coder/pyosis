@@ -45,10 +45,10 @@ osis_node(4, 20, 0, 0)
 # osis_element(3, "Truss", {"nNode1": 2, "nNode2": 4, "nMat": 1, "nSec1": 1, "nSec2": 1, "dStrain": 0.00})
 # osis_element(4, "Truss", {"nNode1": 3, "nNode2": 4, "nMat": 1, "nSec1": 1, "nSec2": 1, "dStrain": 0.00})
 
-osis_element(1, "BEAM3D", {"nNode1": 1, "nNode2": 3, "nMat": 1, "nSec1": 1, "nSec2": 1, "nYTrans": 1, "nZTrans": 1, "dStrain": 0.00, "bFlag": 0, "dTheta": 0.00, "bWarping": 0})
-osis_element(2, "BEAM3D", {"nNode1": 2, "nNode2": 3, "nMat": 1, "nSec1": 2, "nSec2": 2, "nYTrans": 1, "nZTrans": 1, "dStrain": 0.00, "bFlag": 0, "dTheta": 0.00, "bWarping": 0})
-osis_element(3, "BEAM3D", {"nNode1": 2, "nNode2": 4, "nMat": 1, "nSec1": 3, "nSec2": 3, "nYTrans": 1, "nZTrans": 1, "dStrain": 0.00, "bFlag": 0, "dTheta": 0.00, "bWarping": 0})
-osis_element(4, "BEAM3D", {"nNode1": 3, "nNode2": 4, "nMat": 1, "nSec1": 4, "nSec2": 4, "nYTrans": 1, "nZTrans": 1, "dStrain": 0.00, "bFlag": 0, "dTheta": 0.00, "bWarping": 0})
+osis_element(1, "BEAM3D", {"nNode1": 1, "nNode2": 3, "nMat": 1, "nSec1": 4, "nSec2": 4, "nYTrans": 1, "nZTrans": 1, "dStrain": 0.00, "bFlag": 0, "dTheta": 0.00, "bWarping": 0})
+osis_element(2, "BEAM3D", {"nNode1": 2, "nNode2": 3, "nMat": 1, "nSec1": 5, "nSec2": 5, "nYTrans": 1, "nZTrans": 1, "dStrain": 0.00, "bFlag": 0, "dTheta": 0.00, "bWarping": 0})
+osis_element(3, "BEAM3D", {"nNode1": 2, "nNode2": 4, "nMat": 1, "nSec1": 5, "nSec2": 5, "nYTrans": 1, "nZTrans": 1, "dStrain": 0.00, "bFlag": 0, "dTheta": 0.00, "bWarping": 0})
+osis_element(4, "BEAM3D", {"nNode1": 3, "nNode2": 4, "nMat": 1, "nSec1": 5, "nSec2": 5, "nYTrans": 1, "nZTrans": 1, "dStrain": 0.00, "bFlag": 0, "dTheta": 0.00, "bWarping": 0})
             
 
 osis_boundary(1, "GENERAL", {"nCoor": -1, "bDX": 1, "bDY": 1, "bDZ": 1, "bRX": 1, "bRY": 1, "bRZ": 1, "bRW": 1})

@@ -32,9 +32,13 @@ def dict_to_json_txt(data, filename):
 plt.rcParams["font.family"] = ["SimHei"]
 plt.rcParams["axes.unicode_minus"] = False
 
-fp = open('result.txt', 'a', encoding='utf-8')
-fp.write("=====start=====\n")
-fp.close()
+
+def log_to_file(message='', filename='result.txt'):
+    fp = open(filename, 'a', encoding='utf-8')
+    fp.write(message)
+    fp.close()
+
+log_to_file("\n======start======\n")
 # -------------------------- 1. 基本参数定义 --------------------------
 # 材料参数
 E = 200e3  # 弹性模量(MPa)
@@ -153,83 +157,8 @@ def calculate_internal_forces(nodes, edges, loads, load_node_ids, section_ids):
     dict_to_json_txt(ef, "liu_output.json")   # 保存结果用于调试
     ef_fx = ef["Fx"]      # 轴向内力
     N = np.ndarray(ef_fx) / 1000  # 换算成kN
+    log_to_file(f"N = {N}")
     return N
-
-
-# 原来的版本
-# def calculate_internal_forces(nodes, edges, loads, load_node_ids):
-#     """计算桁架内力（静定桁架位移法）"""
-#     n_nodes = len(nodes)
-#     n_edges = len(edges)
-#     n_dof = 2 * n_nodes  # 总自由度（每个节点x,y方向）
-    
-#     # 1. 建立刚度矩阵K和荷载向量F
-#     K = np.zeros((n_dof, n_dof))
-#     F = np.zeros(n_dof)
-    
-#     # 施加荷载
-#     for idx, node_id in enumerate(load_node_ids):
-#         F[2*node_id] = loads[idx, 0]
-#         F[2*node_id + 1] = loads[idx, 1]
-    
-#     # 2. 动态计算固定约束自由度（根据fixed_nodes在nodes中的索引）
-#     fixed_dofs = []
-#     for fixed_node in fixed_nodes:
-#         # 查找固定节点的索引（容忍微小浮点数误差）
-#         node_idx = np.where(np.isclose(nodes, fixed_node).all(axis=1))[0][0]
-#         fixed_dofs.extend([2*node_idx, 2*node_idx+1])
-#     free_dofs = [dof for dof in range(n_dof) if dof not in fixed_dofs]
-    
-#     # 3. 组装刚度矩阵
-#     for e, (i, j) in enumerate(edges):
-#         xi, yi = nodes[i]
-#         xj, yj = nodes[j]
-#         L = np.sqrt((xj - xi)**2 + (yj - yi)**2) * 1000  # 杆件长度(mm)
-#         c = (xj - xi) / (L / 1000)  # 方向余弦（x向）
-#         s = (yj - yi) / (L / 1000)  # 方向余弦（y向）
-        
-#         # 局部刚度矩阵（转换为kN/mm单位）
-#         A = sections[0]['A']  # 临时用第一个截面计算，后续优化中更新
-#         k_local = (E * A / L) * np.array([
-#             [c**2, c*s, -c**2, -c*s],
-#             [c*s, s**2, -c*s, -s**2],
-#             [-c**2, -c*s, c**2, c*s],
-#             [-c*s, -s**2, c*s, s**2]
-#         ])
-        
-#         # 全局刚度矩阵组装
-#         dofs = [2*i, 2*i+1, 2*j, 2*j+1]
-#         for a in range(4):
-#             for b in range(4):
-#                 K[dofs[a], dofs[b]] += k_local[a, b]
-    
-#     # 4. 求解位移和内力
-#     K_free = K[np.ix_(free_dofs, free_dofs)]
-#     F_free = F[free_dofs]
-#     u_free = solve(K_free, F_free)  # 自由节点位移
-    
-#     # 初始化全部位移向量
-#     u = np.zeros(n_dof)
-#     u[free_dofs] = u_free
-    
-#     # 计算各杆件内力N（拉力为正，压力为负）
-#     N = np.zeros(n_edges)
-#     for e, (i, j) in enumerate(edges):
-#         xi, yi = nodes[i]
-#         xj, yj = nodes[j]
-#         L = np.sqrt((xj - xi)**2 + (yj - yi)**2) * 1000  # mm
-#         c = (xj - xi) / (L / 1000)
-#         s = (yj - yi) / (L / 1000)
-        
-#         # 节点位移（直接从全部位移向量获取，避免重复查找）
-#         ui, vi = u[2*i], u[2*i+1]
-#         uj, vj = u[2*j], u[2*j+1]
-        
-#         # 轴向变形
-#         delta = (uj - ui)*c + (vj - vi)*s
-#         A = sections[0]['A']
-#         N[e] = (E * A * delta) / L  # kN
-#     return N
 
 def calculate_volume(nodes, edges, section_ids):
     """计算结构总体积（mm³）"""
@@ -305,11 +234,13 @@ def fitness(individual):
     # 计算内力
     try:
         N = calculate_internal_forces(nodes, edges, loads, load_node_ids, section_ids)
+        log_to_file(f"N = {N}\n")
     except:
         return 10  # 计算失败返回惩罚值
     
     # 检查约束
     feasible, sigma_list, stability_list = check_constraints(nodes, edges, section_ids, N)
+    log_to_file(f"feasible={feasible}, sigma_list={sigma_list}, stability_list={stability_list}\n")
     
     if feasible:
         volume = calculate_volume(nodes, edges, section_ids)
@@ -396,9 +327,7 @@ def genetic_algorithm():
         if (gen + 1) % 10 == 0:
             print(f"第{gen+1}代，最优体积：{best_fitness:.4f} m³")
 
-        fp = open('result.txt', 'a', encoding='utf-8')
-        fp.write(f"第{gen+1}代，最优体积：{best_fitness:.4f} m³")
-        fp.close()
+        log_to_file(f"第{gen+1}代，最优体积：{best_fitness:.4f} m³\n")
         
         # 选择、交叉、变异
         new_population = selection(population, fitnesses)
@@ -432,7 +361,7 @@ def analyze_result(best_individual):
         load_node_ids.append(match_idx)
     
     # 计算内力
-    N = calculate_internal_forces(nodes, edges, loads, load_node_ids)
+    N = calculate_internal_forces(nodes, edges, loads, load_node_ids, section_ids)
     
     # 检查约束
     feasible, sigma_list, stability_list = check_constraints(nodes, edges, section_ids, N)
@@ -442,11 +371,10 @@ def analyze_result(best_individual):
     
     # 输出结果
     
-    fp = open('result.txt', 'a', encoding='utf-8')
-    fp.write("\=== 最优桁架结构结果 ===\n")
-    fp.write(f"结构总体积：{volume:.4f} m³")
-    fp.write(f"约束满足情况：{'可行' if feasible else '不可行'}")
-    fp.write("\n杆件信息（索引-节点对-截面编号-内力(kN)-应力(MPa)）：")
+    log_to_file("\=== 最优桁架结构结果 ===\n")
+    log_to_file(f"结构总体积：{volume:.4f} m³")
+    log_to_file(f"约束满足情况：{'可行' if feasible else '不可行'}")
+    log_to_file("\n杆件信息（索引-节点对-截面编号-内力(kN)-应力(MPa)）：")
     print("\n=== 最优桁架结构结果 ===")
     print(f"结构总体积：{volume:.4f} m³")
     print(f"约束满足情况：{'可行' if feasible else '不可行'}")
@@ -454,8 +382,7 @@ def analyze_result(best_individual):
     for e, (i, j) in enumerate(edges):
         sigma = sigma_list[e] if e < len(sigma_list) else 0
         print(f"{e:2d} - ({i:2d},{j:2d}) - {section_ids[e]:1d} - {N[e]:6.1f} - {sigma:5.1f}")
-        fp.write(f"{e:2d} - ({i:2d},{j:2d}) - {section_ids[e]:1d} - {N[e]:6.1f} - {sigma:5.1f}")
-    fp.close()
+        log_to_file(f"{e:2d} - ({i:2d},{j:2d}) - {section_ids[e]:1d} - {N[e]:6.1f} - {sigma:5.1f}")
         
     
     return nodes, edges, N, section_ids, volume
