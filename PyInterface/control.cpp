@@ -13,7 +13,7 @@ std::pair<bool, std::string> PyInterface::OSIS_Acel(double dG)
 		return { false, errorCode };
 	}
 	pCtrlMgr->setG(dG);
-	return { true, "" };
+	return { true, errorCode };
 }
 
 std::pair<bool, std::string> PyInterface::OSIS_CalcTendon(bool bFlag)
@@ -26,7 +26,7 @@ std::pair<bool, std::string> PyInterface::OSIS_CalcTendon(bool bFlag)
 		return { false, errorCode };
 	}
 	pCtrlMgr->setCalcTendon(bFlag);
-	return { true, "" };
+	return { true, errorCode };
 }
 
 std::pair<bool, std::string> PyInterface::OSIS_CalcConForce(bool bFlag)
@@ -39,7 +39,7 @@ std::pair<bool, std::string> PyInterface::OSIS_CalcConForce(bool bFlag)
 		return { false, errorCode };
 	}
 	pCtrlMgr->setCalcConForce(bFlag);
-	return { true, "" };
+	return { true, errorCode };
 }
 
 std::pair<bool, std::string> PyInterface::OSIS_CalcShrink(bool bFlag)
@@ -52,7 +52,7 @@ std::pair<bool, std::string> PyInterface::OSIS_CalcShrink(bool bFlag)
 		return { false, errorCode };
 	}
 	pCtrlMgr->setCalcShrink(bFlag);
-	return { true, "" };
+	return { true, errorCode };
 }
 
 std::pair<bool, std::string> PyInterface::OSIS_CalcCreep(bool bFlag)
@@ -65,7 +65,7 @@ std::pair<bool, std::string> PyInterface::OSIS_CalcCreep(bool bFlag)
 		return { false, errorCode };
 	}
 	pCtrlMgr->setCalcCreep(bFlag);
-	return { true, "" };
+	return { true, errorCode };
 }
 
 std::pair<bool, std::string> PyInterface::OSIS_CalcShear(bool bFlag)
@@ -78,7 +78,7 @@ std::pair<bool, std::string> PyInterface::OSIS_CalcShear(bool bFlag)
 		return { false, errorCode };
 	}
 	pCtrlMgr->setCalcShear(bFlag);
-	return { true, "" };
+	return { true, errorCode };
 }
 
 std::pair<bool, std::string> PyInterface::OSIS_CalcRlx(bool bFlag)
@@ -91,7 +91,7 @@ std::pair<bool, std::string> PyInterface::OSIS_CalcRlx(bool bFlag)
 		return { false, errorCode };
 	}
 	pCtrlMgr->setCalcRelaxation(bFlag);
-	return { true, "" };
+	return { true, errorCode };
 }
 
 std::pair<bool, std::string> PyInterface::OSIS_ModLocCoor(bool bFlag)
@@ -104,7 +104,7 @@ std::pair<bool, std::string> PyInterface::OSIS_ModLocCoor(bool bFlag)
 		return { false, errorCode };
 	}
 	pCtrlMgr->setModLocCoor(bFlag);
-	return { true, "" };
+	return { true, errorCode };
 }
 
 std::pair<bool, std::string> PyInterface::OSIS_IncTendon(bool bFlag)
@@ -117,7 +117,7 @@ std::pair<bool, std::string> PyInterface::OSIS_IncTendon(bool bFlag)
 		return { false, errorCode };
 	}
 	pCtrlMgr->setIncTendon(bFlag);
-	return { true, "" };
+	return { true, errorCode };
 }
 
 std::pair<bool, std::string> PyInterface::OSIS_NL(bool bGeom, bool bLink)
@@ -131,7 +131,7 @@ std::pair<bool, std::string> PyInterface::OSIS_NL(bool bGeom, bool bLink)
 	}
 	pCtrlMgr->setGeom(bGeom);
 	pCtrlMgr->setLink(bLink);
-	return { true, "" };
+	return { true, errorCode };
 }
 
 std::pair<bool, std::string> PyInterface::OSIS_LnSrch(bool bFlag)
@@ -144,7 +144,7 @@ std::pair<bool, std::string> PyInterface::OSIS_LnSrch(bool bFlag)
 		return { false, errorCode };
 	}
 	pCtrlMgr->setLSKey(bFlag);
-	return { true, "" };
+	return { true, errorCode };
 }
 
 std::pair<bool, std::string> PyInterface::OSIS_AutoTs(bool bFlag)
@@ -157,7 +157,7 @@ std::pair<bool, std::string> PyInterface::OSIS_AutoTs(bool bFlag)
 		return { false, errorCode };
 	}
 	pCtrlMgr->setATSKey(bFlag);
-	return { true, "" };
+	return { true, errorCode };
 }
 
 std::pair<bool, std::string> PyInterface::OSIS_ModOpt(int nNO)
@@ -170,6 +170,7 @@ std::pair<bool, std::string> PyInterface::OSIS_ModOpt(int nNO)
 		return { false, errorCode };
 	}
 	pCtrlMgr->setVibModeNum(nNO);
-	return { true, "" };
+	return { true, errorCode };
 }
+
 

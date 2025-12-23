@@ -8,6 +8,7 @@
 #endif
 
 #include <string>
+#include <tuple>
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
 #include <pybind11/embed.h>
@@ -16,6 +17,7 @@
 
 namespace py = pybind11;
 #include "yilBaseCommand/yilBaseCommandInc.h"
+#include "yilCommand/yilCommandInc.h"
 #include "YILProjectGroup/yilProjectGroupInc.h"
 
 typedef void (*ReplotCallback)();
@@ -70,7 +72,7 @@ public:
 	}
 
 	// ========================================================================
-	// ==============================基础函数接口===============================
+	// ===============================前处理接口================================
 	// ========================================================================
 
 	/// <summary>
@@ -165,12 +167,23 @@ public:
 	/// <returns>是否成功，失败原因</returns>
 	std::pair<bool, std::string> OSIS_ModOpt(int nNO);
 
-
 	/// <summary>
 	/// 重绘窗口
 	/// </summary>
 	/// <returns>是否成功，失败原因</returns>
 	std::pair<bool, std::string> OSIS_Replot();
+
+	/// <summary>
+	/// 清空项目
+	/// </summary>
+	/// <returns>是否成功，失败原因</returns>
+	std::pair<bool, std::string> OSIS_Clear();
+
+	/// <summary>
+	/// 求解
+	/// </summary>
+	/// <returns>是否成功，失败原因</returns>
+	std::pair<bool, std::string> OSIS_Solve();
 
 	/// <summary>
 	/// 创建或修改收缩徐变特性
@@ -353,6 +366,22 @@ public:
 	/// <returns></returns>
 	std::pair<bool, std::string> OSIS_Load(const std::string eLoadType, const std::string strLCName, const py::dict kwargs);
 
+	// ========================================================================
+	// ===============================后处理接口================================
+	// ========================================================================
+
+
+	/// <summary>
+	/// 后处理 输出内力计算工况结果表格
+	/// </summary>
+	/// <param name="strLCName"></param>
+	/// <param name="eDataItem"></param>
+	/// <param name="eElementType"></param>
+	/// <returns></returns>
+	std::pair<bool, std::string> OSIS_PrnLcr(const std::string strLCName, const std::string eDataItem, const std::string eElementType);
+
+
+	std::tuple<bool, std::string, py::dict> OSIS_ElemForce(const std::string strLCName, const std::string eDataItem, const std::string eElementType);
 
 	// ========================================================================
 	// ==============================复杂函数接口===============================
