@@ -5,7 +5,7 @@ def osis_replot():
     重新绘制窗口
     
     Returns:
-        Tuple[bool, str]: (是否成功，失败原因)
+        tuple (bool, str): 是否成功，失败原因
     """
     e = OSISEngine.GetInstance()
     return e.OSIS_Replot()
@@ -15,17 +15,17 @@ def osis_clear():
     清空项目
     
     Returns:
-        Tuple[bool, str]: (是否成功，失败原因)
+        tuple (bool, str): 是否成功，失败原因
     """
     e = OSISEngine.GetInstance()
     return e.OSIS_Clear()
 
 def osis_solve():
     """
-    清空项目
+    求解工程
     
     Returns:
-        Tuple[bool, str]: (是否成功，失败原因)
+        tuple (bool, str): 是否成功，失败原因
     """
     e = OSISEngine.GetInstance()
     return e.OSIS_Solve()
@@ -43,7 +43,7 @@ def osis_creep_shrink(nNO: int, strName: str, dAvgHumidity: float, nBirthTime: i
         nBirthByShrinking (int): 收缩开始时的混凝土龄期（天数）
 
     Returns:
-        Tuple[bool, str]: (是否成功，失败原因)
+        tuple (bool, str): 是否成功，失败原因
     """
     e = OSISEngine.GetInstance()
     return e.OSIS_CrpShrk(nNO, strName, dAvgHumidity, nBirthTime, dTypeCoeff, nBirthByShrinking)
