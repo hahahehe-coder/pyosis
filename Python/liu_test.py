@@ -66,7 +66,7 @@ loads = np.array([[0, -1000], [200, 0]])    # 荷载（Fx,Fy单位：kN）
 n_var_nodes = 0# 可变节点数量（可调整）
 var_node_bounds = [[7.5, 20], [0, 5]]  # 可变节点坐标范围（x:0-20m，y:0-5m）
 pop_size = 10    # 遗传算法种群规模
-n_generations = 10  # 迭代次数
+n_generations = 3  # 迭代次数
 crossover_prob = 0.8  # 交叉概率
 mutation_prob = 0.2  # 变异概率
 
@@ -150,14 +150,16 @@ def calculate_internal_forces(nodes, edges, loads, load_node_ids, section_ids):
     for i in range(len(loads)):
         l = loads[i]        # 力的大小  单位 kN
         idx = load_node_ids[i]  # 节点ID
-        osis_load("NFORCE", "自定义工况1", {"nNO": idx, "dFX": l[0] * 1000, "dFY": l[1] * 1000, "dFZ": 0, "dMX": 0, "dMY": 0, "dMZ": 0})
+        osis_load("NFORCE", "自定义工况1", {"nNO": idx + 1, "dFX": l[0] * 1000, "dFY": l[1] * 1000, "dFZ": 0, "dMX": 0, "dMY": 0, "dMZ": 0})
 
     osis_solve()
     isok, error, ef = osis_elem_force("自定义工况1", "EF", "BEAM3D")
     dict_to_json_txt(ef, "liu_output.json")   # 保存结果用于调试
+    # log_to_file(f"ef = {ef}\n")
     ef_fx = ef["Fx"]      # 轴向内力
-    N = np.ndarray(ef_fx) / 1000  # 换算成kN
-    log_to_file(f"N = {N}")
+    # log_to_file(f"ef_fx = {ef_fx}\n")
+    N = np.array(ef_fx, dtype=float) / 1000  # 换算成kN
+    # log_to_file(f"N = {N}\n")
     return N
 
 def calculate_volume(nodes, edges, section_ids):
@@ -234,13 +236,11 @@ def fitness(individual):
     # 计算内力
     try:
         N = calculate_internal_forces(nodes, edges, loads, load_node_ids, section_ids)
-        log_to_file(f"N = {N}\n")
     except:
         return 10  # 计算失败返回惩罚值
     
     # 检查约束
     feasible, sigma_list, stability_list = check_constraints(nodes, edges, section_ids, N)
-    log_to_file(f"feasible={feasible}, sigma_list={sigma_list}, stability_list={stability_list}\n")
     
     if feasible:
         volume = calculate_volume(nodes, edges, section_ids)
@@ -371,18 +371,18 @@ def analyze_result(best_individual):
     
     # 输出结果
     
-    log_to_file("\=== 最优桁架结构结果 ===\n")
-    log_to_file(f"结构总体积：{volume:.4f} m³")
-    log_to_file(f"约束满足情况：{'可行' if feasible else '不可行'}")
-    log_to_file("\n杆件信息（索引-节点对-截面编号-内力(kN)-应力(MPa)）：")
-    print("\n=== 最优桁架结构结果 ===")
+    log_to_file("=== 最优桁架结构结果 ===\n")
+    log_to_file(f"结构总体积：{volume:.4f} m³\n")
+    log_to_file(f"约束满足情况：{'可行' if feasible else '不可行'}\n")
+    log_to_file("\n杆件信息（索引-节点对-截面编号-内力(kN)-应力(MPa)）：\n")
+    print("=== 最优桁架结构结果 ===\n")
     print(f"结构总体积：{volume:.4f} m³")
     print(f"约束满足情况：{'可行' if feasible else '不可行'}")
     print("\n杆件信息（索引-节点对-截面编号-内力(kN)-应力(MPa)）：")
     for e, (i, j) in enumerate(edges):
         sigma = sigma_list[e] if e < len(sigma_list) else 0
         print(f"{e:2d} - ({i:2d},{j:2d}) - {section_ids[e]:1d} - {N[e]:6.1f} - {sigma:5.1f}")
-        log_to_file(f"{e:2d} - ({i:2d},{j:2d}) - {section_ids[e]:1d} - {N[e]:6.1f} - {sigma:5.1f}")
+        log_to_file(f"{e:2d} - ({i:2d},{j:2d}) - {section_ids[e]:1d} - {N[e]:6.1f} - {sigma:5.1f}\n")
         
     
     return nodes, edges, N, section_ids, volume
@@ -412,11 +412,11 @@ def plot_truss(nodes, edges, section_ids, N):
     var_node_ids = [i for i in range(len(nodes)) if i not in fixed_node_ids + load_node_ids]
     
     # 绘制节点
-    nx.draw_networkx_nodes(G, pos, nodelist=fixed_node_ids, node_color='red', node_size=500, label='固定铰支座')
-    nx.draw_networkx_nodes(G, pos, nodelist=load_node_ids, node_color='orange', node_size=400, label='荷载作用节点')
-    nx.draw_networkx_nodes(G, pos, nodelist=var_node_ids, node_color='blue', node_size=300, label='可变节点')
+    nx.draw_networkx_nodes(G, pos, nodelist=fixed_node_ids, node_color='red', node_size=300, label='固定铰支座')
+    nx.draw_networkx_nodes(G, pos, nodelist=load_node_ids, node_color='orange', node_size=200, label='荷载作用节点')
+    nx.draw_networkx_nodes(G, pos, nodelist=var_node_ids, node_color='blue', node_size=150, label='可变节点')
     # 节点编号（白色加粗，偏移避免遮挡）
-    pos_node_label = {i: (x+0.15, y+0.15) for i, (x, y) in pos.items()}  # 编号向右上偏移
+    pos_node_label = {i: (x, y) for i, (x, y) in pos.items()}
     node_labels = {i: str(i) for i in range(len(nodes))}
     nx.draw_networkx_labels(G, pos_node_label, labels=node_labels, font_size=9, font_color='white', font_weight='bold')
 
@@ -446,8 +446,8 @@ def plot_truss(nodes, edges, section_ids, N):
         load_mag = np.sqrt(fx**2 + fy**2)
         if load_mag == 0:
             continue
-        fx_norm = fx / load_mag * load_scale * 10  # 统一长度（10为基准）
-        fy_norm = fy / load_mag * load_scale * 10
+        fx_norm = fx / load_mag * load_scale * 20  # 统一长度（20为基准）
+        fy_norm = fy / load_mag * load_scale * 20
         # 绘制荷载箭头
         plt.arrow(x, y, fx_norm, fy_norm, head_width=0.25, head_length=0.25, 
                   fc='black', ec='black', alpha=0.9)
