@@ -91,12 +91,12 @@ std::pair<bool, std::string> PyInterface::OSIS_Load(const std::string eLoadType,
 		double dFX, dFY, dFZ, dMX, dMY, dMZ;
 		try {
 			nNO = safe_cast<int>(kwargs, "nNO");
-			dFX = safe_cast<bool>(kwargs, "dFX");
-			dFY = safe_cast<bool>(kwargs, "dFY");
-			dFZ = safe_cast<bool>(kwargs, "dFZ");
-			dMX = safe_cast<bool>(kwargs, "dMX");
-			dMY = safe_cast<bool>(kwargs, "dMY");
-			dMZ = safe_cast<bool>(kwargs, "dMZ");
+			dFX = safe_cast<double>(kwargs, "dFX");
+			dFY = safe_cast<double>(kwargs, "dFY");
+			dFZ = safe_cast<double>(kwargs, "dFZ");
+			dMX = safe_cast<double>(kwargs, "dMX");
+			dMY = safe_cast<double>(kwargs, "dMY");
+			dMZ = safe_cast<double>(kwargs, "dMZ");
 		}
 		catch (const std::runtime_error& e) {
 			// ¥¶¿Ì¥ÌŒÛ

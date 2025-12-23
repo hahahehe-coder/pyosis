@@ -848,7 +848,7 @@ def section_offset(nSec: int = 1, offsetTypeY: str = "Middle", dOffsetValueY: fl
 
 @tool
 def section_mesh(nSec: int = 1, bMeshMethod: int = 1, dMeshSize: float = 0.1) -> Tuple[bool, str]:  
-    """设置截面偏移。
+    """设置截面网格。
 
     Args:
         nSec (int): 截面编号。

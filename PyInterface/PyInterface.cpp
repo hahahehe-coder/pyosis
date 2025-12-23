@@ -54,6 +54,8 @@ PYBIND11_MODULE(PyInterface, m)
         .def_static("GetInstance", &PyInterface::GetInstance,
             py::return_value_policy::reference)
         .def("OSIS_Replot", &PyInterface::OSIS_Replot)
+        .def("OSIS_Clear", &PyInterface::OSIS_Clear)
+        .def("OSIS_Solve", &PyInterface::OSIS_Solve)
 
         .def("OSIS_Acel", &PyInterface::OSIS_Acel,
             py::arg("dG"))
@@ -125,6 +127,9 @@ PYBIND11_MODULE(PyInterface, m)
             py::arg("strName"), py::arg("eLoadCaseType"), py::arg("dScalar"), py::arg("strPrompt"))
         .def("OSIS_Load", &PyInterface::OSIS_Load,
             py::arg("eLoadType"), py::arg("strLCName"), py::arg("kwargs"))
+
+        .def("OSIS_ElemForce", &PyInterface::OSIS_ElemForce,
+            py::arg("strLCName"), py::arg("eDataItem"), py::arg("eElementType"))
         ;
 
 	//m.def("add", &, "A function that adds two numbers");

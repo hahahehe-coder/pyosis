@@ -73,5 +73,29 @@ std::pair<bool, std::string> PyInterface::OSIS_CrpShrk(const int nNO, const std:
 }
 
 
+std::pair<bool, std::string> PyInterface::OSIS_Clear()
+{
+	std::string errorCode;
+	yilCommand* pCmd = m_pProjectGroup->GetyilCommand();
+	pCmd->Command_CLEAR_PY();
+
+	/*auto * pCmd = m_pProjectGroup->GetyilCommand();
+	pCmd->Command_CLEAR();*/
+	return { true, errorCode };
+}
 
 
+/// <summary>
+/// 求解
+/// </summary>
+/// <returns>是否成功，失败原因</returns>
+std::pair<bool, std::string> PyInterface::OSIS_Solve()
+{
+	std::string errorCode;
+	yilCommand* pCmd = m_pProjectGroup->GetyilCommand();
+	pCmd->Command_Solve_PY();
+
+	/*auto * pCmd = m_pProjectGroup->GetyilCommand();
+	pCmd->Command_CLEAR();*/
+	return { true, errorCode };
+}
