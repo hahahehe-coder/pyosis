@@ -189,7 +189,7 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>HPDI.OSIS.Geometry.lib;HPDI.OSIS.PREP.Control.lib;HPDI.OSIS.IO.lib;HPDI.OSIS.PREP.Stage.lib;HPDI.OSIS.PREP.Load.lib;HPDI.OSIS.PREP.Boundary.lib;HPDI.OSIS.PREP.Command.lib;HPDI.OSIS.PREP.Material.lib;HPDI.OSIS.PREP.Property.lib;HPDI.OSIS.PREP.Section.lib;HPDI.OSIS.PREP.Element.lib;qilBaseLibrary.lib;yilBaseClass.lib;yilProject.lib;yilProjectGroup.lib;yilBaseCommand.lib;yilControl.lib;yilObject.lib;yilMatrix.lib;yilAlgorithm.lib;yilGraphicDisplay.lib;yilPlotControl.lib;vtkCommonCore.lib;vtksys.lib;yilSelect.lib;python3.lib;python3_d.lib;python311.lib;python311_d.lib</AdditionalDependencies>
+      <AdditionalDependencies>HPDI.OSIS.Geometry.lib;HPDI.OSIS.PREP.Control.lib;HPDI.OSIS.IO.lib;HPDI.OSIS.PREP.Stage.lib;HPDI.OSIS.PREP.Load.lib;HPDI.OSIS.PREP.Boundary.lib;HPDI.OSIS.PREP.Command.lib;HPDI.OSIS.PREP.Material.lib;HPDI.OSIS.PREP.Property.lib;HPDI.OSIS.PREP.Section.lib;HPDI.OSIS.PREP.Element.lib;qilBaseLibrary.lib;yilBaseClass.lib;yilProject.lib;yilProjectGroup.lib;yilBaseCommand.lib;yilControl.lib;yilObject.lib;yilMatrix.lib;yilAlgorithm.lib;yilGraphicDisplay.lib;yilPlotControl.lib;vtkCommonCore.lib;vtksys.lib;yilSelect.lib;python3.lib;python311.lib</AdditionalDependencies>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
       <AdditionalLibraryDirectories>..\..\lib64;..\..\lib64\BCGCBPro</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -250,23 +250,24 @@ call .\set_python_env.bat</Command>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <Optimization>Disabled</Optimization>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>HPDI.OSIS.Geometry.lib;HPDI.OSIS.PREP.Control.lib;HPDI.OSIS.IO.lib;HPDI.OSIS.PREP.Stage.lib;HPDI.OSIS.PREP.Load.lib;HPDI.OSIS.PREP.Boundary.lib;HPDI.OSIS.PREP.Command.lib;HPDI.OSIS.PREP.Material.lib;HPDI.OSIS.PREP.Property.lib;HPDI.OSIS.PREP.Section.lib;HPDI.OSIS.PREP.Element.lib;qilBaseLibrary.lib;yilBaseClass.lib;yilProject.lib;yilProjectGroup.lib;yilBaseCommand.lib;yilControl.lib;yilObject.lib;yilMatrix.lib;yilAlgorithm.lib;yilGraphicDisplay.lib;yilPlotControl.lib;vtkCommonCore.lib;vtksys.lib;yilSelect.lib;python3.lib;python3_d.lib;python311.lib;python311_d.lib</AdditionalDependencies>
+      <AdditionalDependencies>HPDI.OSIS.Geometry.lib;HPDI.OSIS.PREP.Control.lib;HPDI.OSIS.IO.lib;HPDI.OSIS.PREP.Stage.lib;HPDI.OSIS.PREP.Load.lib;HPDI.OSIS.PREP.Boundary.lib;HPDI.OSIS.PREP.Command.lib;HPDI.OSIS.PREP.Material.lib;HPDI.OSIS.PREP.Property.lib;HPDI.OSIS.PREP.Section.lib;HPDI.OSIS.PREP.Element.lib;qilBaseLibrary.lib;yilBaseClass.lib;yilProject.lib;yilProjectGroup.lib;yilBaseCommand.lib;yilControl.lib;yilObject.lib;yilMatrix.lib;yilAlgorithm.lib;yilGraphicDisplay.lib;yilPlotControl.lib;vtkCommonCore.lib;vtksys.lib;yilSelect.lib;python3.lib;python311.lib</AdditionalDependencies>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <ImportLibrary>$(OutDir)$(TargetName).lib</ImportLibrary>
-      <AdditionalLibraryDirectories>..\..\lib64;..\..\lib64\BCGCBPro</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\rlib64;..\..\rlib64\BCGCBPro</AdditionalLibraryDirectories>
       <DelayLoadDLLs>%(DelayLoadDLLs)</DelayLoadDLLs>
     </Link>
     <PostBuildEvent>
       <Command>
       </Command>
-      <Command>copy .\$(Configuration)\PyInterface.lib ..\..\lib64
-copy .\$(Configuration)\PyInterface.pyd ..\..\bin64</Command>
+      <Command>copy .\$(Configuration)\PyInterface.lib ..\..\rlib64
+copy .\$(Configuration)\PyInterface.pyd ..\..\rbin64</Command>
     </PostBuildEvent>
     <PreBuildEvent>
       <Command>if not exist "..\..\include\PyInterface " mkdir "..\..\include\PyInterface"
