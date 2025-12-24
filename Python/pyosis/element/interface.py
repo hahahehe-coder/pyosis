@@ -9,13 +9,13 @@ Interfaces of OSIS functions
 from typing import Any, Dict, Literal
 from ..core import OSISEngine
 
-def osis_element(nEle: int, eElementType: Literal["BEAM3D", "TRUSS", "SPRING", "CABLE"], params: Dict[str, Any]):
+def osis_element(nEle: int, eElementType: Literal["BEAM3D", "TRUSS", "SPRING", "CABLE", "SHELL"], params: Dict[str, Any]):
     '''
     创建单元
     
     Args:
         nEle (int): 单元编号
-        eElementType (str): 单元类型，BEAM3D = 梁柱单元，TRUSS = 桁架单元，SPRING = 弹簧单元，CABLE = 拉索单元
+        eElementType (str): 单元类型，不区分大小写。BEAM3D = 梁柱单元，TRUSS = 桁架单元，SPRING = 弹簧单元，CABLE = 拉索单元，SHELL = 壳单元
         params (Dict[str, Any]): 对应单元类型所需要的参数
     Returns:
         tuple (bool, str): 是否成功，失败原因
@@ -113,7 +113,7 @@ def osis_element_spring(nEle: int, nNode1: int, nNode2: int, bLinear: int, dx: f
     e = OSISEngine.GetInstance()
     return e.OSIS_Element(nEle, "SPRING", params)
 
-def osis_element_cable(nEle: int, nNode1: int, nNode2: int, nMat: int, nSec: int, eMethod, dPara):
+def osis_element_cable(nEle: int, nNode1: int, nNode2: int, nMat: int, nSec: int, eMethod: Literal["UL", "IF", "HF", "VF", "IS"], dPara: float):
     '''
     创建弹簧单元
     
@@ -142,6 +142,29 @@ def osis_element_cable(nEle: int, nNode1: int, nNode2: int, nMat: int, nSec: int
     params = locals()
     e = OSISEngine.GetInstance()
     return e.OSIS_Element(nEle, "CABLE", params)
+
+def osis_element_shell(nEle: int, bIsThin: bool, nMat: int, nThk: int, nNode1: int, nNode2: int, nNode3: int, nNode4: int = None):
+    '''
+    创建弹簧单元
+    
+    Args:
+        nEle (int): 单元编号。从 1 开始编号，所有类型的单元均使用同一编号序列。
+        bIsThin (bool): 
+        nMat (int): 材料编号。
+        nThk (int): 
+        nNode1 (int): 节点1编号。
+        nNode1 (int): 节点2编号。
+        nNode1 (int): 节点3编号。
+        nNode1 (int): 节点4编号，可缺省
+        
+    Returns:
+        tuple (bool, str): 是否成功，失败原因
+    '''
+    params = locals()
+    if nNode4 is None:
+        params.pop("nNode4")    # 得手动pop掉，不能留下这个键值对
+    e = OSISEngine.GetInstance()
+    return e.OSIS_Element(nEle, "SHELL", params)
 
 def osis_element_del(nEle: int):
     """删除一个单元

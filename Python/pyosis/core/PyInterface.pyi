@@ -62,7 +62,7 @@ class PyInterface:
     def OSIS_CrpShrk(self, nNO: int, strName: str, dAvgHumidity: float, nBirthTime: int, dTypeCoeff: float, nBirthByShrinking: int) -> Tuple[bool, str]: 
         return True, ""
 
-    def OSIS_Material(self, nMat: int, strName: str, eMaterialType: str, eCode: str, eGrade: str, nCrepShrk: int, dDmp: float) -> Tuple[bool, str]:
+    def OSIS_Material(self, nMat: int, strName: str, eMaterialType: str, eCode: str, eGrade: str, nCrepShrk: int, dDmp: float, params: dict={}) -> Tuple[bool, str]:    # 需要修改
         return True, ""
     
     def OSIS_MaterialDel(self, nMat: int) -> Tuple[bool, str]:
@@ -113,7 +113,7 @@ class PyInterface:
     def OSIS_Load(self, eLoadType: str, strLCName: str, params: Dict[str, Any]) -> Tuple[bool, str]:
         return True, ""
 
-    def OSIS_LoadCase(self, strName: str, eLoadCaseType: str, dScalar: float, strPrompt: str) -> Tuple[bool, str]:
+    def OSIS_LoadCase(self, strLCName: str, eLoadCaseType: str, dScalar: float, strPrompt: str) -> Tuple[bool, str]:
         return True, ""
     
     def OSIS_ElemForce(str, strLCName: str, eDataItem: str, eElementType: str) -> Tuple[bool, str]:

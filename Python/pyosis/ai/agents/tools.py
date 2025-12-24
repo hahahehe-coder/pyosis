@@ -91,7 +91,7 @@ args_default = {    # 工具函数默认调用参数
     "section_l_shape": {
         "nSec": 1,
         "strName": "L形截面1",
-        "eSectionType": "LShape",
+        "eSectionType": "LSHAPE",
         "params": {
             "Dir": 0,
             "H": 3.0,
@@ -103,7 +103,7 @@ args_default = {    # 工具函数默认调用参数
     "section_circle": {
         "nSec": 1,
         "strName": "圆形截面1",
-        "eSectionType": "Circle",
+        "eSectionType": "CIRCLE",
         "params": {
             "CircleType": "Hollow",
             "D": 6.0,
@@ -113,7 +113,7 @@ args_default = {    # 工具函数默认调用参数
     "section_t_shape": {
         "nSec": 1,
         "strName": "T形截面1",
-        "eSectionType": "TShape",
+        "eSectionType": "TSHAPE",
         "params": {
             "Dir": 0,
             "H": 3.0,
@@ -125,7 +125,7 @@ args_default = {    # 工具函数默认调用参数
     "section_i_shape": {
         "nSec": 1,
         "strName": "I形截面1",
-        "eSectionType": "IShape",
+        "eSectionType": "ISHAPE",
         "params": {
             "H": 3.0,
             "Bt": 6.0,
@@ -454,16 +454,16 @@ def section(nSec: int = 1, strName: str = "截面1", eSectionType: str = "RECT",
         strName: 截面名称，默认为"截面1"
         eSectionType: 截面类型，可选值：
             * RECT: 矩形截面
-            * IShape: 工字形截面  
-            * TShape: T形截面
-            * Circle: 圆形截面
-            * LShape: L形截面
+            * ISHAPE: 工字形截面  
+            * TSHAPE: T形截面
+            * CIRCLE: 圆形截面
+            * LSHAPE: L形截面
         params: 截面参数字典，具体参数根据eSectionType不同而变化：
             * RECT类型: 需要传递矩形截面相关参数（B、H等）
-            * IShape类型: 需要传递工字形截面参数（H、Bt、Bb等）
-            * TShape类型: 需要传递T形截面参数（Dir、H、B等）
-            * Circle类型: 需要传递圆形截面参数（CircleType、D等）
-            * LShape类型: 需要传递L形截面参数（Dir、H、B等）
+            * ISHAPE类型: 需要传递工字形截面参数（H、Bt、Bb等）
+            * TSHAPE类型: 需要传递T形截面参数（Dir、H、B等）
+            * CIRCLE类型: 需要传递圆形截面参数（CircleType、D等）
+            * LSHAPE类型: 需要传递L形截面参数（Dir、H、B等）
             详细参数说明请查看函数完整文档
     
     Returns:
@@ -481,7 +481,7 @@ def section(nSec: int = 1, strName: str = "截面1", eSectionType: str = "RECT",
         (True, "")
         
         >>> # 创建工字形截面  
-        >>> result = osis_section(2, "截面2 (工字形)", "IShape", {
+        >>> result = osis_section(2, "截面2 (工字形)", "ISHAPE", {
         ...     "H": 0.4, "Bt": 0.2, "Bb": 0.2,
         ...     "Tt": 0.016, "Tb": 0.016, "Tw": 0.01
         ... })
@@ -551,7 +551,7 @@ def section_l_shape(nSec: int = 1, strName: str = "截面1 (L形)",
         - 单位：所有尺寸参数单位均为米(m)
         - 重复使用截面编号会修改现有截面
     """
-    eSectionType = "LShape"
+    eSectionType = "LSHAPE"
     default_params = args_default["section_l_shape"]["params"]
     return osis_section(nSec, strName, eSectionType, {**default_params, **params})
 
@@ -603,7 +603,7 @@ def section_circle(nSec: int = 1, strName: str = "截面1 (圆形)",
         - 单位：所有尺寸参数单位均为米(m)
         - 重复使用截面编号会修改现有截面
     """
-    eSectionType = "Circle"
+    eSectionType = "CIRCLE"
     default_params = args_default["section_circle"]["params"]
     return osis_section(nSec, strName, eSectionType, {**default_params, **params})
 
@@ -653,7 +653,7 @@ def section_t_shape(nSec: int = 1, strName: str = "截面1 (T形)",
         - 重复使用截面编号会修改现有截面
     """
 
-    eSectionType = "TShape"
+    eSectionType = "TSHAPE"
     default_params = args_default["section_t_shape"]["params"]
     return osis_section(nSec, strName, eSectionType, {**default_params, **params})
 
@@ -703,7 +703,7 @@ def section_i_shape(nSec: int = 1, strName: str = "截面1 (工字形)",
         - 重复使用截面编号会修改现有截面
     """
 
-    eSectionType = "IShape"
+    eSectionType = "ISHAPE"
     default_params = args_default["section_i_shape"]["params"]
     return osis_section(nSec, strName, eSectionType, {**default_params, **params})
 

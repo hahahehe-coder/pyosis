@@ -15,12 +15,13 @@ def osis_boundary(nBd: int, eBoundaryType: Literal["GENERAL", "MSTSLV", "RELEASE
     
     Args:
         nBd (int): 边界编号
-        eBoundaryType (str): 边界类型，GENERAL = 一般边界，MSTSLV = 主从约束，RELEASE = 释放梁端约束，ELSTCSPT = 节点弹性支承
+        eBoundaryType (str): 边界类型，不区分大小写。GENERAL = 一般边界，MSTSLV = 主从约束，RELEASE = 释放梁端约束，ELSTCSPT = 节点弹性支承
         params (Dict[str, Any]): 对应边界类型所需要的参数
     Returns:
         tuple (bool, str): 是否成功，失败原因
     '''
     e = OSISEngine.GetInstance()
+    eBoundaryType = eBoundaryType.upper()
     return e.OSIS_Boundary(nBd, eBoundaryType, params)
 
 def osis_assign_boundary(nBd: int, eOP: str, nodeNOs: list[int] | list[list[int]]):
