@@ -10,7 +10,7 @@
 /// <param name="dScalar">系数</param>
 /// <param name="strPrompt">说明</param>
 /// <returns></returns>
-std::pair<bool, std::string> PyInterface::OSIS_LoadCase(const std::string strLCName, const std::string eLoadCaseType, const double dScalar, const std::string strPrompt)
+std::pair<bool, std::string> PyInterface::OSIS_LoadCase(const std::string strName, const std::string eLoadCaseType, const double dScalar, const std::string strPrompt)
 {
 	std::string errorCode;
 	PrepEnum::LoadCase eLC;
@@ -21,7 +21,7 @@ std::pair<bool, std::string> PyInterface::OSIS_LoadCase(const std::string strLCN
 	}
 
 	auto* pLCM = GET_PREP_LC();
-	PREP::LoadCaseInfo* pInfo = pLCM->getInfo(strLCName);
+	PREP::LoadCaseInfo* pInfo = pLCM->getInfo(strName);
 	if (pInfo) {		// 修改
 
 		//yilCString strCommand;
@@ -35,7 +35,7 @@ std::pair<bool, std::string> PyInterface::OSIS_LoadCase(const std::string strLCN
 	else				// 创建
 	{
 		pInfo = new PREP::LoadCaseInfo();
-		pInfo->setName(strLCName);
+		pInfo->setName(strName);
 		pInfo->setType(eLC);
 		pInfo->setScalar(dScalar);
 		pInfo->setPrompt(strPrompt);

@@ -128,6 +128,9 @@ PYBIND11_MODULE(PyInterface, m)
         .def("OSIS_Load", &PyInterface::OSIS_Load,
             py::arg("eLoadType"), py::arg("strLCName"), py::arg("kwargs"))
 
+        .def("OSIS_LiveGrade", &PyInterface::OSIS_LiveGrade,
+            py::arg("strName"), py::arg("eCode"), py::arg("eLiveLoadType"), py::arg("kwargs"))
+
         .def("OSIS_ElemForce", &PyInterface::OSIS_ElemForce,
             py::arg("strLCName"), py::arg("eDataItem"), py::arg("eElementType"))
         ;

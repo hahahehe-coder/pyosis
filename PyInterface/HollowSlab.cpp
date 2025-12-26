@@ -247,9 +247,16 @@ std::pair<bool, std::string> PyInterface::OSIS_QBHollowSlab(const py::list spans
 
 	// ===================材料定义===================
 	// TODO 混凝土 钢筋 钢束材料
+	OSIS_CrpShrk(1, "收缩徐变", 70, 7, 5.0, 3);
+	OSIS_Material(1, "混凝土-C50", "CONC", "JTG3362_2018", "C50", 1, 0.05);
+	OSIS_Material(2, "钢筋-HRB400", "REBAR", "JTG3362_2018", "HRB400", -1, 0.05);
+	OSIS_Material(3, "钢绞线-1860", "PRESTRESSED", "JTG3362_2018", "Strand1860", -1, 0.05);
+
+	OSIS_LiveGrade("简支空心板-移动荷载", "JTGD60_2015", "HIGHWAY_I", py::dict());	// 根据快速建模的具体实现，Init Project的时候初始化了活载
 
 	// ===================截面定义===================
 	// TODO 从pPortrait中获取
+
 
 	// ===================节点定义===================
 	// TODO 从pPortrait->CalcualteElement();中计算节点

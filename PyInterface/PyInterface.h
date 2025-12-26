@@ -366,6 +366,16 @@ public:
 	/// <returns></returns>
 	std::pair<bool, std::string> OSIS_Load(const std::string eLoadType, const std::string strLCName, const py::dict kwargs);
 
+	/// <summary>
+	/// 定义活载
+	/// </summary>
+	/// <param name="strName">活载名称</param>
+	/// <param name="eCode">规范类型，JTGD60_2015，CUSTOM（暂未实现）</param>
+	/// <param name="eLiveLoadType">活载类型</param>
+	/// <param name="kwargs">附加参数</param>
+	/// <returns></returns>
+	std::pair<bool, std::string> OSIS_LiveGrade(const std::string strName, const std::string eCode, const std::string eLiveLoadType, const py::dict kwargs);
+
 	// ========================================================================
 	// ===============================后处理接口================================
 	// ========================================================================

@@ -14,6 +14,7 @@
     <ClCompile Include="Stage.cpp" />
     <ClCompile Include="Load.cpp" />
     <ClCompile Include="Post.cpp" />
+    <ClCompile Include="Live.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PyInterface.h" />

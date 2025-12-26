@@ -24,6 +24,7 @@
     <ClCompile Include="Element.cpp" />
     <ClCompile Include="General.cpp" />
     <ClCompile Include="HollowSlab.cpp" />
+    <ClCompile Include="Live.cpp" />
     <ClCompile Include="Load.cpp" />
     <ClCompile Include="Material.cpp" />
     <ClCompile Include="Node.cpp" />
