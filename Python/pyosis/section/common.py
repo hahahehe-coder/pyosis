@@ -1,3 +1,7 @@
+'''
+pyosis.section.interface 的 Docstring
+'''
+
 from typing import Any, Dict, Literal
 from ..core import REGISTRY
 
@@ -164,6 +168,49 @@ def osis_section_Ishape(nSec: int, strName: str, eSectionType: Literal["ISHAPE"]
     pass
 
 @REGISTRY.register('Section')
+def osis_section_smallbox(nSec: int, strName: str, eSectionType: Literal["SMALLBOX"], eGirderPos: Literal["LEFT", "MIDDLE", "RIGHT"], 
+                          H: float, Bs: float, Bc: float, Bb: float, Tt: float, Tb: float, Tw: float, i: float, Tc: float, Tc1: float, x: float, xi1: float, Tt1: float, xi2: float, yi2: float, bSlope: bool, i1: float, i2: float, R: float):
+    """定义或修改小箱梁截面(SMALLBOX)。
+
+    Args:
+        nSec (int): 截面编号，从1开始编号，所有类型的截面均使用同一编号序列。
+        strName (str): 截面名称。
+        eSectionType (str): 截面类型，固定为 SMALLBOX
+        eGirderPos (str): 截面位置
+            * Left = 左边梁
+            * Middle = 中梁
+            * Right = 右边梁
+        H (float): 箱梁高度
+        Bs (float): 边翼板宽
+        Bm (float): 中梁半宽
+        Bc (float): 现浇湿接缝半宽
+        Bb (float): 底板宽
+        Tt (float): 顶板厚
+        Tb (float): 底板厚
+        Tw (float): 腹板厚
+        i (float): 腹板倾斜比
+        Tc (float): 边梁悬臂端部厚
+        Tc1 (float): 边梁悬臂根部厚
+        x (float): 中梁翼板倒角宽
+        xi1 (float): 倒角1宽（顶板）
+        Tt1 (float): 倒角1根部厚
+        xi2 (float): 倒角2宽（底板）
+        yi2 (float): 倒角2高
+        bSlope (bool): 是否输入横坡
+            * 0 = 否
+            * 1 = 是
+        i1 (float): 顶左坡
+        i2 (float): 顶右坡
+        R (float): 底板倒角圆弧半径
+
+    Returns:
+        tuple (bool, str): 返回一个元组，包含：
+            - bool: 操作是否成功
+            - str: 失败原因（如果操作失败）
+    """
+    pass
+
+@REGISTRY.register('Section')
 def osis_section_rect(nSec: int, strName: str, eSectionType: Literal["RECT"], TransitionType: Literal["Chamfer", "Fillet"], SecType: Literal["Solid", "Hollow"],
         B: float, H: float, xo1: float, yo1: float, R: float, t1: float, t2: float, xi1: float, yi1: float, HasDiaphragm: bool, tw: float, xi2: float, yi2: float,
         HasGroove: bool, b1: float, b2: float, h: float):
@@ -218,92 +265,59 @@ def osis_section_rect(nSec: int, strName: str, eSectionType: Literal["RECT"], Tr
     """
     pass
 
-
-@REGISTRY.register('SectionOffset')
-def osis_section_offset(nSec: int, offsetTypeY: str, dOffsetValueY: float, offsetTypeZ: str, dOffsetValueZ: float):
-    """设置截面偏移。
+@REGISTRY.register("Section")
+def osis_section_hollowslab(nSec: int, strName: str, eSectionType: Literal["HOLLOWSLAB"], eGirderPos: Literal["LEFT", "MIDDLE", "RIGHT"], 
+                          H: float, Bs: float, Bm: float, Bj: float, Tt: float, Tb: float, Tw: float, Tc: float, Tc1: float, Bc: float, xi1: float, yi1: float, xi2: float, yi2: float, xo3: bool, yo3: float, xo4: float, yo4: float, h1: float):
+    """定义或修改空心板截面(HOLLOWSLAB)。
 
     Args:
-        nSec (int): 截面编号。
-        offsetTypeY (str): Y方向偏移类型，可选值：
-            * Left: 左对齐
-            * Middle: 居中对齐
-            * Right: 右对齐
-            * Manual: 手动指定偏移值
-        dOffsetValueY (float): Y方向偏移值（单位：m）。
-            仅当offsetTypeY为"Manual"时生效。
-        offsetTypeZ (str): Z方向偏移类型，可选值：
-            * Top: 顶部对齐
-            * Center: 居中对齐
-            * Bottom: 底部对齐
-            * Manual: 手动指定偏移值
-        dOffsetValueZ (float): Z方向偏移值（单位：m）。
-            仅当offsetTypeZ为"Manual"时生效。
+        nSec (int): 截面编号，从1开始编号，所有类型的截面均使用同一编号序列。
+        strName (str): 截面名称。
+        eSectionType (str): 截面类型，固定为 HOLLOWSLAB
+        eGirderPos (str): 截面位置
+            * Left = 左边梁
+            * Middle = 中梁
+            * Right = 右边梁
+        H (float): 板高
+        Bs (float): 边板宽，eGirderPos=Middle时设置为 ""
+        Bm (float): 中梁半宽
+        Bj (float): 铰缝上端缩进宽
+        Tt (float): 顶板厚
+        Tb (float): 底板厚
+        Tw (float): 腹板下端厚
+        Tc (float): 边板悬臂端部厚，eGirderPos=Middle时设置为 ""
+        Tc1 (float): 边板悬臂根部厚，eGirderPos=Middle时设置为 ""
+        Bc (float): 边板悬臂厚，eGirderPos=Middle时设置为 ""
+        xi1 (float): 倒角1宽（顶板）
+        yi1 (float): 倒角1高
+        xi2 (float): 倒角2宽（底板）
+        yi2 (float): 倒角2高
+        xo3 (float): 倒角3宽（上端）
+        yo3 (float): 倒角3高
+        xo4 (float): 倒角4宽（下端）
+        yo4 (float): 倒角4高
+        h1 (float): 下端竖直段高
 
     Returns:
         tuple (bool, str): 返回一个元组，包含：
             - bool: 操作是否成功
             - str: 失败原因（如果操作失败）
-
-    Examples:
-        >>> # 设置截面Y方向左对齐，Z方向底部对齐
-        >>> result = section_offset(1, "Left", 0.0, "Bottom", 0.0)
-        >>> print(result)
-        (True, "")
-        
-        >>> # 设置截面Y方向手动偏移0.1m，Z方向居中对齐
-        >>> result = section_offset(1, "Manual", 0.1, "Center", 0.0)
-        >>> print(result)
-        (True, "")
-
     """
     pass
 
-@REGISTRY.register('SectionMesh')
-def osis_section_mesh(nSec: int, nMeshMethod: Literal[0, 1], dMeshSize: float):
-    """设置截面网格。
+@REGISTRY.register("Section")
+def osis_section_custom(nSec: int, strName: str, eSectionType: Literal["CUSTOM"], contourMatrix: list):
+    """定义或修改自定义截面(CUSTOM)。
 
     Args:
-        nSec (int): 截面编号。
-        nMeshMethod (int): Y定义截面网格划分，可选值：
-            * 0 = 自动划分
-            * 1 = 手动划分
-        dMeshSize (float): 网格划分尺寸，在 nMeshMethod=1 时该项起作用
+        nSec (int): 截面编号，从1开始编号，所有类型的截面均使用同一编号序列。
+        strName (str): 截面名称。
+        eSectionType (str): 截面类型，固定为 CUSTOM
+        contourMatrix (list): 轮廓点矩阵，大小为n*3，n为点的个数，第一列为点所在的轮廓线编号，第二列为点的x坐标，第三列为点的y坐标。需要按照行顺序组织成list
 
     Returns:
         tuple (bool, str): 返回一个元组，包含：
             - bool: 操作是否成功
             - str: 失败原因（如果操作失败）
-        
     """
     pass
-
-@REGISTRY.register('SectionDel')
-def osis_section_del(nSec: int):
-    """删除截面
-
-    Args:
-        nSec (int): 截面编号。
-
-    Returns:
-        tuple (bool, str):
-            - bool: 操作是否成功
-            - str: 失败原因（如果操作失败）
-    """
-    pass
-
-@REGISTRY.register('SectionMod')
-def osis_section_mod(nOld: int, nNew: int):
-    """修改截面
-
-    Args:
-        nOld (int): 旧截面编号
-        nNew (int): 新截面编号
-
-    Returns:
-        tuple (bool, str):
-            - bool: 操作是否成功
-            - str: 失败原因（如果操作失败）
-    """
-    pass
-
