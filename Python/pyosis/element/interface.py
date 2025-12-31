@@ -7,29 +7,34 @@ Interfaces of OSIS functions
 
 
 from typing import Any, Dict, Literal
-from ..core import OSISEngine
+from ..core import OSISEngine, REGISTRY
 
-def osis_element(nEle: int, eElementType: Literal["BEAM3D", "TRUSS", "SPRING", "CABLE", "SHELL"], params: Dict[str, Any]):
-    '''
-    创建单元
+
+# @REGISTRY.register("Element")
+# def osis_element(nEle: int, eElementType: Literal["BEAM3D", "TRUSS", "SPRING", "CABLE", "SHELL"], params: Dict[str, Any]):
+#     '''
+#     创建单元
     
-    Args:
-        nEle (int): 单元编号
-        eElementType (str): 单元类型，不区分大小写。BEAM3D = 梁柱单元，TRUSS = 桁架单元，SPRING = 弹簧单元，CABLE = 拉索单元，SHELL = 壳单元
-        params (Dict[str, Any]): 对应单元类型所需要的参数
-    Returns:
-        tuple (bool, str): 是否成功，失败原因
-    '''
-    e = OSISEngine.GetInstance()
-    eElementType = eElementType.upper()
-    return e.OSIS_Element(nEle, eElementType, params)
+#     Args:
+#         nEle (int): 单元编号
+#         eElementType (str): 单元类型，不区分大小写。BEAM3D = 梁柱单元，TRUSS = 桁架单元，SPRING = 弹簧单元，CABLE = 拉索单元，SHELL = 壳单元
+#         params (Dict[str, Any]): 对应单元类型所需要的参数
+#     Returns:
+#         tuple (bool, str): 是否成功，失败原因
+#     '''
+#     e = OSISEngine.GetInstance()
+#     eElementType = eElementType.upper()
+#     return e.OSIS_Element(nEle, eElementType, params)
 
-def osis_element_beam3d(nEle: int, nNode1: int, nNode2: int, nMat: int, nSec1: int, nSec2: int, nYTrans: int, nZTrans: int, dStrain: float, bFlag: bool, dTheta: float, bWarping: bool):
+@REGISTRY.register("Element")
+def osis_element_beam3d(nEle: int, eElementType: str="BEAM3D", nNode1: int=1, nNode2: int=2, nMat: int=1, nSec1: int=1, nSec2: int=1, 
+                        nYTrans: Literal[1, 2, 3, 4]=1, nZTrans: Literal[1, 2, 3, 4]=1, dStrain: float=0.0, bFlag: bool=0, dTheta: float=0, bWarping: bool=0):
     '''
     创建梁柱单元
     
     Args:
         nEle (int): 单元编号。从 1 开始编号，所有类型的单元均使用同一编号序列。
+        eElementType (str): 不能修改，固定为 BEAM3D，不区分大小写
         nNode1 (int): 节点1编号
         nNode2 (int): 节点2编号
         nMat (int): 材料编号
@@ -51,16 +56,16 @@ def osis_element_beam3d(nEle: int, nNode1: int, nNode2: int, nMat: int, nSec1: i
     Returns:
         tuple (bool, str): 是否成功，失败原因
     '''
-    params = locals()
-    e = OSISEngine.GetInstance()
-    return e.OSIS_Element(nEle, "BEAM3D", params)
+    pass
 
-def osis_element_truss(nEle: int, nNode1: int, nNode2: int, nMat: int, nSec1: int, nSec2: int, dStrain: float):
+@REGISTRY.register("Element")
+def osis_element_truss(nEle: int=1, eElementType: str="TRUSS", nNode1: int=1, nNode2: int=2, nMat: int=1, nSec1: int=1, nSec2: int=1, dStrain: float=0.0):
     '''
     创建桁架单元
     
     Args:
         nEle (int): 单元编号。从 1 开始编号，所有类型的单元均使用同一编号序列。
+        eElementType (str): 不能修改，固定为 TRUSS，不区分大小写
         nNode1 (int): 节点1编号
         nNode2 (int): 节点2编号
         nMat (int): 材料编号
@@ -71,16 +76,16 @@ def osis_element_truss(nEle: int, nNode1: int, nNode2: int, nMat: int, nSec1: in
     Returns:
         tuple (bool, str): 是否成功，失败原因
     '''
-    params = locals()
-    e = OSISEngine.GetInstance()
-    return e.OSIS_Element(nEle, "TRUSS", params)
+    pass
 
-def osis_element_spring(nEle: int, nNode1: int, nNode2: int, bLinear: int, dx: float, dy: float, dz: float, rx: float, ry: float, rz: float, dBeta: float):
+@REGISTRY.register("Element")
+def osis_element_spring(nEle: int=1, eElementType: str="SPRING", nNode1: int=1, nNode2: int=2, bLinear: int=1, dx: float=10, dy: float=10, dz: float=10, rx: float=10, ry: float=10, rz: float=10, dBeta: float=0.0):
     '''
     创建弹簧单元
     
     Args:
         nEle (int): 单元编号。从 1 开始编号，所有类型的单元均使用同一编号序列。
+        eElementType (str): 不能修改，固定为 SPRING，不区分大小写
         nNode1 (int): 节点1编号
         nNode2 (int): 节点2编号
         bLinear (int): 弹簧类型标志：
@@ -109,16 +114,16 @@ def osis_element_spring(nEle: int, nNode1: int, nNode2: int, bLinear: int, dx: f
     Returns:
         tuple (bool, str): 是否成功，失败原因
     '''
-    params = locals()
-    e = OSISEngine.GetInstance()
-    return e.OSIS_Element(nEle, "SPRING", params)
+    pass
 
-def osis_element_cable(nEle: int, nNode1: int, nNode2: int, nMat: int, nSec: int, eMethod: Literal["UL", "IF", "HF", "VF", "IS"], dPara: float):
+@REGISTRY.register("Element")
+def osis_element_cable(nEle: int=1, eElementType: str="CABLE", nNode1: int=1, nNode2: int=2, nMat: int=1, nSec: int=1, eMethod: Literal["UL", "IF", "HF", "VF", "IS"]="UL", dPara: float="10.0"):
     '''
     创建弹簧单元
     
     Args:
         nEle (int): 单元编号。从 1 开始编号，所有类型的单元均使用同一编号序列。
+        eElementType (str): 不能修改，固定为 CABLE，不区分大小写
         nNode1 (int): 节点1编号。
         nNode2 (int): 节点2编号。
         nMat (int): 材料编号。
@@ -139,16 +144,16 @@ def osis_element_cable(nEle: int, nNode1: int, nNode2: int, nMat: int, nSec: int
     Returns:
         tuple (bool, str): 是否成功，失败原因
     '''
-    params = locals()
-    e = OSISEngine.GetInstance()
-    return e.OSIS_Element(nEle, "CABLE", params)
+    pass
 
-def osis_element_shell(nEle: int, bIsThin: bool, nMat: int, nThk: int, nNode1: int, nNode2: int, nNode3: int, nNode4: int = None):
+@REGISTRY.register("Element")
+def osis_element_shell(nEle: int=1, eElementType: str="CABLE", bIsThin: bool=1, nMat: int=1, nThk: int=1, nNode1: int=1, nNode2: int=2, nNode3: int=3, nNode4: int = None):
     '''
     创建弹簧单元
     
     Args:
         nEle (int): 单元编号。从 1 开始编号，所有类型的单元均使用同一编号序列。
+        eElementType (str): 不能修改，固定为 SHELL，不区分大小写
         bIsThin (bool): 
         nMat (int): 材料编号。
         nThk (int): 
@@ -160,13 +165,10 @@ def osis_element_shell(nEle: int, bIsThin: bool, nMat: int, nThk: int, nNode1: i
     Returns:
         tuple (bool, str): 是否成功，失败原因
     '''
-    params = locals()
-    if nNode4 is None:
-        params.pop("nNode4")    # 得手动pop掉，不能留下这个键值对
-    e = OSISEngine.GetInstance()
-    return e.OSIS_Element(nEle, "SHELL", params)
+    pass
 
-def osis_element_del(nEle: int):
+@REGISTRY.register("ElementDel")
+def osis_element_del(nEle: int=1):
     """删除一个单元
 
     Args:
@@ -177,10 +179,10 @@ def osis_element_del(nEle: int):
             - bool: 操作是否成功
             - str: 失败原因（如果操作失败）
     """
-    e = OSISEngine.GetInstance()
-    return e.OSIS_ElementDel(nEle)
+    pass
 
-def osis_element_mod(nOld: int, nNew: int):
+@REGISTRY.register("ElementMod")
+def osis_element_mod(nOld: int=1, nNew: int=2):
     """修改一个单元的编号。单元编号存在时，交换
 
     Args:
@@ -192,5 +194,27 @@ def osis_element_mod(nOld: int, nNew: int):
             - bool: 操作是否成功
             - str: 失败原因（如果操作失败）
     """
-    e = OSISEngine.GetInstance()
-    return e.OSIS_ElementMod(nOld, nNew)
+    pass
+
+@REGISTRY.register("EleGrp")
+def osis_element_group(strName: str="单元组1", eOP: Literal["c", "a", "s", "r", "aa", "ra", "m", "d"]='a', param: list=[1]):
+    '''
+    分配边界给节点(一般支撑，节点弹性支撑)
+    
+    Args:
+        strName (str): 边界编号
+        eOP (str): 操作
+            * c = 创建
+            * a = 添加
+            * s = 替换
+            * r = 移除
+            * aa = 添加全部
+            * ra = 移除全部
+            * m = 修改组名
+            * d = 删除
+        param (list): 待操作的编号，支持的格式：*，*to*；*by*，仅用于替换。例子：[2,3,5,8to10] [2by3,5by6,8by10] 重合的编号自动忽略
+    Returns:
+        tuple (bool, str): 是否成功，失败原因
+    '''
+    pass
+

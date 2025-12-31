@@ -16,8 +16,10 @@
 #include <codecvt>
 
 namespace py = pybind11;
+#include "YILAlgorithm/yilWarning.h"
 #include "yilBaseCommand/yilBaseCommandInc.h"
 #include "yilCommand/yilCommandInc.h"
+#include "XCPCalculateTool/CalBsUtils.h"
 #include "YILProjectGroup/yilProjectGroupInc.h"
 
 typedef void (*ReplotCallback)();
@@ -74,6 +76,9 @@ public:
 	// ========================================================================
 	// ===============================前处理接口================================
 	// ========================================================================
+
+	// 直接运行OSIS命令流
+	std::pair<bool, std::string> OSIS_Run(std::string strCommand);
 
 	/// <summary>
 	/// 定义加速度
@@ -343,9 +348,18 @@ public:
 	/// </summary>
 	/// <param name="nBd">边界编号</param>
 	/// <param name="eOP">操作: a = 添加，s = 替换，r = 移除，aa = 添加全部，ra = 移除全部</param>
-	/// <param name="nodeNOs">待操作的节点编号</param>
+	/// <param name="nodeNOs">待操作的节点编号。替换时，nodeNOs每个元素为 <旧编号,新编号> 对</param>
 	/// <returns></returns>
 	std::pair<bool, std::string> OSIS_AsgnBd(const int nBd, const std::string eOP, const py::list nodeNOs);
+
+	/// <summary>
+	/// 添加或移除边界
+	/// </summary>
+	/// <param name="strName">边界组名</param>
+	/// <param name="eOP">操作 c = 创建，a = 添加，s = 替换，r = 移除，aa = 添加全部，ra = 移除全部，m = 修改组名，d = 删除</param>
+	/// <param name="boundaryNOs">待操作的边界编号。替换时，boundaryNOs每个元素为 <旧编号,新编号> 对</param>
+	/// <returns></returns>
+	std::pair<bool, std::string> OSIS_BdGrp(const std::string strName, const std::string eOP, const py::list boundaryNOs);
 
 	/// <summary>
 	/// 定义或修改荷载工况
@@ -390,7 +404,13 @@ public:
 	/// <returns></returns>
 	std::pair<bool, std::string> OSIS_PrnLcr(const std::string strLCName, const std::string eDataItem, const std::string eElementType);
 
-
+	/// <summary>
+	/// 提取内力结果
+	/// </summary>
+	/// <param name="strLCName"></param>
+	/// <param name="eDataItem"></param>
+	/// <param name="eElementType"></param>
+	/// <returns></returns>
 	std::tuple<bool, std::string, py::dict> OSIS_ElemForce(const std::string strLCName, const std::string eDataItem, const std::string eElementType);
 
 	// ========================================================================
@@ -422,18 +442,13 @@ inline T safe_cast(const py::dict& kwargs, const std::string& key) {
 	}
 }
 
-//// 安全参数解析 单个参数版
-//template<typename T>
-//inline T safe_cast(const py::dict& kwargs, const std::string& key) {
-//	if (!kwargs.contains(key)) {
-//		throw std::runtime_error("参数 '" + key + "' 不存在!");
-//	}
-//
-//	try {
-//		auto a = kwargs[key.c_str()];
-//		return kwargs[key.c_str()].cast<T>();
-//	}
-//	catch (const py::cast_error& e) {
-//		throw std::runtime_error("参数 '" + key + "' 解析错误: " + e.what());
-//	}
-//}
+// 安全参数解析 单个参数版
+template<typename T>
+inline T safe_cast(const py::object param) {
+	try {
+		return param.cast<T>();
+	}
+	catch (const py::cast_error& e) {
+		throw std::runtime_error("参数 '" + key + "' 解析错误: " + e.what());
+	}
+}

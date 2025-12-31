@@ -1,7 +1,7 @@
+from ..core import REGISTRY
 
-from ..core import OSISEngine
-
-def osis_node(nNO: int, x: float, y: float, z: float):
+@REGISTRY.register('Node')
+def osis_node(nNO: int=1, x: float=0.0, y: float=0.0, z: float=0.0):
     """创建一个节点
 
     Args:
@@ -15,10 +15,10 @@ def osis_node(nNO: int, x: float, y: float, z: float):
             - bool: 操作是否成功
             - str: 失败原因（如果操作失败）
     """
-    e = OSISEngine.GetInstance()
-    return e.OSIS_Node(nNO, x, y, z)
+    pass
 
-def osis_node_del(nNO: int):
+@REGISTRY.register('NodeDel')
+def osis_node_del(nNO: int=1):
     """删除一个节点
 
     Args:
@@ -29,10 +29,10 @@ def osis_node_del(nNO: int):
             - bool: 操作是否成功
             - str: 失败原因（如果操作失败）
     """
-    e = OSISEngine.GetInstance()
-    return e.OSIS_NodeDel(nNO)
+    pass
 
-def osis_node_mod(nOld: int, nNew: int):
+@REGISTRY.register('NodeMod')
+def osis_node_mod(nOld: int=1, nNew: int=2):
     """修改一个节点的编号。节点编号存在时，交换
 
     Args:
@@ -44,5 +44,8 @@ def osis_node_mod(nOld: int, nNew: int):
             - bool: 操作是否成功
             - str: 失败原因（如果操作失败）
     """
-    e = OSISEngine.GetInstance()
-    return e.OSIS_NodeMod(nOld, nNew)
+    pass
+
+# @REGISTRY.register('test')
+# def test(a: int=1, b: bool=1, c:str=None):
+#     pass

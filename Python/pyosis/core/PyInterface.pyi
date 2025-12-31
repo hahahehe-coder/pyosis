@@ -1,3 +1,7 @@
+'''
+PyInterface 的 高亮提示文件
+'''
+
 from typing import Any, Dict, Tuple
 
 class PyInterface:
@@ -10,6 +14,9 @@ class PyInterface:
         return cls._instance
 
     # def setProjects(self, project: Any) -> None: ...
+
+    def OSIS_Run(self, strCmd) -> Tuple[bool, str]:
+        return True, ""
 
     def OSIS_Replot(self) -> Tuple[bool, str]:
         return True, ""
@@ -113,9 +120,12 @@ class PyInterface:
     def OSIS_Load(self, eLoadType: str, strLCName: str, params: Dict[str, Any]) -> Tuple[bool, str]:
         return True, ""
 
-    def OSIS_LoadCase(self, strLCName: str, eLoadCaseType: str, dScalar: float, strPrompt: str) -> Tuple[bool, str]:
+    def OSIS_LoadCase(self, strName: str, eLoadCaseType: str, dScalar: float, strPrompt: str) -> Tuple[bool, str]:
         return True, ""
     
-    def OSIS_ElemForce(str, strLCName: str, eDataItem: str, eElementType: str) -> Tuple[bool, str]:
+    def OSIS_LiveGrade(self, strName: str, eCode: str, eLiveLoadType: str, params: Dict[str, Any]) -> Tuple[bool, str]:
         return True, ""
+
+    def OSIS_ElemForce(str, strLCName: str, eDataItem: str, eElementType: str) -> Tuple[bool, str, Any]:
+        return True, "", None
     

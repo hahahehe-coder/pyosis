@@ -53,6 +53,8 @@ PYBIND11_MODULE(PyInterface, m)
     py::class_<PyInterface>(m, "PyInterface")
         .def_static("GetInstance", &PyInterface::GetInstance,
             py::return_value_policy::reference)
+        .def("OSIS_Run", &PyInterface::OSIS_Run,
+            py::arg("strCmd"))
         .def("OSIS_Replot", &PyInterface::OSIS_Replot)
         .def("OSIS_Clear", &PyInterface::OSIS_Clear)
         .def("OSIS_Solve", &PyInterface::OSIS_Solve)

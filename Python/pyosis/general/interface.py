@@ -1,5 +1,6 @@
-from ..core import OSISEngine
+from ..core import REGISTRY
 
+@REGISTRY.register("Replot")
 def osis_replot():
     """
     重新绘制窗口
@@ -7,9 +8,9 @@ def osis_replot():
     Returns:
         tuple (bool, str): 是否成功，失败原因
     """
-    e = OSISEngine.GetInstance()
-    return e.OSIS_Replot()
+    pass
 
+@REGISTRY.register("Clear")
 def osis_clear():
     """
     清空项目
@@ -17,9 +18,9 @@ def osis_clear():
     Returns:
         tuple (bool, str): 是否成功，失败原因
     """
-    e = OSISEngine.GetInstance()
-    return e.OSIS_Clear()
+    pass
 
+@REGISTRY.register("Solve")
 def osis_solve():
     """
     求解工程
@@ -27,10 +28,10 @@ def osis_solve():
     Returns:
         tuple (bool, str): 是否成功，失败原因
     """
-    e = OSISEngine.GetInstance()
-    return e.OSIS_Solve()
+    pass
 
-def osis_creep_shrink(nNO: int, strName: str, dAvgHumidity: float, nBirthTime: int, dTypeCoeff: float, nBirthByShrinking: int):
+@REGISTRY.register("CrpShrk")
+def osis_creep_shrink(nNO: int=1, strName: str="收缩徐变1", dAvgHumidity: float=70.0, nBirthTime: int=7, dTypeCoeff: float=5.0, nBirthByShrinking: int=3):
     """
     设置收缩徐变
 
@@ -45,5 +46,4 @@ def osis_creep_shrink(nNO: int, strName: str, dAvgHumidity: float, nBirthTime: i
     Returns:
         tuple (bool, str): 是否成功，失败原因
     """
-    e = OSISEngine.GetInstance()
-    return e.OSIS_CrpShrk(nNO, strName, dAvgHumidity, nBirthTime, dTypeCoeff, nBirthByShrinking)
+    pass

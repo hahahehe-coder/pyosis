@@ -1,6 +1,20 @@
 #include "stdafx.h"
 #include "PyInterface.h"
 
+// 直接运行OSIS命令流
+std::pair<bool, std::string> PyInterface::OSIS_Run(std::string strCmd)
+{
+	std::string errorCode = "";
+
+	yilObjectNoneVec<yilCString> tCommandVec;
+	tCommandVec.Add(&(yilCString)strCmd);
+
+	CalBsUtils::ExecuteCommands(tCommandVec);
+
+	auto warning = g_pWarningList->GetLastWaringContent();
+	errorCode = warning.c_str();
+	return { false, errorCode };
+}
 
 std::pair<bool, std::string> PyInterface::OSIS_Replot()
 {

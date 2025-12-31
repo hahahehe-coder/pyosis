@@ -638,7 +638,7 @@ def section_t_shape(nSec: int = 1, strName: str = "截面1 (T形)",
 
     Examples:
         >>> # 创建基本T形截面
-        >>> result = section_tshape(1, "截面1 (T形)", {
+        >>> result = section_t_shape(1, "截面1 (T形)", {
         ...     "Dir": 0,
         ...     "H": 2,
         ...     "B": 12,
@@ -687,7 +687,7 @@ def section_i_shape(nSec: int = 1, strName: str = "截面1 (工字形)",
 
     Examples:
         >>> # 创建基本工字形截面
-        >>> result = section_ishape(1, "截面1 (工字形)", {
+        >>> result = section_i_shape(1, "截面1 (工字形)", {
         ...     "H": 2.0,
         ...     "Bt": 12.0,
         ...     "Bb": 12.0,

@@ -9,3 +9,4 @@ OSISEngine中的函数，将会分发到各个模块，被再次封装，意图�
 """
 
 from .engine import OSISEngine
+from .command import REGISTRY, osis_run

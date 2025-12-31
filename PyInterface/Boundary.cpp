@@ -27,6 +27,23 @@ bool RestoreBoundary(bool _status, int _index, InfoType* _pInfo)
 	return true;
 }
 
+// 原定义意思为 FILTER_INVALID_ENTITY_FOR_APPEND
+void FilterEntity(std::string strName, std::set<int>& setNo)
+{
+	std::set<int> setDel;
+	auto* pMgr = GET_PREP_BD();
+	auto* pGrp = pMgr->getGroupManager()->getGroupInfo(strName);
+	for (auto it : setNo) {
+		if (!pMgr->getInfo(it))
+			setDel.emplace(it);
+		if (pGrp->find(it) != pGrp->end())
+			setDel.emplace(it);
+	}
+	for (const auto& elem : setDel) {
+		setNo.erase(elem);
+	}
+}
+
 /// <summary>
 /// 边界条件
 /// </summary>
@@ -157,7 +174,7 @@ std::pair<bool, std::string> PyInterface::OSIS_Boundary(const int nBd, const std
 /// </summary>
 /// <param name="nBd">边界编号</param>
 /// <param name="eOP">操作: a = 添加，s = 替换，r = 移除，aa = 添加全部，ra = 移除全部</param>
-/// <param name="nodeNOs">待操作的节点编号</param>
+/// <param name="nodeNOs">待操作的节点编号。替换时，nodeNOs每个元素为 <旧编号,新编号> 对</param>
 /// <returns></returns>
 std::pair<bool, std::string> PyInterface::OSIS_AsgnBd(const int nBd, const std::string eOP, const py::list nodeNOs)
 {
@@ -261,3 +278,87 @@ std::pair<bool, std::string> PyInterface::OSIS_AsgnBd(const int nBd, const std::
 
 	return { true, errorCode };
 }
+
+/*
+/// <summary>
+/// 添加或移除边界
+/// </summary>
+/// <param name="strName">边界组名</param>
+/// <param name="eOP">操作 c = 创建，a = 添加，s = 替换，r = 移除，aa = 添加全部，ra = 移除全部，m = 修改组名，d = 删除</param>
+/// <param name="boundaryNOs">待操作的边界编号。替换时，boundaryNOs每个元素为 <旧编号,新编号> 对</param>
+/// <returns></returns>
+std::pair<bool, std::string> PyInterface::OSIS_BdGrp(const std::string strName, const std::string eOP, const py::list boundaryNOs)
+{
+	std::string errorCode;
+
+	auto pPREPCmd = (PREP::Command*)GetCommand();	// 不知道对不对
+	if (eOP == OSIS_CREATE) { //创建组
+		
+		if (!pPREPCmd->BdGroupCreate(strName))
+		{
+			errorCode = "创建失败！";
+			return { false, errorCode };
+		}
+	}
+	else if (eOP == OSIS_APPEND) { //添加
+		//PROCESS_GROUP(BdGroupAppend);
+		auto* pBGM = GET_PREP_BDGRP();
+		if (!pBGM->getGroupInfo(strName))
+		{
+			return { false, errorCode };
+		}
+
+		std::set<int> setNO;
+		for (auto item : boundaryNOs)
+		{
+			int nNO = item.cast<int>();
+			setNO.insert(nNO);
+		}
+		
+		FilterEntity(strName, setNO);
+
+		if (!pBGM->appendToGrp(strName, setNO))
+		{
+			return { false, errorCode };
+		}
+
+
+		////压入影子命令
+		//yilCString strCommand;
+		//pBGM->generateAPDL(_Name, OSIS_REMOVE, vecNO, strCommand);
+		//PUSH_SHADOW_CMD(THIS_IS_APP, strCommand);
+	}
+	else if (eOP == OSIS_SUBSTITUTE) { //替换
+		//PROCESS_GROUP(BdGroupSubstitute);
+	}
+	else if (eOP == OSIS_REMOVE) { //移除
+		//PROCESS_GROUP(BdGroupRemove);
+	}
+	else if (eOP == OSIS_APPEND_ALL) { //添加全部
+		//PROCESS_GROUP(BdGroupAppendAll);
+	}
+	else if (eOP == OSIS_REMOVE_ALL) { //移除全部
+		//PROCESS_GROUP(BdGroupRemoveAll);
+	}
+	else if (eOP == OSIS_MODIFY_NAME) { //修改
+		//PROCESS_GROUP(BdGroupModify);
+	}
+	else if (eOP == OSIS_DELETE) { //删除组
+		if (!pPREPCmd->BdGroupDelete(strName))
+		{
+			errorCode = "删除失败！";
+			return { false, errorCode };
+		}
+	}
+	else {
+		errorCode = "参数 操作类型 错误！";
+		return { false, errorCode };
+	}
+
+	GetProject()->GetPlotControl()->StructTreeChangedOn();
+	GetProject()->GetPlotControl()->GroupTreeChangedOn();
+	GetProject()->GetPlotControl()->BoundCondGropDataChangedOn();
+
+	return { true, errorCode };
+}
+*/

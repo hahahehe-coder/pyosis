@@ -254,6 +254,7 @@ std::pair<bool, std::string> PyInterface::OSIS_QBHollowSlab(const py::list spans
 
 	OSIS_LiveGrade("简支空心板-移动荷载", "JTGD60_2015", "HIGHWAY_I", py::dict());	// 根据快速建模的具体实现，Init Project的时候初始化了活载
 
+
 	// ===================截面定义===================
 	// TODO 从pPortrait中获取
 
