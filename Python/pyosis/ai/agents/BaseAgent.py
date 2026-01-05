@@ -9,7 +9,7 @@ class BaseAgent:
     
     def __init__(self, model="qwen-flash", api_key="", base_url=""):
         """Initialize the agent"""
-        if api_key == "" or base_url == "":
+        if model == "" or api_key == "" or base_url == "":
             raise ValueError("API key and Base URL must be provided for Agent.")
         self.llm = ChatOpenAI(
             model=model,

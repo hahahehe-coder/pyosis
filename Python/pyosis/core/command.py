@@ -7,21 +7,22 @@ pyosis.core.command 的 Docstring
 
 import inspect
 import functools
-from typing import Dict, Any, Tuple
+from typing import Dict, Any, Tuple, Literal
 from .engine import OSISEngine
 
-def osis_run(strCmd) -> Tuple[bool, str, Any]:
+def osis_run(strCmd: str="", mode: Literal["stash", "exec"]="exec") -> Tuple[bool, str, Any]:
     '''
     直接以命令流的形式运行OSIS功能
     
     Args:
         strCmd: 完整的命令流
+        mode: 运行模式，使用 stash 仅会将命令流存到OSIS中，不会执行。只有收到 exec 信号才会执行。此参数为了同时执行多条命令提高效率
 
     Returns:
         tuple (bool, str, Any): 是否成功，失败原因，其他结果数据
     '''
     e = OSISEngine.GetInstance()
-    return e.OSIS_Run(strCmd)
+    return e.OSIS_Run(strCmd, mode)
 
 class OSISFunctionRegistry:
     """
@@ -120,7 +121,7 @@ class OSISFunctionRegistry:
                 param_values.append(str(int(value)))
             elif value is None:
                 # 参数值为空字符串时会加一个空的参数
-                # 如果希望生成 cmd,a,b,,d;的命令格式，c参数需要忽略参数类型填写：""
+                # 如果希望生成 cmd,a,b,,d;的命令格式，c参数需要忽略参数类型填写空字符串：""
                 # param_values.append("")     # 加一个空字符串
                 continue        # 如果为None则跳过解析
             else:
@@ -133,7 +134,7 @@ class OSISFunctionRegistry:
     def _execute_command(self, cmd) -> Tuple[bool, str, Any]:
         """执行命令（发送到软件）"""
         print(cmd)
-        return OSISEngine.GetInstance().OSIS_Run(cmd)
+        return osis_run(cmd, "stash")
     
     def list_commands(self):
         """列出所有命令"""
@@ -143,6 +144,10 @@ class OSISFunctionRegistry:
     def get_command(self, cmd_name):
         """获取函数信息"""
         return self.commands.get(cmd_name)
+    
+    def count_command(self):
+        """计算总共多少个函数"""
+        return len(self.commands)
 
 # 全局函数注册表实例
 REGISTRY = OSISFunctionRegistry()       # 作用为保证参数个数与顺序正常，python函数一定要注册一下

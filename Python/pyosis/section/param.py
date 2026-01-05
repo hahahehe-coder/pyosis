@@ -5,8 +5,9 @@ pyosis.section.param 的 Docstring
 from typing import Any, Dict, Literal
 from ..core import REGISTRY
 
+#SectionOffset,1,Middle,0.0000,Center,0.0000; SectionMesh,1,0,0.1000; 
 @REGISTRY.register('SectionOffset')
-def osis_section_offset(nSec: int, offsetTypeY: str, dOffsetValueY: float, offsetTypeZ: str, dOffsetValueZ: float):
+def osis_section_offset(nSec: int=1, offsetTypeY: Literal["Left", "Middle", "Right", "Manual"]="Middle", dOffsetValueY: float=0.0, offsetTypeZ: Literal["Top", "Center", "Bottom", "Manual"]="Center", dOffsetValueZ: float=0.0):
     """设置截面偏移。
 
     Args:
@@ -46,7 +47,7 @@ def osis_section_offset(nSec: int, offsetTypeY: str, dOffsetValueY: float, offse
     pass
 
 @REGISTRY.register('SectionMesh')
-def osis_section_mesh(nSec: int, nMeshMethod: Literal[0, 1], dMeshSize: float):
+def osis_section_mesh(nSec: int=1, nMeshMethod: Literal[0, 1]=0, dMeshSize: float=0.0):
     """设置截面网格。
 
     Args:

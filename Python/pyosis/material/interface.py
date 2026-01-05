@@ -4,7 +4,7 @@ Interfaces of OSIS functions
 ========
 
 """
-from typing import Any, Dict, Literal
+from typing import Literal
 from ..core import REGISTRY
 
 # 后续会重写这部分接口
@@ -129,7 +129,30 @@ def osis_material_prestressed(nMat: int, strName: str, eMaterialType: Literal["P
     """
     pass
 
-# 这个函数后面还得继续改
+@REGISTRY.register('Material')
+def osis_material_reber(nMat: int, strName: str, eMaterialType: Literal["REBAR"], eCode: Literal["JTG3362_2018", "JTGD62_2004"], 
+                        eGrade: Literal["HPB300", "HRB400", "HRBF400", "RRB400", "HRB500"] | Literal["R235", "HRB335", "HRB400", "KL400"], dDmp: float):
+    """创建或修改钢材
+
+    Args:
+        nMat (int): 材料编号
+        strName (str): 材料名称
+        eMaterialType (str): 材料类型，不区分大小写。固定为 REBAR
+        eCode (str): 材料标准代码，可选值：
+            * JTG3362_2018
+            * JTGD62_2004
+        eGrade (str): 材料等级牌号，根据材料类型可选（不按照规定填写可能会有错误）：
+            * JTG3362_2018: HPB300, HRB400, HRBF400, RRB400, HRB500
+            * JTGD62_2004: R235, HRB335, HRB400, KL400
+        dDmp (float): 材料阻尼比
+
+    Returns:
+        tuple (bool, str):
+            - bool: 操作是否成功
+            - str: 失败原因（如果操作失败）
+    """
+    pass
+
 @REGISTRY.register('Material')
 def osis_material_custom(nMat: int, strName: str, eMaterialType: Literal["CUSTOM"], dE: float=0, dG: float=0, dMu: float=0, dExpCoeff: float=0, dUnitWeight: float=0, dDensity: float=0, dDmp: float=0):
     """创建或修改材料。

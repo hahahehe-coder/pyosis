@@ -31,6 +31,7 @@ private:
 	yilProjectGroup* m_pProjectGroup;
 	//yilBaseCommand* GetCommand();
 	ReplotCallback Replot;
+	yilObjectNoneVec<yilCString> m_vCommand;	// 暂存的命令流
 	PyInterface() = default;
 
 public:
@@ -78,7 +79,14 @@ public:
 	// ========================================================================
 
 	// 直接运行OSIS命令流
-	std::pair<bool, std::string> OSIS_Run(std::string strCommand);
+
+	/// <summary>
+	/// 直接运行OSIS命令流
+	/// </summary>
+	/// <param name="strCmd">命令流</param>
+	/// <param name="mode">运行模式 stash=暂存 execute=立即执行</param>
+	/// <returns></returns>
+	std::pair<bool, std::string> OSIS_Run(std::string strCmd, std::string mode);
 
 	/// <summary>
 	/// 定义加速度

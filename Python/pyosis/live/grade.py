@@ -25,7 +25,7 @@ from ..core import REGISTRY
 #     eLiveLoadType = eLiveLoadType.upper()
 #     return e.OSIS_LiveGrade(strName, eCode, eLiveLoadType, params)
 @REGISTRY.register("LiveGrade")
-def osis_live_grade_highway(strName: str="活载-HIGHWAY", eCode: str="JTGD60_2015", eLiveLoadType: Literal["HIGHWAY_I", "HIGHWAY_II"]="HIGHWAY_I"):
+def osis_livegrade_highway(strName: str="活载-HIGHWAY", eCode: str="JTGD60_2015", eLiveLoadType: Literal["HIGHWAY_I", "HIGHWAY_II"]="HIGHWAY_I"):
     '''
     定义活载-公路活载
 
@@ -42,7 +42,7 @@ def osis_live_grade_highway(strName: str="活载-HIGHWAY", eCode: str="JTGD60_20
     pass
 
 @REGISTRY.register("LiveGrade")
-def osis_live_grade_highway(strName: str="活载-HIGHWAY", eCode: str="JTGD60_2015", eLiveLoadType: Literal["VEHICLE"]="VEHICLE"):
+def osis_livegrade_highway(strName: str="活载-HIGHWAY", eCode: str="JTGD60_2015", eLiveLoadType: Literal["VEHICLE"]="VEHICLE"):
     '''
     定义活载-车辆荷载
 
@@ -59,7 +59,7 @@ def osis_live_grade_highway(strName: str="活载-HIGHWAY", eCode: str="JTGD60_20
     pass
 
 @REGISTRY.register("LiveGrade")
-def osis_live_grade_crowd(strName: str="活载-CROWD", eCode: str="JTGD60_2015", eLiveLoadType: str="CROWD", eBridgeType: Literal["BRIDGE_COMMON", "BRIDGE_CROWD_WITH", "BRIDGE_CROWD_ONLY"]="BRIDGE_COMMON", dPara: float=10):
+def osis_livegrade_crowd(strName: str="活载-CROWD", eCode: str="JTGD60_2015", eLiveLoadType: str="CROWD", eBridgeType: Literal["BRIDGE_COMMON", "BRIDGE_CROWD_WITH", "BRIDGE_CROWD_ONLY"]="BRIDGE_COMMON", dPara: float=10):
     '''
     定义活载-人群荷载
 
@@ -79,7 +79,7 @@ def osis_live_grade_crowd(strName: str="活载-CROWD", eCode: str="JTGD60_2015",
     pass
 
 @REGISTRY.register("LiveGrade")
-def osis_live_grade_fatigue(strName: str="活载-FATIGUE", eCode: str="JTGD60_2015", eLiveLoadType: Literal["FATIGUE_I", "FATIGUE_II", "FATIGUE_III"]="FATIGUE_I",  dPara: float=None):
+def osis_livegrade_fatigue(strName: str="活载-FATIGUE", eCode: str="JTGD60_2015", eLiveLoadType: Literal["FATIGUE_I", "FATIGUE_II", "FATIGUE_III"]="FATIGUE_I",  dPara: float=None):
     '''
     定义活载-疲劳模型
 
@@ -98,7 +98,7 @@ def osis_live_grade_fatigue(strName: str="活载-FATIGUE", eCode: str="JTGD60_20
     pass
 
 @REGISTRY.register("LiveGradeDel")
-def osis_live_grade_del(strName: str="活载1"):
+def osis_livegrade_del(strName: str="活载1"):
     '''
     删除活载等级
     
@@ -111,13 +111,13 @@ def osis_live_grade_del(strName: str="活载1"):
     pass
 
 @REGISTRY.register("LiveGradeMod")
-def osis_live_grade_mod(nOld: int=1, nNew: int=2):
+def osis_livegrade_mod(strOldName: str, strNewName: str):
     '''
     修改编号
     
     Args:
-        nOld (int): 旧编号
-        nNew (int): 新编号
+        strOldName (str): 旧名称
+        strOldName (str): 新名称
 
     Returns:
         tuple (bool, str): 是否成功，失败原因

@@ -265,9 +265,11 @@ def osis_section_rect(nSec: int, strName: str, eSectionType: Literal["RECT"], Tr
     """
     pass
 
+# 0.9500,1.0000,0.5700,0.0500,0.1200,0.1200,0.1600,0.1200,0.1600,0.3800, 0.1500,0.0800,0.1200,0.0800,0.0500,0.0500,0.0800,0.0800,0.1200; SectionOffset,1,Middle,0.0000,Center,0.0000; SectionMesh,1,0,0.1000; 
 @REGISTRY.register("Section")
-def osis_section_hollowslab(nSec: int, strName: str, eSectionType: Literal["HOLLOWSLAB"], eGirderPos: Literal["LEFT", "MIDDLE", "RIGHT"], 
-                          H: float, Bs: float, Bm: float, Bj: float, Tt: float, Tb: float, Tw: float, Tc: float, Tc1: float, Bc: float, xi1: float, yi1: float, xi2: float, yi2: float, xo3: bool, yo3: float, xo4: float, yo4: float, h1: float):
+def osis_section_hollowslab(nSec: int=1, strName: str="截面1-空心板", eSectionType: Literal["HOLLOWSLAB"]="HOLLOWSLAB", eGirderPos: Literal["LEFT", "MIDDLE", "RIGHT"]="MIDDLE", 
+                          H: float=0.95, Bs: float=1.0, Bm: float=0.57, Bj: float=0.05, Tt: float=0.12, Tb: float=0.12, Tw: float=0.16, 
+                          Tc: float=0.12, Tc1: float=0.16, Bc: float=0.38, xi1: float=0.15, yi1: float=0.08, xi2: float=0.12, yi2: float=0.08, xo3: float=0.05, yo3: float=0.05, xo4: float=0.08, yo4: float=0.08, h1: float=0.12):
     """定义或修改空心板截面(HOLLOWSLAB)。
 
     Args:

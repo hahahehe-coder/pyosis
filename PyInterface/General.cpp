@@ -2,18 +2,40 @@
 #include "PyInterface.h"
 
 // 直接运行OSIS命令流
-std::pair<bool, std::string> PyInterface::OSIS_Run(std::string strCmd)
+std::pair<bool, std::string> PyInterface::OSIS_Run(std::string strCmd, std::string mode)
 {
 	std::string errorCode = "";
 
-	yilObjectNoneVec<yilCString> tCommandVec;
-	tCommandVec.Add(&(yilCString)strCmd);
+	if (strCmd != "")
+	{
+		if (mode == "execute" || mode == "exec")
+		{
+			m_vCommand.Add(&(yilCString)strCmd);
+			// 这里需要split一下
+			CalBsUtils::ExecuteCommands(m_vCommand);
+			m_vCommand.Clear();
+		}
+		else if (mode == "stash")
+		{
+			m_vCommand.Add(&(yilCString)strCmd);
+		}
+		else
+		{
 
-	CalBsUtils::ExecuteCommands(tCommandVec);
+		}
+	}
+	else
+	{
+		if (mode == "execute" || mode == "exec")
+		{
+			CalBsUtils::ExecuteCommands(m_vCommand);
+			m_vCommand.Clear();
+		}
+	}
 
 	auto warning = g_pWarningList->GetLastWaringContent();
 	errorCode = warning.c_str();
-	return { false, errorCode };
+	return { true, errorCode };
 }
 
 std::pair<bool, std::string> PyInterface::OSIS_Replot()

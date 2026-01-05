@@ -15,7 +15,7 @@ class PyInterface:
 
     # def setProjects(self, project: Any) -> None: ...
 
-    def OSIS_Run(self, strCmd) -> Tuple[bool, str]:
+    def OSIS_Run(self, strCmd: str, mode: str) -> Tuple[bool, str]:
         return True, ""
 
     def OSIS_Replot(self) -> Tuple[bool, str]:
