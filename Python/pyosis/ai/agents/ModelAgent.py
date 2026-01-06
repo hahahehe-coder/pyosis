@@ -1,6 +1,7 @@
-from typing import Tuple
+from langchain.tools import tool
 from .BaseAgent import BaseAgent
-from .tools import *
+from ...node import *
+from ...element import *
 
 class ModelAgent(BaseAgent):
     """模型设计智能体"""
@@ -9,13 +10,17 @@ class ModelAgent(BaseAgent):
 
     def create_agent(self):
         tools = [
-            node,
-            node_del,
-            element_beam3d,
-            element_truss,
-            element_spring,
-            element_cable,
-            element_del,
+            tool(osis_node),
+            tool(osis_node_del),
+            tool(osis_node_mod),
+
+            tool(osis_element_beam3d),
+            tool(osis_element_cable),
+            tool(osis_element_truss),
+            tool(osis_element_spring),
+            tool(osis_element_shell),
+            tool(osis_element_del),
+            tool(osis_element_mod)
         ]
         system_prompt = \
 """
@@ -26,12 +31,6 @@ class ModelAgent(BaseAgent):
 - 需要使用已创建的材料编号和截面编号，如果没有提供给你，终止调用并告诉决策智能体
 - 创建单元前一定要确保使用的节点已经创建
         
-你的工具：
-1. node - 创建一个节点
-2. node_del - 删除节点
-3. element_XXX - 创建一个对应类型的单元
-4. element_del - 删除单元
-
 工作流程：
 - 创建任何对象时编号从1递增
 - 用户未规定的参数使用默认参数

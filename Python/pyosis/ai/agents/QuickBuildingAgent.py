@@ -1,7 +1,7 @@
-from typing import Tuple
 from langchain.tools import tool
 from .BaseAgent import BaseAgent
 from ...quick_building import *
+
 
 class QuickBuildingAgent(BaseAgent):
     """模型设计智能体"""

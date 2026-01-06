@@ -1,24 +1,9 @@
-from pyosis.ai.agents.DecisionAgent import DecisionAgent
-
-# material_agent = MaterialAgent.create_agent()
-# material_agent.run_example()
-
-# section_agent = SectionAgent.create_agent()
-# section_agent.run_example()
-
-# model_agent = ModelAgent('qwen-flash')
-# model_agent.create_agent()
-# model_agent.run_example()
-
-# agent = DecisionAgent('qwen-max')
-# agent.create_agent()
-# agent.run_example()
-
 import queue
 import threading
 from ui import ChatInterface
 import tkinter as tk
 
+from pyosis.ai.agents.DecisionAgent import DecisionAgent
 # _api_key=""      # 全局变量
 # _base_url=""
 # 全局变量，用于存储UI实例的引用
@@ -85,7 +70,6 @@ class LangChainAgent:
             
             # 流式输出结束
             self.message_queue.put(("end", "", stream_id))
-            self.agent.replot()
             # 普通输出
             # self.message_queue.put(("message", self.agent.ask_agent(user_message), None))
             
@@ -114,7 +98,7 @@ class LangChainAgent:
             # 继续检查新消息
             self.ui.root.after(100, self.process_messages)
 
-def create_agent_ui(api_key="sk-49a9cacef0274e4a8441914642ed1a73", base_url="https://dashscope.aliyuncs.com/compatible-mode/v1"):
+def create_agent_ui(api_key="sk-2aa267fb86de469b8d831bea645cf182", base_url="https://dashscope.aliyuncs.com/compatible-mode/v1"):
     """创建智能体UI的便捷函数"""
     root = tk.Tk()
     ui = ChatInterface(root)
@@ -146,22 +130,9 @@ def close_window():
     if ui_instance:
         ui_instance.close_window()
 
-# def main(api_key="sk-49a9cacef0274e4a8441914642ed1a73", base_url="https://dashscope.aliyuncs.com/compatible-mode/v1"):
-#     # 创建UI
-#     root = tk.Tk()
-#     ui = ChatInterface(root)
-    
-#     # 创建智能体并连接到UI
-#     agent = LangChainAgent(ui, api_key, base_url)
-    
-#     # 设置UI的回调函数
-#     ui.on_send_message = agent.process_user_message
-    
-#     # 启动UI主循环
-#     root.mainloop()
 
 if __name__ == "__main__":
-    api_key="sk-49a9cacef0274e4a8441914642ed1a73"
+    api_key="sk-2aa267fb86de469b8d831bea645cf182"
     base_url="https://dashscope.aliyuncs.com/compatible-mode/v1"
 
     create_agent_ui(api_key, base_url)

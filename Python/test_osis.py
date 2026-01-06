@@ -1,3 +1,4 @@
+import json
 from pyosis.control import *
 from pyosis.general import *
 from pyosis.section import *
@@ -7,7 +8,6 @@ from pyosis.element import *
 from pyosis.boundary import *
 from pyosis.load import *
 from pyosis.post import *
-import json
 
 osis_clear()
 
@@ -49,7 +49,7 @@ osis_element_beam3d(1, "BEAM3D", 1, 3, 1, 4, 4, 1, 1, 0.00, 0, 0.00, 0)
 osis_element_beam3d(2, "BEAM3D", 2, 3, 1, 5, 5, 1, 1, 0.00, 0, 0.00, 0)
 osis_element_beam3d(3, "BEAM3D", 2, 4, 1, 5, 5, 1, 1, 0.00, 0, 0.00, 0)
 osis_element_beam3d(4, "BEAM3D", 3, 4, 1, 5, 5, 1, 1, 0.00, 0, 0.00, 0)
-            
+
 
 osis_boundary_general(1, "GENERAL", "", 1, 1, 1, 1, 1, 1, 1)
 osis_assign_boundary(1, "a", [1, 2])

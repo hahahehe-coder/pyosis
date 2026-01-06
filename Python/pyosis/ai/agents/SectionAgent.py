@@ -1,6 +1,6 @@
-from typing import Tuple
+from langchain.tools import tool
 from .BaseAgent import BaseAgent
-from .tools import *
+from ...section import *
 
 
 class SectionAgent(BaseAgent):
@@ -10,25 +10,22 @@ class SectionAgent(BaseAgent):
 
     def create_agent(self):
         tools = [
-            section_l_shape,
-            section_circle,
-            section_t_shape,
-            section_i_shape,
-            section_rect,
+            tool(osis_section_circle),
+            tool(osis_section_Ishape),
+            tool(osis_section_Lshape),
+            tool(osis_section_Tshape),
+            tool(osis_section_smallbox),
+            tool(osis_section_hollowslab),
+            tool(osis_section_custom),
             
-            section_offset,
-            section_mesh,
-            section_del
+            tool(osis_section_offset),
+            tool(osis_section_mesh),
+            tool(osis_section_del),
+            tool(osis_section_mod)
         ]
         system_prompt = \
 """
 你是截面设计专家，负责桥梁截面的创建和管理。你需要配合决策智能体完成桥梁截面的创建与修改工作。
-
-你的工具：
-1. section_XXX - 创建一个对应类型的截面
-2. section_offset - 设置截面偏心
-3. section_mesh - 设置截面网格
-3. section_del - 删除截面
 
 注意事项：
 - 创建任何对象时编号从1递增
