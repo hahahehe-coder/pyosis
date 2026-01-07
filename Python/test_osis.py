@@ -1,4 +1,5 @@
 import json
+from pyosis.core import osis_run
 from pyosis.control import *
 from pyosis.general import *
 from pyosis.section import *
@@ -61,6 +62,8 @@ osis_load_nforce("NFORCE", "自定义工况1", 4, 200000, 0, 0, 0, 0, 0)
 osis_solve()
 
 isok, error, ef = osis_elem_force("自定义工况1", "EF", "BEAM3D")
+
+osis_run()
 
 def dict_to_json_txt(data, filename):
     """将字典以JSON格式写入文件"""

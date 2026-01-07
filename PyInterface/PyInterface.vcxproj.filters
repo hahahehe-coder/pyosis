@@ -8,13 +8,18 @@
     <ClCompile Include="Section.cpp" />
     <ClCompile Include="stdafx.cpp" />
     <ClCompile Include="PyInterface.cpp" />
-    <ClCompile Include="HollowSlab.cpp" />
     <ClCompile Include="control.cpp" />
     <ClCompile Include="Boundary.cpp" />
     <ClCompile Include="Stage.cpp" />
     <ClCompile Include="Load.cpp" />
     <ClCompile Include="Post.cpp" />
     <ClCompile Include="Live.cpp" />
+    <ClCompile Include="HollowSlab.cpp">
+      <Filter>QuickBuilding</Filter>
+    </ClCompile>
+    <ClCompile Include="SmallBoxBeam.cpp">
+      <Filter>QuickBuilding</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PyInterface.h" />
@@ -23,5 +28,10 @@
   <ItemGroup>
     <None Include="PyInterface.pyi" />
     <None Include="set_python_env.bat" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="QuickBuilding">
+      <UniqueIdentifier>{4785e153-ca3e-4207-b176-7d4bd319c384}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

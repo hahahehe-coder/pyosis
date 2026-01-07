@@ -130,8 +130,12 @@ def osis_nl(bGeom: int=0, bLink: int=0):
     非线性控制开关
 
     Args:
-        bGeom (bool): 0=关闭几何非线性开关，1=打开几何非线性开关、大位移大转角
-        bLink (bool): 0=不考虑非线性连接单元，1=考虑非线性连接单元
+        bGeom (bool): 
+            * 0 = 关闭几何非线性开关
+            * 1 = 打开几何非线性开关、大位移大转角
+        bLink (bool): 
+            * 0 = 不考虑非线性连接单元
+            * 1 = 考虑非线性连接单元
 
     Returns:
         tuple (bool, str): 是否成功，失败原因

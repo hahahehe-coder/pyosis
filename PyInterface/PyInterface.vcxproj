@@ -31,6 +31,7 @@
     <ClCompile Include="Post.cpp" />
     <ClCompile Include="PyInterface.cpp" />
     <ClCompile Include="Section.cpp" />
+    <ClCompile Include="SmallBoxBeam.cpp" />
     <ClCompile Include="Stage.cpp" />
     <ClCompile Include="stdafx.cpp" />
   </ItemGroup>
