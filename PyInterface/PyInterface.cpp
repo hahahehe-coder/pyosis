@@ -7,42 +7,42 @@ namespace py = pybind11;
 
 #include "PyInterface.h"
 
-// 将 UTF-8 string 转换为 wstring 用于显示
-std::wstring utf8_to_wstring(const std::string& utf8_str) {
-    if (utf8_str.empty()) return L"";
+//// 将 UTF-8 string 转换为 wstring 用于显示
+//std::wstring utf8_to_wstring(const std::string& utf8_str) {
+//    if (utf8_str.empty()) return L"";
+//
+//    int wide_size = MultiByteToWideChar(CP_UTF8, 0, utf8_str.c_str(), -1, nullptr, 0);
+//    if (wide_size == 0) return L"";
+//
+//    std::wstring wide_str(wide_size, 0);
+//    MultiByteToWideChar(CP_UTF8, 0, utf8_str.c_str(), -1, &wide_str[0], wide_size);
+//
+//    // 移除末尾的 null 字符
+//    if (!wide_str.empty() && wide_str.back() == L'\0') {
+//        wide_str.pop_back();
+//    }
+//
+//    return wide_str;
+//}
+//
+////wstring=>string
+//std::string wstring_to_string(const std::wstring& ws) {
+//    std::string strLocale = setlocale(LC_ALL, "");
+//    const wchar_t* wchSrc = ws.c_str();
+//    size_t nDestSize = wcstombs(NULL, wchSrc, 0) + 1;
+//    char* chDest = new char[nDestSize];
+//    memset(chDest, 0, nDestSize);
+//    wcstombs(chDest, wchSrc, nDestSize);
+//    std::string strResult = chDest;
+//    delete[]chDest;
+//    setlocale(LC_ALL, strLocale.c_str());
+//    return strResult;
+//}
 
-    int wide_size = MultiByteToWideChar(CP_UTF8, 0, utf8_str.c_str(), -1, nullptr, 0);
-    if (wide_size == 0) return L"";
-
-    std::wstring wide_str(wide_size, 0);
-    MultiByteToWideChar(CP_UTF8, 0, utf8_str.c_str(), -1, &wide_str[0], wide_size);
-
-    // 移除末尾的 null 字符
-    if (!wide_str.empty() && wide_str.back() == L'\0') {
-        wide_str.pop_back();
-    }
-
-    return wide_str;
-}
-
-//wstring=>string
-std::string wstring_to_string(const std::wstring& ws) {
-    std::string strLocale = setlocale(LC_ALL, "");
-    const wchar_t* wchSrc = ws.c_str();
-    size_t nDestSize = wcstombs(NULL, wchSrc, 0) + 1;
-    char* chDest = new char[nDestSize];
-    memset(chDest, 0, nDestSize);
-    wcstombs(chDest, wchSrc, nDestSize);
-    std::string strResult = chDest;
-    delete[]chDest;
-    setlocale(LC_ALL, strLocale.c_str());
-    return strResult;
-}
-
-std::string utf8_to_wide(const std::string& utf8_str)
-{
-    return wstring_to_string(utf8_to_wstring(utf8_str));
-}
+//std::string utf8_to_wide(const std::string& utf8_str)
+//{
+//    return wstring_to_string(utf8_to_wstring(utf8_str));
+//}
 
 // 下面的函数将返回<bool, string>
 // 添加或修改导出函数后，请在PyInterface.pyi中也将函数的声明加上。作用为便于用户在IDE中得到osis函数的高亮信息

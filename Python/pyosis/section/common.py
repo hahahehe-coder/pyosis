@@ -58,9 +58,9 @@ def osis_section_Lshape(nSec: int, strName: str, eSectionType: Literal["LSHAPE"]
         nSec (int): 截面编号，从1开始编号，所有类型的截面均使用同一编号序列。
         strName (str): 截面名称。
         eSectionType (str): 截面类型，固定为 LSHAPE
-        nDir (int): L形截面方向：
-            * 0: 左下向
-            * 1: 左上向
+        nDir (int): L形截面方向
+            * 0 = 左下向
+            * 1 = 左上向
         H (float): 截面总高度
         B (float): 截面总宽度
         Tf1 (float): 竖肢厚度
@@ -81,20 +81,20 @@ def osis_section_Lshape(nSec: int, strName: str, eSectionType: Literal["LSHAPE"]
     pass
 
 @REGISTRY.register('Section')
-def osis_section_circle(nSec: int, strName: str, eSectionType: Literal["CIRCLE"], CircleType: Literal["Hollow", "Solid"], D: float,Tw: float):
+def osis_section_circle(nSec: int, strName: str, eSectionType: Literal["CIRCLE"], eCircleType: Literal["Hollow", "Solid"], D: float,Tw: float):
     """创建或修改圆形截面(Circle)。
 
     Args:
         nSec (int): 截面编号，从1开始编号，所有类型的截面均使用同一编号序列。
         strName (str): 截面名称。
         eSectionType (str): 截面类型，固定为 CIRCLE
-        CircleType (str): 截面类型：
-            * Hollow: 空腹截面
-            * Solid: 实腹截面
+        eCircleType (str): 截面类型：
+            * Hollow = 空腹截面e
+            * Solid = 实腹截面
         D (float): 圆形截面直径
         Tw (float): 空腹截面的壁厚
-            仅当CircleType为"Hollow"时需要指定。
-
+            仅当 eCircleType 为 "Hollow" 时需要指定。
+e
     Returns:
         tuple (bool, str): 返回一个元组，包含：
             - bool: 操作是否成功

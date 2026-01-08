@@ -18,9 +18,15 @@
 namespace py = pybind11;
 #include "YILAlgorithm/yilWarning.h"
 #include "yilBaseCommand/yilBaseCommandInc.h"
+#include "YILProjectGroup/yilProjectGroupInc.h"
 #include "yilCommand/yilCommandInc.h"
 #include "XCPCalculateTool/CalBsUtils.h"
-#include "YILProjectGroup/yilProjectGroupInc.h"
+
+// 快速建模相关依赖
+#include "XCPUIModuleControl/xcpQBBridgeTool.h"
+#include "XCPUIModuleControl/xcpQBDlgToolFactory.h"
+#include "XCPCalculateTool/xcpQBShowToolBase.h"
+#include "XCPQuickBuilding/ShowSimSmallBoxTool.h"
 
 typedef void (*ReplotCallback)();
 
@@ -58,6 +64,11 @@ public:
 	yilBaseCommand* GetCommand()
 	{
 		return (yilBaseCommand*)m_pProjectGroup->GetyilCommand();
+	}
+
+	xcpQBShowToolBase* GetQBShowTool()	// 必须先在外部 create 快速建模再调用这个
+	{
+		return xcpQBBridgeTool::GetInstance()->GetDlgToolFactory()->GetShowDlgTool().get();
 	}
 
 	//void SetProject(yilProject* GetProject()) {
@@ -426,14 +437,16 @@ public:
 	// ========================================================================
 
 	std::pair<bool, std::string> OSIS_QBHollowSlab(const py::list spans, const bool bIsElasticConnection);
+
+	std::pair<bool, std::string> OSIS_QBSmallBoxBeam(const py::list spans, const bool bIsElasticConnection);
 };
 
 // 将 UTF-8 string 转换为 wstring 用于显示
-std::wstring utf8_to_wstring(const std::string& utf8_str);
-
-std::string wstring_to_string(const std::wstring& wide_str);
-
-std::string utf8_to_wide(const std::string& utf8_str);
+//std::wstring utf8_to_wstring(const std::string& utf8_str);
+//
+//std::string wstring_to_string(const std::wstring& wide_str);
+//
+//std::string utf8_to_wide(const std::string& utf8_str);
 
 // 安全参数解析 字典版
 template<typename T>

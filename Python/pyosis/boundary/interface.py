@@ -58,7 +58,8 @@ def osis_assign_boundary(nBd: int=1, eOP: Literal["a", "s", "r", "aa", "ra"]="a"
             * r = 移除
             * aa = 添加全部
             * ra = 移除全部
-        param (list): 待操作的编号，支持的格式：*，*to*；*by*，仅用于替换。例子：[2,3,5,"8to10"] ["2by3","5by6","8by10"] 重合的编号自动忽略
+        param (list): 待操作的编号，支持的格式：*，*to*，*by*（仅用于替换）。
+            例子：[2,3,5,"8to10"] ["2by3","5by6","8by10"] 重合的编号自动忽略
     Returns:
         tuple (bool, str): 是否成功，失败原因
     '''
