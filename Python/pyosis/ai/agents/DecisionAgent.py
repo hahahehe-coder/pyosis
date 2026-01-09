@@ -12,6 +12,13 @@ section_agent = None
 model_agent = None
 quick_building_agent = None
 
+def log_to_file(msg,fn = "D:/log.txt"):
+    fp = open("D:/log.txt", "a", encoding="utf-8")
+    fp.write(msg)
+    print(msg)
+    fp.write('\r\n')
+    fp.close()
+
 def call_agent(agent, request: str):
     ai_response = agent.invoke(request, "4")
     messages = ai_response['messages']
@@ -24,8 +31,10 @@ def call_agent(agent, request: str):
     print("v" * 30)
     for message in messages[last_human_index + 1:]:
         if isinstance(message, AIMessage):
-            print(f"content: {message.content}")
-            print(f"tool_calls: {message.tool_calls}\n")
+            # print(f"content: {message.content}")
+            # print(f"tool_calls: {message.tool_calls}\n")
+            log_to_file(f"content: {message.content}")
+            log_to_file(f"tool_calls: {message.tool_calls}\n")
     print("^" * 30)
 
     return ai_response['messages'][-1].content
@@ -155,7 +164,7 @@ class DecisionAgent(BaseAgent):
 1. 材料智能体：用于生成满足用户需求的材料。
 2. 截面智能体：用于生成满足用户需求的截面。
 3. 模型智能体：用于创建节点与创建单元。创建一定要提供材料与截面编号，如果没有材料或者截面，新建一个。
-4. 快速建模智能体：这是一个独立的模块，直接创建 空心板 小箱梁 T梁 连续小箱梁 连续T梁 等模型。当用户想要直接创建桥梁时，**将用户的所有需求（包括桥梁类型、尺寸、荷载等）全部转交给快速建模智能体**
+4. 快速建模智能体：这是一个独立的模块，直接创建 空心板 小箱梁 T梁 连续小箱梁 连续T梁 等模型。当用户想要直接创建桥梁时，**确保将用户的所有需求（包括桥梁类型、尺寸、荷载、钢束、施工阶段等）一次性全部转交给快速建模智能体，不能分布执行**
 
 你的职责：
 1. 分析用户需求，确定设计参数
@@ -165,9 +174,9 @@ class DecisionAgent(BaseAgent):
 
 工作流程：
 - 先告诉用户你的思考和计划
-- 调用需要的工具
-- 等待工具执行完成并返回结果
-- 检查结果，确认是否成功
+- 调用需要的智能体
+- 等待智能体执行完成并返回结果
+- 检查结果，确认是否成功，并详细告知你调用的智能体做了什么
 - 如果成功，继续下一步；如果失败，处理错误
 
 特殊情况处理：

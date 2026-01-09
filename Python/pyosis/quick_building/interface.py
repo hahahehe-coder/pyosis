@@ -3,7 +3,7 @@ pyosis.quick_building.py.interface 的 Docstring
 '''
 from typing import Tuple, Literal
 from ..core import *
-from ..general import osis_clear, osis_replot
+# from ..general import osis_clear, osis_replot
 
 # def log_to_file(msg,fn = "D:/log.txt"):
 #     fp = open("D:/log.txt", "a", encoding="utf-8")
@@ -27,8 +27,19 @@ def osis_set_qb_bridge_type(eBridgeType: Literal["HOLLOWSLAB", "SMALLBOXBEAM", "
     Returns:
         tuple (bool, str): 是否成功，失败原因
     '''
-    osis_clear()
-    return osis_run("/create,132")
+    if eBridgeType == "HOLLOWSLAB":
+        return osis_run("/create,134")
+    elif eBridgeType == "SMALLBOXBEAM":
+        return osis_run("/create,132")
+    elif eBridgeType == "TBEAM":
+        return osis_run("/create,133")
+    elif eBridgeType == "CONTINUOUSSMALLBOXBEAM":
+        return osis_run("/create,112")
+    elif eBridgeType == "CONTINUOUSTBEAM":
+        return osis_run("/create,113")
+
+    else:
+        return False, "不支持的桥梁类型！"
 
 
 def osis_set_qb_overall(eBridgeType: Literal["HOLLOWSLAB", "SMALLBOXBEAM", "TBEAM", "CONTINUOUSSMALLBOXBEAM", "CONTINUOUSTBEAM"], spans: list=[30], bIsElasticConnection: bool=False, 
@@ -103,20 +114,20 @@ def osis_set_qb_load(eBridgeType: Literal["HOLLOWSLAB", "SMALLBOXBEAM", "TBEAM",
             * TBEAM = T梁
             * CONTINUOUSSMALLBOXBEAM = 连续小箱梁
             * CONTINUOUSTBEAM = 连续T梁
-        dDeadLoadFactor (float): 自重系数（恒载参数），为0表示不设置
-        dPavementIntensity (float): 铺装荷载集度（恒载参数），为0表示不设置
-        dRailIntensity (float): 防撞护栏荷载集度（恒载参数），为0表示不设置
-        dSidewalkIntensity (float): 人行道荷载集度（恒载参数），为0表示不设置
-        dCrowdLoad (float): 人行道人群荷载（恒载参数），为0表示不设置
-        dSideBeamPointLoad (float): 端横隔板集中荷载（恒载参数），为0表示不设置
-        dMiddleBeamPointLoad (float): 中横隔板集中荷载（恒载参数），为0表示不设置
+        dDeadLoadFactor (float): 自重系数（恒载参数），为0表示不设置。单位：N/m
+        dPavementIntensity (float): 铺装荷载集度（恒载参数），为0表示不设置。单位：N/m
+        dRailIntensity (float): 防撞护栏荷载集度（恒载参数），为0表示不设置。单位：N/m
+        dSidewalkIntensity (float): 人行道荷载集度（恒载参数），为0表示不设置。单位：N/m
+        dCrowdLoad (float): 人行道人群荷载（恒载参数），为0表示不设置。单位：N/m
+        dSideBeamPointLoad (float): 端横隔板集中荷载（恒载参数），为0表示不设置。单位：N
+        dMiddleBeamPointLoad (float): 中横隔板集中荷载（恒载参数），为0表示不设置。单位：N
         dTransVehDistribution (float): 移动荷载横向分布系数，为0表示不设置移动荷载
-        dFundFreq (float): 结构基频，dTransVehDistribution不为0时有效，不为0则为用户自定义基频，为0则使用规范公式
+        dFundFreq (float): 结构基频，dTransVehDistribution不为0时有效，不为0则为用户自定义基频，为0则使用规范公式。单位：Hz
         dWarming (float): 温度作用整体升温。不考虑温度作用时要和dCooling一起设置为0
         dCooling (float): 温度作用整体降温。不考虑温度作用时要和dWarming一起设置为0
         T1 (float): 温度梯度 T1。不考虑温度梯度时要和T2一起设置为0
         T2 (float): 温度梯度 T2。不考虑温度梯度时要和T1一起设置为0
-        dSupSettle (float): 支座沉降（沉降荷载参数），为0表示不设置
+        dSupSettle (float): 支座沉降（沉降荷载参数），为0表示不设置。单位：m
 
     Returns:
         tuple (bool, str): 是否成功，失败原因
@@ -124,7 +135,7 @@ def osis_set_qb_load(eBridgeType: Literal["HOLLOWSLAB", "SMALLBOXBEAM", "TBEAM",
     bHaveDeadLoad: bool = (dDeadLoadFactor != 0)
     bHavePavement: bool = (dPavementIntensity != 0)
     bHaveRail: bool = (dRailIntensity != 0)
-    bHaveSidewalk: bool = (dSidewalkIntensity != 0) 
+    bHaveSidewalk: bool = (dSidewalkIntensity != 0 or dCrowdLoad != 0) 
     bHaveSideBeam: bool = (dSideBeamPointLoad != 0)
     bHaveMiddleBeam: bool = (dMiddleBeamPointLoad != 0)
     bHaveMovingLoad: bool = (dTransVehDistribution != 0)
@@ -159,7 +170,7 @@ def osis_set_qb_tendon(eBridgeType: Literal["HOLLOWSLAB", "SMALLBOXBEAM", "TBEAM
             * CONTINUOUSTBEAM = 连续T梁
         tendonInfo (list): 每条钢束的信息，由多个dict组成，每个dict包含：
             - name (str): 钢束名称
-            - prop (str): 钢束属性
+            - prop (str): 钢束属性，可选项：[15-2, 15-3, 15-4, ..., 15-10]
             - Le (float): 起点距边缘混凝土距离Le(m)
             - He (float): 起点距底缘距离He(m)
             - A (float): 起弯角度A(度)
@@ -210,9 +221,9 @@ def osis_create_qb_bridge():
     Returns:
         tuple (bool, str): 是否成功，失败原因
     '''
-    isok, error = osis_run("/control,quickCreateModel")
-    osis_replot()
-    return isok, error
+    return osis_run("/control,quickCreateModel")
+    # osis_replot()
+    # return isok, error
 
 
 ## 老的写法，快速建模简化版

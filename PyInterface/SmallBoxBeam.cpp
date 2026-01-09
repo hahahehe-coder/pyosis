@@ -190,26 +190,27 @@ std::pair<bool, std::string> PyInterface::OSIS_QBLoad(
 
 // 检查tendon参数对不对(后面可能优化一下，不用单独写个函数或者写个更通用的)
 bool CheckTendonParam(yilUnitScale* pUnit, const double& Le, const double& He, const double& A, const double& Hm, const double& R, const double& stress, const int& tieNums,
-	xcpSimplyTendonInfo& tendonInfo, std::string& errorCode)
+	std::string& errorCode)
 {
-	tendonInfo.SetLengthOfLe(pUnit->LocalLengthToSI(Le));
+	xcpSimplyTendonInfo tendonTemp;
+	tendonTemp.SetLengthOfLe(pUnit->LocalLengthToSI(Le));
 	double dSt = 0.0, dEnd = 0.0;
-	tendonInfo.CalTendonPos(dSt, dEnd);
+	tendonTemp.CalTendonPos(dSt, dEnd);
 	/*int iEleNo, jEleNo;
 	if (pPortrait->GetEachEndOfEleNo(dSt, dEnd, iEleNo, jEleNo))
 	{
 		striEleNo.Format(_T("%d"), iEleNo);
 		strjEleNo.Format(_T("%d"), jEleNo);
 	}*/
-	tendonInfo.SetLengthOfHe(pUnit->LocalLengthToSI(He));
+	tendonTemp.SetLengthOfHe(pUnit->LocalLengthToSI(He));
 
-	tendonInfo.SetDegreeOfA(pUnit->LocalAngleToSI(A));
+	tendonTemp.SetDegreeOfA(pUnit->LocalAngleToSI(A));
 
-	tendonInfo.SetLengthOfHm(pUnit->LocalLengthToSI(Hm));
+	tendonTemp.SetLengthOfHm(pUnit->LocalLengthToSI(Hm));
 
-	tendonInfo.SetLengthOfR(pUnit->LocalLengthToSI(R));
+	tendonTemp.SetLengthOfR(pUnit->LocalLengthToSI(R));
 
-	const double dLm = tendonInfo.GetLengthOfLm();
+	const double dLm = tendonTemp.GetLengthOfLm();
 
 	if (dLm <= 0)
 	{
@@ -217,17 +218,17 @@ bool CheckTendonParam(yilUnitScale* pUnit, const double& Le, const double& He, c
 		//m_CtrlTendon.SetItemText(_iRow, _iCol, m_strSelGridCell);
 		return false;
 	}
-	const double dRadianA = tendonInfo.DegreeToRadian(tendonInfo.GetDegreeOfA());
-	const double dLeftVal = tendonInfo.GetLengthOfR() * tan(dRadianA / 2.0);
-	const double dRightVal = (tendonInfo.GetLengthOfHe() - tendonInfo.GetLengthOfHm()) / sin(dRadianA);
-	if (dLeftVal > min(dRightVal, tendonInfo.GetLaValue(tendonInfo.GetLengthOfLe(), tendonInfo.GetLengthOfHe(), tendonInfo.GetDegreeOfA())))
+	const double dRadianA = tendonTemp.DegreeToRadian(tendonTemp.GetDegreeOfA());
+	const double dLeftVal = tendonTemp.GetLengthOfR() * tan(dRadianA / 2.0);
+	const double dRightVal = (tendonTemp.GetLengthOfHe() - tendonTemp.GetLengthOfHm()) / sin(dRadianA);
+	if (dLeftVal > min(dRightVal, tendonTemp.GetLaValue(tendonTemp.GetLengthOfLe(), tendonTemp.GetLengthOfHe(), tendonTemp.GetDegreeOfA())))
 	{
 		errorCode = "圆弧半径R与其余钢束参数不匹配,钢束线形错误,请修改钢束参数!";
 		//m_CtrlTendon.SetItemText(_iRow, _iCol, m_strSelGridCell);
 		return false;
 	}
-	tendonInfo.SetTensileStress(pUnit->LocalPascalToSI(stress));//张拉应力
-	tendonInfo.SetTieNums(tieNums);
+	tendonTemp.SetTensileStress(pUnit->LocalPascalToSI(stress));//张拉应力
+	tendonTemp.SetTieNums(tieNums);
 
 	return true;
 }
@@ -248,12 +249,11 @@ std::pair<bool, std::string> PyInterface::OSIS_QBTendon(
 		xcpSimplyPortraitData<qilSmallBoxSectionDto>* pPortrait = (xcpSimplyPortraitData<qilSmallBoxSectionDto>*)pTool->GetPortraitData();
 		pPortrait->CalcualteElement();
 
-		xcpSimplyTendonInfo infoTemp;
 		auto* pUnit = GetProject()->GetUnit(); 
 		std::map<int, xcpSimplyTendonInfo>* pTendonInfoMap = pTendon->GetTendonInfo();
 		//std::map<int, xcpSimplyTendonInfo> tendonInfoMapTemp;
 
-		for (int i = 0; i < py::len(tendonInfo) - 1; i++)	// python中将以 list[dict[]] 的形式组织钢束数据
+		for (int i = 0; i < py::len(tendonInfo); i++)	// python中将以 list[dict[]] 的形式组织钢束数据
 		{
 			std::string name, prop;
 			double Le, He, A, Hm, R, stress;
@@ -282,12 +282,21 @@ std::pair<bool, std::string> PyInterface::OSIS_QBTendon(
 			}
 
 			// 数据检验，仿照 XXXDlg
-			xcpSimplyTendonInfo tendonInfo;
-			if (!CheckTendonParam(pUnit, Le, He, A, Hm, R, stress, tieNums, tendonInfo, errorCode))
+			if (!CheckTendonParam(pUnit, Le, He, A, Hm, R, stress, tieNums, errorCode))
 			{
 				return { false, errorCode };
 			}
-			(*pTendonInfoMap)[i] = infoTemp;
+			xcpSimplyTendonInfo tendonTemp;
+			tendonTemp.SetTendonName(name);
+			tendonTemp.SetTendonProp(prop);
+			tendonTemp.SetLengthOfLe(Le);
+			tendonTemp.SetLengthOfHe(He);
+			tendonTemp.SetDegreeOfA(A);
+			tendonTemp.SetLengthOfHm(Hm);
+			tendonTemp.SetLengthOfR(R);
+			tendonTemp.SetTensileStress(stress);
+			tendonTemp.SetTieNums(tieNums);
+			(*pTendonInfoMap)[i] = tendonTemp;
 		}
 	}
 	else if (eBridgeType == "TBEAM")
