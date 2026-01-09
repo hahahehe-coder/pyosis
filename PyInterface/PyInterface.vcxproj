@@ -247,6 +247,7 @@ call .\set_python_env.bat</Command>
     </ClCompile>
     <Link>
       <AdditionalDependencies>HPDI.OSIS.Geometry.lib;HPDI.OSIS.PREP.Control.lib;HPDI.OSIS.IO.lib;HPDI.OSIS.PREP.Stage.lib;HPDI.OSIS.PREP.Load.lib;HPDI.OSIS.PREP.Boundary.lib;HPDI.OSIS.PREP.Command.lib;HPDI.OSIS.PREP.Material.lib;HPDI.OSIS.PREP.Property.lib;HPDI.OSIS.PREP.Section.lib;HPDI.OSIS.PREP.Element.lib;qilBaseLibrary.lib;yilBaseClass.lib;yilProject.lib;yilProjectGroup.lib;yilBaseCommand.lib;yilControl.lib;yilObject.lib;yilMatrix.lib;yilAlgorithm.lib;yilGraphicDisplay.lib;yilPlotControl.lib;yilCommonData.lib;vtkCommonCore.lib;vtksys.lib;yilSelect.lib;BCGCBPRO3340d143.lib;CXTreeCtrl.lib;xcpCalculateTool.lib;xcpUIModuleControl.lib;xcpQuickBuilding.lib;python3.lib;python311.lib</AdditionalDependencies>
+
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
