@@ -16,7 +16,7 @@
 #include <codecvt>
 
 namespace py = pybind11;
-#include "BCGCBPro/BCGCBProInc.h"
+//#include "BCGCBPro/BCGCBProInc.h"
 #include "YILAlgorithm/yilWarning.h"
 #include "yilBaseCommand/yilBaseCommandInc.h"
 #include "YILProjectGroup/yilProjectGroupInc.h"
