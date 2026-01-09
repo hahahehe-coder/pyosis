@@ -126,18 +126,18 @@ class PyInterface:
     # def OSIS_LiveGrade(self, strName: str, eCode: str, eLiveLoadType: str, params: Dict[str, Any]) -> Tuple[bool, str]:
     #     return True, ""
 
-    def OSIS_ElemForce(strLCName: str, eDataItem: str, eElementType: str) -> Tuple[bool, str, Any]:
+    def OSIS_ElemForce(self, strLCName: str, eDataItem: str, eElementType: str) -> Tuple[bool, str, Any]:
         return True, "", None
 
-    def OSIS_QBOverall(eBridgeType: str, spans: list, bIsElasticConnection: bool, 
+    def OSIS_QBOverall(self, eBridgeType: str, spans: list, bIsElasticConnection: bool, 
                        dKxOfAbutment1: float, dKyOfAbutment1: float, dKzOfAbutment1: float, 
                        dKxOfAbutment2: float, dKyOfAbutment2: float, dKzOfAbutment2: float, dElasticLength: float) -> Tuple[bool, str]:
         return True, ""
     
-    def OSIS_QBPortrait(eBridgeType: str, dEleLengthMin: float, dEleLengthMax: float, S1: float, L1: float, F1: float, Tb: float, Tw: float, D1: float) -> Tuple[bool, str]:
+    def OSIS_QBPortrait(self, eBridgeType: str, dEleLengthMin: float, dEleLengthMax: float, S1: float, L1: float, F1: float, Tb: float, Tw: float, D1: float) -> Tuple[bool, str]:
         return True, ""
     
-    def OSIS_QBLoad(eBridgeType: str,
+    def OSIS_QBLoad(self, eBridgeType: str,
                     bHaveDeadLoad: bool, bHavePavement: bool, bHaveRail: bool, bHaveSidewalk: bool, bHaveSideBeam: bool, bHaveMiddleBeam: bool,
                     bHaveMovingLoad: bool, bHaveTemperEff: bool, bHaveTemperGradient: bool, bHaveSupSettle: bool,
                     dDeadLoadFactor: float, dPavementIntensity: float, dRailIntensity: float, dSidewalkIntensity: float, dCrowdLoad: float,
@@ -146,8 +146,8 @@ class PyInterface:
                     T1: float, T2: float, dSupSettle: float) -> Tuple[bool, str]:
         return True, ""
 
-    def OSIS_QBTendon(eBridgeType: str, tendonInfo: list) -> Tuple[bool, str]:
+    def OSIS_QBTendon(self, eBridgeType: str, tendonInfo: list) -> Tuple[bool, str]:
         return True, ""
 
-    def OSIS_QBStage(eBridgeType: str, stageInfo: list) -> Tuple[bool, str]:
+    def OSIS_QBStage(self, eBridgeType: str, stageInfo: list) -> Tuple[bool, str]:
         return True, ""

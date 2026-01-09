@@ -3,13 +3,14 @@ pyosis.quick_building.py.interface 的 Docstring
 '''
 from typing import Tuple, Literal
 from ..core import *
+from ..general import osis_clear, osis_replot
 
-def log_to_file(msg,fn = "D:/log.txt"):
-    fp = open("D:/log.txt", "a", encoding="utf-8")
-    fp.write(msg)
-    print(msg)
-    fp.write('\r\n')
-    fp.close()
+# def log_to_file(msg,fn = "D:/log.txt"):
+#     fp = open("D:/log.txt", "a", encoding="utf-8")
+#     fp.write(msg)
+#     print(msg)
+#     fp.write('\r\n')
+#     fp.close()
 
 def osis_set_qb_bridge_type(eBridgeType: Literal["HOLLOWSLAB", "SMALLBOXBEAM", "TBEAM", "CONTINUOUSSMALLBOXBEAM", "CONTINUOUSTBEAM"]):
     '''
@@ -26,6 +27,7 @@ def osis_set_qb_bridge_type(eBridgeType: Literal["HOLLOWSLAB", "SMALLBOXBEAM", "
     Returns:
         tuple (bool, str): 是否成功，失败原因
     '''
+    osis_clear()
     return osis_run("/create,132")
 
 
@@ -55,8 +57,9 @@ def osis_set_qb_overall(eBridgeType: Literal["HOLLOWSLAB", "SMALLBOXBEAM", "TBEA
         tuple (bool, str): 是否成功，失败原因
     '''
     e = OSISEngine.GetInstance()
-    return e.OSIS_QBOverall(eBridgeType, spans, bIsElasticConnection, dKxOfAbutment1, dKyOfAbutment1, dKzOfAbutment1, 
-                                                                      dKxOfAbutment2, dKyOfAbutment2, dKzOfAbutment2, dElasticLength)
+    return e.OSIS_QBOverall(eBridgeType, spans, bIsElasticConnection, 
+                            dKxOfAbutment1, dKyOfAbutment1, dKzOfAbutment1, 
+                            dKxOfAbutment2, dKyOfAbutment2, dKzOfAbutment2, dElasticLength)
 
 def osis_set_qb_portrait(eBridgeType: Literal["HOLLOWSLAB", "SMALLBOXBEAM", "TBEAM", "CONTINUOUSSMALLBOXBEAM", "CONTINUOUSTBEAM"], dEleLengthMin: float=0.5, dEleLengthMax: float=2.0, 
                       S1: float=0.04, L1: float=0.8, F1: float=2.0, Tb: float=0.3, Tw: float=0.3, D1: float=0.54):
@@ -207,7 +210,9 @@ def osis_create_qb_bridge():
     Returns:
         tuple (bool, str): 是否成功，失败原因
     '''
-    return osis_run("/control,quickCreateModel")
+    isok, error = osis_run("/control,quickCreateModel")
+    osis_replot()
+    return isok, error
 
 
 ## 老的写法，快速建模简化版
