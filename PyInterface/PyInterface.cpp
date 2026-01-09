@@ -44,6 +44,43 @@ namespace py = pybind11;
 //    return wstring_to_string(utf8_to_wstring(utf8_str));
 //}
 
+// 直接运行OSIS命令流
+std::pair<bool, std::string> PyInterface::OSIS_Run(std::string strCmd, std::string mode)
+{
+    std::string errorCode = "";
+
+    if (strCmd != "")
+    {
+        if (mode == "execute" || mode == "exec")
+        {
+            m_vCommand.Add(&(yilCString)strCmd);
+            // 这里需要split一下
+            CalBsUtils::ExecuteCommands(m_vCommand);
+            m_vCommand.Clear();
+        }
+        else if (mode == "stash")
+        {
+            m_vCommand.Add(&(yilCString)strCmd);
+        }
+        else
+        {
+
+        }
+    }
+    else
+    {
+        if (mode == "execute" || mode == "exec")
+        {
+            CalBsUtils::ExecuteCommands(m_vCommand);
+            m_vCommand.Clear();
+        }
+    }
+
+    auto warning = g_pWarningList->GetLastWaringContent();
+    errorCode = warning.c_str();
+    return { true, errorCode };
+}
+
 // 下面的函数将返回<bool, string>
 // 添加或修改导出函数后，请在PyInterface.pyi中也将函数的声明加上。作用为便于用户在IDE中得到osis函数的高亮信息
 PYBIND11_MODULE(PyInterface, m)
@@ -55,7 +92,7 @@ PYBIND11_MODULE(PyInterface, m)
             py::return_value_policy::reference)
         .def("OSIS_Run", &PyInterface::OSIS_Run,
             py::arg("strCmd"), py::arg("mode"))
-        .def("OSIS_Replot", &PyInterface::OSIS_Replot)
+        /*.def("OSIS_Replot", &PyInterface::OSIS_Replot)
         .def("OSIS_Clear", &PyInterface::OSIS_Clear)
         .def("OSIS_Solve", &PyInterface::OSIS_Solve)
 
@@ -131,10 +168,28 @@ PYBIND11_MODULE(PyInterface, m)
             py::arg("eLoadType"), py::arg("strLCName"), py::arg("kwargs"))
 
         .def("OSIS_LiveGrade", &PyInterface::OSIS_LiveGrade,
-            py::arg("strName"), py::arg("eCode"), py::arg("eLiveLoadType"), py::arg("kwargs"))
+            py::arg("strName"), py::arg("eCode"), py::arg("eLiveLoadType"), py::arg("kwargs"))*/
 
         .def("OSIS_ElemForce", &PyInterface::OSIS_ElemForce,
             py::arg("strLCName"), py::arg("eDataItem"), py::arg("eElementType"))
+
+        .def("OSIS_QBOverall", &PyInterface::OSIS_QBOverall,
+            py::arg("eBridgeType"), py::arg("spans"), py::arg("bIsElasticConnection"), py::arg("dKxOfAbutment1"), py::arg("dKyOfAbutment1"), py::arg("dKzOfAbutment1"),
+            py::arg("dKxOfAbutment2"), py::arg("dKyOfAbutment2"), py::arg("dKzOfAbutment2"), py::arg("dElasticLength"))
+        .def("OSIS_QBPortrait", &PyInterface::OSIS_QBPortrait,
+            py::arg("eBridgeType"), py::arg("dEleLengthMin"), py::arg("dEleLengthMax"), py::arg("S1"), py::arg("L1"), py::arg("F1"), py::arg("Tb"), py::arg("Tw"), py::arg("D1"))
+        .def("OSIS_QBLoad", &PyInterface::OSIS_QBLoad,
+            py::arg("eBridgeType"), 
+            py::arg("bHaveDeadLoad"), py::arg("bHavePavement"), py::arg("bHaveRail"), py::arg("bHaveSidewalk"), py::arg("bHaveSideBeam"), py::arg("bHaveMiddleBeam"),
+            py::arg("bHaveMovingLoad"), py::arg("bHaveTemperEff"), py::arg("bHaveTemperGradient"), py::arg("bHaveSupSettle"),
+            py::arg("dDeadLoadFactor"), py::arg("dPavementIntensity"), py::arg("dRailIntensity"), py::arg("dSidewalkIntensity"), py::arg("dCrowdLoad"), 
+            py::arg("dSideBeamPointLoad"), py::arg("dMiddleBeamPointLoad"),
+            py::arg("dTransVehDistribution"), py::arg("bIsSelfDefine"), py::arg("dFundFreq"), py::arg("dWarming"), py::arg("dCooling"), 
+            py::arg("T1"), py::arg("T2"), py::arg("dSupSettle"))
+        .def("OSIS_QBTendon", &PyInterface::OSIS_QBTendon,
+            py::arg("eBridgeType"), py::arg("tendonInfo"))
+        .def("OSIS_QBStage", &PyInterface::OSIS_QBStage,
+            py::arg("eBridgeType"), py::arg("stageInfo"))
         ;
 
 	//m.def("add", &, "A function that adds two numbers");

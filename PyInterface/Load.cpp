@@ -286,7 +286,7 @@ std::pair<bool, std::string> PyInterface::OSIS_Load(const std::string eLoadType,
 		std::string eDirect, eType;
 		PrepEnum::TempDirc eDirc;
 		PrepEnum::GTempType eT;
-		int nNum;	// 本来需要解析参数，现在直接从loadValues的长度计算
+		int nNum=5;	// 本来需要解析参数，现在直接从loadValues的长度计算
 
 		// 梯度温度荷载参数数值
 		//B：考虑温度变化的宽度，宽度可缺省

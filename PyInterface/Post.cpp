@@ -9,12 +9,12 @@
 /// <param name="eDataItem"></param>
 /// <param name="eElementType"></param>
 /// <returns></returns>
-std::pair<bool, std::string> PyInterface::OSIS_PrnLcr(const std::string strLCName, const std::string eDataItem, const std::string eElementType)
-{
-	std::string errorCode;
-
-	return { true, errorCode };
-}
+//std::pair<bool, std::string> PyInterface::OSIS_PrnLcr(const std::string strLCName, const std::string eDataItem, const std::string eElementType)
+//{
+//	std::string errorCode;
+//
+//	return { true, errorCode };
+//}
 
 
 std::tuple<bool, std::string, py::dict> PyInterface::OSIS_ElemForce(const std::string strLCName, const std::string eDataItem, const std::string eElementType)
