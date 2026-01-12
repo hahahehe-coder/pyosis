@@ -445,6 +445,12 @@ public:
 	//std::pair<bool, std::string> OSIS_QBSmallBoxBeam(const py::list spans, const bool bIsElasticConnection);
 
 	/// <summary>
+	/// 快速建模专属命令流执行
+	/// </summary>
+	/// <param name="strCmd"></param>
+	/// <returns></returns>
+	std::pair<bool, std::string> OSIS_ExecuteQB(const std::string strCmd);
+	/// <summary>
 	/// 设置总体数据
 	/// </summary>
 	/// <param name="eBridgeType"></param>

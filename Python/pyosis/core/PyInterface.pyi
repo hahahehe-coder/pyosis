@@ -17,7 +17,7 @@ class PyInterface:
 
     def OSIS_Run(self, strCmd: str, mode: str) -> Tuple[bool, str]:
         return True, ""
-
+    
     # def OSIS_Replot(self) -> Tuple[bool, str]:
     #     return True, ""
     

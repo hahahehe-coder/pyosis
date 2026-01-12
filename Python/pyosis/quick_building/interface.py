@@ -222,8 +222,7 @@ def osis_create_qb_bridge():
         tuple (bool, str): 是否成功，失败原因
     '''
     return osis_run("/control,quickCreateModel")
-    # osis_replot()
-    # return isok, error
+    # return osis_execute_qb("quickCreateModel")
 
 
 ## 老的写法，快速建模简化版

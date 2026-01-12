@@ -56,7 +56,7 @@ std::pair<bool, std::string> PyInterface::OSIS_QBOverall(
 		pOverall->SetKxOfAbutment2(pUnit->LocalLineForceToSI(dKxOfAbutment2));
 		pOverall->SetKyOfAbutment2(pUnit->LocalLineForceToSI(dKyOfAbutment2));
 		pOverall->SetKzOfAbutment2(pUnit->LocalLineForceToSI(dKzOfAbutment2));
-		pOverall->SetElasticLength(pUnit->LocalLengthToSI(dElasticLength));
+		pOverall->SetElasticLength(pUnit->LocalLengthToSI(dElasticLength)); 
 
 		if (pTool->UpdateRelativeValue())
 		{
@@ -69,6 +69,14 @@ std::pair<bool, std::string> PyInterface::OSIS_QBOverall(
 		}
 	}
 	else if (eBridgeType == "TBEAM")
+	{
+
+	}
+	else if (eBridgeType == "CONTINUOUSSMALLBOXBEAM")
+	{
+
+	}
+	else if (eBridgeType == "CONTINUOUSTBEAM")
 	{
 
 	}

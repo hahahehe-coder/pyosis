@@ -1,6 +1,6 @@
 from langchain.tools import tool
 from .BaseAgent import BaseAgent
-from ...general import osis_creep_shrink
+from ...property.creep_shrink import osis_creep_shrink
 from ...material import *
 
 class MaterialAgent(BaseAgent):
