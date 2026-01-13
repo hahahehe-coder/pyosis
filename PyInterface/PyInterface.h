@@ -17,21 +17,13 @@
 
 namespace py = pybind11;
 //#include "BCGCBPro/BCGCBProInc.h"
-#include "YILAlgorithm/yilWarning.h"
 #include "yilBaseCommand/yilBaseCommandInc.h"
 #include "YILProjectGroup/yilProjectGroupInc.h"
 #include "yilCommand/yilCommandInc.h"
-#include "XCPCalculateTool/CalBsUtils.h"
 
 // 快速建模相关依赖
 //#include "CXTreeCtrl/yilCXTreeCtrlInc.h"
-#include "XCPUIModuleControl/xcpQBBridgeTool.h"
-#include "XCPUIModuleControl/xcpQBDlgToolFactory.h"
 #include "XCPCalculateTool/xcpQBShowToolBase.h"
-#include "XCPQuickBuilding/xcpGeneralBridgeShowTool.h"
-#include "XCPQuickBuilding/xcpGeneralBridgeData.h"
-#include "XCPQuickBuilding/ShowSimSmallBoxTool.h"
-#include "XCPQuickBuilding/ShowSimHollowSlabTool.h"
 
 //typedef void (*ReplotCallback)();
 
@@ -71,10 +63,8 @@ public:
 		return (yilBaseCommand*)m_pProjectGroup->GetyilCommand();
 	}
 
-	xcpQBShowToolBase* GetQBShowTool()	// 必须先在外部 create 快速建模再调用这个
-	{
-		return xcpQBBridgeTool::GetInstance()->GetDlgToolFactory()->GetShowDlgTool().get();
-	}
+	xcpQBShowToolBase* GetQBShowTool();	// 必须先在外部 create 快速建模再调用这个
+
 
 	//void SetProject(yilProject* GetProject()) {
 	//	GetProject() = GetProject();

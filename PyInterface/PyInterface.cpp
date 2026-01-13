@@ -3,9 +3,10 @@
 #include <pybind11/stl.h>
 #include <pybind11/embed.h>
 
-namespace py = pybind11;
 
 #include "PyInterface.h"
+#include "YILAlgorithm/yilWarning.h"
+#include "XCPCalculateTool/CalBsUtils.h"
 
 //// 将 UTF-8 string 转换为 wstring 用于显示
 //std::wstring utf8_to_wstring(const std::string& utf8_str) {
