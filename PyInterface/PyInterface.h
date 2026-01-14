@@ -9,13 +9,13 @@
 
 #include <string>
 #include <tuple>
+#include <locale>
+#include <codecvt>
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
 #include <pybind11/embed.h>
-#include <locale>
-#include <codecvt>
-
 namespace py = pybind11;
+
 //#include "BCGCBPro/BCGCBProInc.h"
 #include "yilBaseCommand/yilBaseCommandInc.h"
 #include "YILProjectGroup/yilProjectGroupInc.h"
@@ -418,7 +418,7 @@ public:
 	///// <returns></returns>
 	//std::pair<bool, std::string> OSIS_PrnLcr(const std::string strLCName, const std::string eDataItem, const std::string eElementType);
 
-	/// <summary>
+	/// <summary>====================暂时停用========================
 	/// 提取内力结果
 	/// </summary>
 	/// <param name="strLCName"></param>

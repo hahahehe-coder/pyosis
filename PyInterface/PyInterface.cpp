@@ -1,7 +1,7 @@
 #include "stdafx.h"
-#include <pybind11/pybind11.h>
-#include <pybind11/stl.h>
-#include <pybind11/embed.h>
+//#include <pybind11/pybind11.h>
+//#include <pybind11/stl.h>
+//#include <pybind11/embed.h>
 
 
 #include "PyInterface.h"
@@ -171,8 +171,8 @@ PYBIND11_MODULE(PyInterface, m)
         .def("OSIS_LiveGrade", &PyInterface::OSIS_LiveGrade,
             py::arg("strName"), py::arg("eCode"), py::arg("eLiveLoadType"), py::arg("kwargs"))*/
 
-        .def("OSIS_ElemForce", &PyInterface::OSIS_ElemForce,
-            py::arg("strLCName"), py::arg("eDataItem"), py::arg("eElementType"))
+        //.def("OSIS_ElemForce", &PyInterface::OSIS_ElemForce,
+        //    py::arg("strLCName"), py::arg("eDataItem"), py::arg("eElementType"))
 
         .def("OSIS_QBOverall", &PyInterface::OSIS_QBOverall,
             py::arg("eBridgeType"), py::arg("spans"), py::arg("bIsElasticConnection"), py::arg("dKxOfAbutment1"), py::arg("dKyOfAbutment1"), py::arg("dKzOfAbutment1"),
