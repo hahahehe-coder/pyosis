@@ -1,0 +1,20 @@
+name: Sync from Gitea
+on:
+  repository_dispatch:  # 接收Gitea的Webhook触发
+    types: [gitea_push]
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 拉取Gitea仓库代码
+        uses: actions/checkout@v4
+        with:
+          repository: https://47.92.169.225:8005/lizihao/osisPython.git
+          token: 12d432a5162f62990cbda20a9104642a219a2ef6  # Gitea的个人访问令牌（需提前在GitHub Secrets中配置）
+          fetch-depth: 0  # 拉取全量历史
+      
+      - name: 推送到GitHub仓库
+        run: |
+          git remote add github https://x-access-token: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@github.com/liuqingSH/pyosis.git
+          git push github --all
+          git push github --tags
