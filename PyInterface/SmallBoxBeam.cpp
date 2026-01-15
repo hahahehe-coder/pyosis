@@ -1,6 +1,12 @@
 #include "stdafx.h"
 #include "PyInterface.h"
 
+#include "XCPUIModuleControl/xcpQBBridgeTool.h"
+#include "XCPUIModuleControl/xcpQBDlgToolFactory.h"
+#include "XCPQuickBuilding/xcpGeneralBridgeShowTool.h"
+#include "XCPQuickBuilding/xcpGeneralBridgeData.h"
+#include "XCPQuickBuilding/ShowSimSmallBoxTool.h"
+#include "XCPQuickBuilding/ShowSimHollowSlabTool.h"
 //#include "XCPQuickBuilding/xcpGeneralBridgeData.h"
 
 
@@ -26,7 +32,10 @@
 //
 //	return { true, errorCode };
 //}
-
+xcpQBShowToolBase* PyInterface::GetQBShowTool()	// 必须先在外部 create 快速建模再调用这个
+{
+	return xcpQBBridgeTool::GetInstance()->GetDlgToolFactory()->GetShowDlgTool().get();
+}
 
 std::pair<bool, std::string> PyInterface::OSIS_QBOverall(
 	const std::string eBridgeType,

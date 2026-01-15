@@ -3,7 +3,7 @@ pyosis.quick_building.py.interface 的 Docstring
 '''
 from typing import Tuple, Literal
 from ..core import *
-# from ..general import osis_clear, osis_replot
+# 未开发完
 
 # def log_to_file(msg,fn = "D:/log.txt"):
 #     fp = open("D:/log.txt", "a", encoding="utf-8")

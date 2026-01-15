@@ -5,6 +5,7 @@ pyosis.core.command 的 Docstring
 # OSIS命令流兼容
 '''
 
+import datetime
 import inspect
 import functools
 from typing import Dict, Any, Tuple, Literal
@@ -16,13 +17,23 @@ def osis_run(strCmd: str="", mode: Literal["stash", "exec"]="exec") -> Tuple[boo
     
     Args:
         strCmd: 完整的命令流
-        mode: 运行模式，使用 stash 仅会将命令流存到OSIS中，不会执行。只有收到 exec 信号才会执行。此参数为了同时执行多条命令提高效率
+        mode: 运行模式，此参数为了同时执行多条命令提高效率
+            * 使用 stash 仅会将命令流存到OSIS中，不会执行
+            * 收到 exec 信号才会执行暂存包括当前的所有命令流。
 
     Returns:
         tuple (bool, str, Any): 是否成功，失败原因，其他结果数据
     '''
     e = OSISEngine.GetInstance()
     return e.OSIS_Run(strCmd, mode)
+
+def _log(text, filename="pyosis.log"):
+    """简单的日志函数"""
+    timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    with open(filename, 'a', encoding='utf-8') as f:
+        f.write(f"[{timestamp}] {text}\n")
+        f.close()
+
 
 class OSISFunctionRegistry:
     """
@@ -57,7 +68,8 @@ class OSISFunctionRegistry:
     """
     
     def __init__(self):
-        self.commands = {}  # func_name -> info
+        self.commands = {}      # func_name -> info
+        self.run_mode = "stash"     # 命令处理模式，默认暂存
     
     def register(self, cmd_name=None):
         """
@@ -133,8 +145,8 @@ class OSISFunctionRegistry:
     
     def _execute_command(self, cmd) -> Tuple[bool, str, Any]:
         """执行命令（发送到软件）"""
-        print(cmd)
-        return osis_run(cmd, "stash")
+        _log(cmd)
+        return osis_run(cmd, self.run_mode)
     
     def list_commands(self):
         """列出所有命令"""
@@ -148,6 +160,21 @@ class OSISFunctionRegistry:
     def count_command(self):
         """计算总共多少个函数"""
         return len(self.commands)
+    
+    def set_run_mode(self, mode: Literal["stash", "exec"]="exec"):
+        '''设置命令运行模式，默认是暂存，可以提高性能'''
+        self.mode = mode
 
 # 全局函数注册表实例
 REGISTRY = OSISFunctionRegistry()       # 作用为提供python函数和命令流的映射关系，保证参数个数与顺序正常，python函数一定要注册一下
+
+def set_run_mode(mode: Literal["stash", "exec"]="exec"):
+    '''
+    设置全局命令运行模式，默认是暂存，可以提高性能
+    
+    Args:
+        mode: 运行模式，此参数为了同时执行多条命令提高效率
+            * 使用 stash 仅会将命令流存到OSIS中，不会执行
+            * 收到 exec 信号才会执行暂存包括当前的所有命令流。
+    '''
+    REGISTRY.set_run_mode(mode)

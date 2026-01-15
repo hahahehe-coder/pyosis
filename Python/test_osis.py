@@ -61,9 +61,10 @@ osis_load_nforce("NFORCE", "自定义工况1", 4, 200000, 0, 0, 0, 0, 0)
 
 osis_solve()
 
+osis_run()      # 让OSIS执行所有前处理命令
+
 isok, error, ef = osis_elem_force("自定义工况1", "EF", "BEAM3D")
 
-osis_run()
 
 def dict_to_json_txt(data, filename):
     """将字典以JSON格式写入文件"""
